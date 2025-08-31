@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Main | Jind Bank Management System</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #2c3e50, #3498db);
+      color: white;
+    }
+
+    header {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+      color: #f1c40f;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: #f1c40f;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 80px 20px;
+    }
+
+    .hero h2 {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 40px;
+    }
+
+    .card {
+      background: rgba(0,0,0,0.5);
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      background: rgba(0,0,0,0.7);
+    }
+
+    .card h3 {
+      margin-bottom: 15px;
+      color: #f1c40f;
+    }
+
+    .card a {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 20px;
+      border-radius: 6px;
+      background: #27ae60;
+      color: white;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .card a:hover {
+      background: #2ecc71;
+    }
+
+    footer {
+      background: rgba(0,0,0,0.6);
+      text-align: center;
+      padding: 15px;
+      margin-top: 40px;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <h1>🏦 Jind Bank Management</h1>
+    <nav>
+      <a href="main.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html">Login</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h2>Welcome to Bank Management System</h2>
+    <p>Secure • Reliable • Fast Banking Services</p>
+  </section>
+
+  <!-- Feature Cards -->
+  <section class="features">
+    <div class="card">
+      <h3>Login</h3>
+      <p>Access your account securely with your credentials.</p>
+      <a href="login.html">Login</a>
+    </div>
+    <div class="card">
+      <h3>Register</h3>
+      <p>Create a new account and start your banking journey.</p>
+      <a href="register.html">Register</a>
+    </div>
+    <div class="card">
+      <h3>About Us</h3>
+      <p>Learn more about our bank and services we offer.</p>
+      <a href="about.html">About</a>
+    </div>
+    <div class="card">
+      <h3>Contact</h3>
+      <p>Need help? Get in touch with our support team.</p>
+      <a href="contact.html">Contact</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 Jind Bank Management System | All Rights Reserved
+  </footer>
+
+</body>
+</html>
