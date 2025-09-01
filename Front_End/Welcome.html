@@ -3,79 +3,417 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome | Bank Management System</title>
+  <title>Welcome | APEX Bank</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
+   
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --gold: #e7d38e;
+      --gold-light: #F1E5AC;
+      --gold-dark: #100d08;
+      --light-bg: #f8fafc;
+      --light-panel: #ffffff;
+      --text: #374151;
+      --text-light: #6b7280;
+      --border: #e5e7eb;
+    }
+
     body {
       margin: 0;
       padding: 0;
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: linear-gradient(135deg, #2c3e50, #3498db);
-      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+      font-family: 'Montserrat', sans-serif;
       overflow: hidden;
+      position: relative;
+      color: var(--text);
     }
 
-    .welcome-box {
+    /* Light background pattern */
+    .light-pattern {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(circle at 5% 10%, rgba(212, 175, 55, 0.03) 0px, transparent 50px),
+        radial-gradient(circle at 95% 10%, rgba(212, 175, 55, 0.03) 0px, transparent 50px),
+        radial-gradient(circle at 50% 90%, rgba(212, 175, 55, 0.03) 0px, transparent 50px);
+      z-index: 1;
+    }
+
+    /* Decorative elements */
+    .decorative-corner {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      z-index: 2;
+    }
+
+    .corner-top-left {
+      top: 30px;
+      left: 30px;
+      border-top: 2px solid var(--gold);
+      border-left: 2px solid var(--gold);
+      opacity: 0.5;
+    }
+
+    .corner-top-right {
+      top: 30px;
+      right: 30px;
+      border-top: 2px solid var(--gold);
+      border-right: 2px solid var(--gold);
+      opacity: 0.5;
+    }
+
+    .corner-bottom-left {
+      bottom: 30px;
+      left: 30px;
+      border-bottom: 2px solid var(--gold);
+      border-left: 2px solid var(--gold);
+      opacity: 0.5;
+    }
+
+    .corner-bottom-right {
+      bottom: 30px;
+      right: 30px;
+      border-bottom: 2px solid var(--gold);
+      border-right: 2px solid var(--gold);
+      opacity: 0.5;
+    }
+
+    .accent-dots {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background-color: var(--gold);
+      border-radius: 50%;
+      opacity: 0.7;
+    }
+
+    .dot-1 { top: 35px; left: 35px; }
+    .dot-2 { top: 35px; right: 35px; }
+    .dot-3 { bottom: 35px; left: 35px; }
+    .dot-4 { bottom: 35px; right: 35px; }
+
+    .welcome-container {
+      position: relative;
+      z-index: 3;
+      width: 100%;
+      max-width: 600px;
+      padding: 50px 40px;
+      background: var(--light-panel);
+      backdrop-filter: blur(12px);
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 5px 10px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border);
+      overflow: hidden;
       text-align: center;
-      color: white;
-      animation: fadeIn 2s ease-in-out;
+    }
+
+    .welcome-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+    }
+
+    .welcome-container::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+    }
+
+    .bank-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      letter-spacing: 3px;
+      margin-bottom: 25px;
+      color: var(--gold-dark);
+      font-weight: 700;
     }
 
     h1 {
-      font-size: 3rem;
-      margin-bottom: 20px;
-      letter-spacing: 2px;
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      letter-spacing: 1px;
+      color: var(--text);
+      font-weight: 600;
     }
 
-    .namaste {
-      font-size: 4rem;
-      animation: wave 1.5s infinite alternate;
+    .welcome-text {
+      font-size: 1.4rem;
+      animation: gentlePulse 3s infinite ease-in-out;
       display: inline-block;
+      color: var(--gold-dark);
+      margin-bottom: 10px;
     }
 
     p {
       margin: 20px 0;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       opacity: 0.9;
+      line-height: 1.6;
+      font-weight: 300;
+      color: var(--text);
+    }
+
+    .tagline {
+      color: var(--gold-dark);
+      margin-bottom: 30px;
+      font-size: 1.2rem;
+      letter-spacing: 1px;
+      font-weight: 500;
+    }
+
+    .features {
+      display: flex;
+      justify-content: space-around;
+      margin: 40px 0;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .feature {
+      text-align: center;
+      padding: 25px 15px;
+      flex: 1;
+      min-width: 150px;
+      transition: all 0.3s;
+      position: relative;
+      background: rgba(248, 250, 252, 0.7);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .feature::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 30px;
+      height: 2px;
+      background: var(--gold);
+      transition: width 0.3s;
+    }
+
+    .feature:hover::before {
+      width: 60px;
+    }
+
+    .feature:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(212, 175, 55, 0.1);
+      border-color: var(--gold);
+    }
+
+    .feature i {
+      font-size: 2.2rem;
+      color: var(--gold-dark);
+      margin-bottom: 15px;
+    }
+
+    .feature span {
+      font-size: 0.9rem;
+      display: block;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+      color: var(--text);
     }
 
     .btn {
       display: inline-block;
-      padding: 12px 25px;
+      padding: 16px 40px;
       border: none;
-      border-radius: 8px;
-      background: #27ae60;
+      border-radius: 6px;
+      background: var(--gold);
       color: white;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
+      font-weight: 500;
       cursor: pointer;
-      transition: 0.3s;
+      transition: all 0.3s;
       text-decoration: none;
+      position: relative;
+      overflow: hidden;
+      letter-spacing: 1px;
+      margin-top: 20px;
+      box-shadow: 0 4px 6px rgba(212, 175, 55, 0.3);
     }
 
     .btn:hover {
-      background: #2ecc71;
-      transform: scale(1.05);
+      background: var(--gold-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 7px 14px rgba(212, 175, 55, 0.4);
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transition: 0.5s;
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    .security-note {
+      margin-top: 40px;
+      font-size: 0.9rem;
+      opacity: 0.8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-light);
+      letter-spacing: 0.5px;
+    }
+
+    .security-note i {
+      margin-right: 10px;
+      color: var(--gold);
     }
 
     /* Animations */
-    @keyframes wave {
-      from { transform: rotate(-10deg); }
-      to { transform: rotate(10deg); }
+    @keyframes gentlePulse {
+      0% { transform: scale(1); opacity: 0.9; }
+      50% { transform: scale(1.03); opacity: 1; }
+      100% { transform: scale(1); opacity: 0.9; }
     }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(-20px); }
       to { opacity: 1; transform: translateY(0); }
     }
-  </style>
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .welcome-container {
+        width: 90%;
+        padding: 40px 30px;
+      }
+      
+      .bank-name {
+        font-size: 2.2rem;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      .welcome-text {
+        font-size: 1.2rem;
+      }
+      
+      .features {
+        flex-direction: column;
+        gap: 25px;
+      }
+      
+      .btn {
+        padding: 14px 35px;
+        font-size: 1rem;
+      }
+
+      .decorative-corner {
+        width: 80px;
+        height: 80px;
+      }
+    }
+</style>
+  
 </head>
 <body>
-  <div class="welcome-box">
-    <h1>🙏 <span class="namaste">Namaste</span> 🙏</h1>
-    <p>Welcome to <strong>Bank Management System</strong></p>
-    <a href="main.html" class="btn">Enter Site</a>
+  <!-- Light background pattern -->
+  <div class="light-pattern"></div>
+  
+  <!-- Decorative corners -->
+  <div class="decorative-corner corner-top-left"></div>
+  <div class="decorative-corner corner-top-right"></div>
+  <div class="decorative-corner corner-bottom-left"></div>
+  <div class="decorative-corner corner-bottom-right"></div>
+  
+  <!-- Accent dots -->
+  <div class="accent-dots dot-1"></div>
+  <div class="accent-dots dot-2"></div>
+  <div class="accent-dots dot-3"></div>
+  <div class="accent-dots dot-4"></div>
+
+  <div class="welcome-container">
+    <div class="bank-name">APEX BANK</div>
+
+    <h1><span class="welcome-text">WELCOME TO MODERN BANKING</span></h1>
+    <p class="tagline">Excellence in Banking Since 2025</p>
+    
+   
+    
+    
+    
+    <a href="main.html" class="btn">
+      <i class="fas fa-arrow-right"></i> ENTER ONLINE BANKING
+    </a>
+    
+    <div class="security-note">
+      <i class="fas fa-shield-alt"></i> Highest Level of Encryption & Privacy Protection
+    </div>
   </div>
+
+  <script>
+    // Add a subtle typing effect to the welcome text
+    document.addEventListener('DOMContentLoaded', function() {
+      const welcomeText = " APEX Bank";
+      const welcomeElement = document.querySelector('.welcome-container p');
+      
+      // Reset text
+      welcomeElement.innerHTML = 'Welcome to <strong></strong>';
+      const strongElement = welcomeElement.querySelector('strong');
+      
+      let i = 0;
+      function typeWriter() {
+        if (i < welcomeText.length) {
+          strongElement.innerHTML += welcomeText.charAt(i);
+          i++;
+          setTimeout(typeWriter, 100);
+        }
+      }
+      
+      // Start the typing effect after a brief delay
+      setTimeout(typeWriter, 1000);
+      
+      // Add subtle animation to features on load
+      const features = document.querySelectorAll('.feature');
+      features.forEach((feature, index) => {
+        feature.style.opacity = 0;
+        feature.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+          feature.style.opacity = 1;
+          feature.style.transform = 'translateY(0)';
+        }, 1200 + (index * 200));
+      });
+    });
+  </script>
 </body>
 </html>
