@@ -3,36 +3,349 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login | Bank Management</title>
-  <link rel="stylesheet" href="navbaar.css">
+  <title>APEX Bank - Login</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --gold: #e7d38e;
+      --gold-light: #F1E5AC;
+      --gold-dark: #100d08;
+      --light-bg: #f8fafc;
+      --light-panel: #ffffff;
+      --text: #374151;
+      --text-light: #6b7280;
+      --border: #e5e7eb;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+      font-family: 'Montserrat', sans-serif;
+      overflow-x: hidden;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-container {
+      width: 100%;
+      max-width: 420px;
+      padding: 20px;
+    }
+
+    .login-card {
+      background: var(--light-panel);
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      border: 1px solid var(--border);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    }
+
+    .bank-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      color: var(--gold-dark);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    .bank-logo i {
+      margin-right: 12px;
+      color: var(--gold);
+    }
+
+    .welcome-text {
+      margin-bottom: 30px;
+    }
+
+    .welcome-text h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--gold-dark);
+      margin-bottom: 10px;
+    }
+
+    .welcome-text p {
+      color: var(--text-light);
+      font-size: 1rem;
+    }
+
+    .login-form {
+      text-align: left;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .input-with-icon {
+      position: relative;
+    }
+
+    .input-with-icon i {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gold);
+    }
+
+    .input-with-icon input {
+      width: 100%;
+      padding: 14px 15px 14px 45px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s;
+    }
+
+    .input-with-icon input:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(231, 211, 142, 0.2);
+    }
+
+    .remember-forgot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+      font-size: 0.9rem;
+    }
+
+    .remember-me {
+      display: flex;
+      align-items: center;
+    }
+
+    .remember-me input {
+      margin-right: 8px;
+      accent-color: var(--gold);
+    }
+
+    .forgot-password {
+      color: var(--gold);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .forgot-password:hover {
+      color: var(--gold-dark);
+      text-decoration: underline;
+    }
+
+    .login-button {
+      width: 100%;
+      padding: 14px;
+      background: var(--gold);
+      color: var(--gold-dark);
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-bottom: 20px;
+    }
+
+    .login-button:hover {
+      background: #d4bc6a;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(231, 211, 142, 0.3);
+    }
+
+    .login-button:active {
+      transform: translateY(0);
+    }
+
+    .signup-link {
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+    .signup-link a {
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .signup-link a:hover {
+      color: var(--gold-dark);
+      text-decoration: underline;
+    }
+
+    .security-notice {
+      margin-top: 30px;
+      padding: 15px;
+      background: #fef7e0;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+    }
+
+    .security-notice i {
+      color: var(--gold);
+      margin-right: 10px;
+      font-size: 1.2rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 480px) {
+      .login-container {
+        padding: 15px;
+      }
+      
+      .login-card {
+        padding: 30px 25px;
+      }
+      
+      .bank-logo {
+        font-size: 1.8rem;
+      }
+      
+      .welcome-text h1 {
+        font-size: 1.5rem;
+      }
+      
+      .remember-forgot {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>🏦 Bank Management</h1>
-    <nav>
-      <a href="home.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-      <a href="login.html">Login</a>
-      <a href="register.html">Register</a>
-    </nav>
-  </header>
-
-  <section class="form-box">
-    <h2>Login</h2>
-    <form>
-      <label>Email</label>
-      <input type="email" placeholder="Enter your email" required>
+  <div class="login-container">
+    <div class="login-card">
+      <div class="bank-logo">
+        <i class="fas fa-landmark"></i>
+        APEX BANK
+      </div>
       
-      <label>Password</label>
-      <input type="password" placeholder="Enter your password" required>
+      <div class="welcome-text">
+        <h1>Welcome Back</h1>
+        <p>Sign in to access your accounts</p>
+      </div>
       
-      <button type="submit">Login</button>
-    </form>
-  </section>
+      <form class="login-form" id="loginForm">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <div class="input-with-icon">
+            <i class="fas fa-user"></i>
+            <input type="text" id="username" placeholder="Enter your username" required>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="input-with-icon">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="password" placeholder="Enter your password" required>
+          </div>
+        </div>
+        
+        <div class="remember-forgot">
+          <div class="remember-me">
+            <input type="checkbox" id="remember">
+            <label for="remember">Remember me</label>
+          </div>
+          <a href="#" class="forgot-password">Forgot password?</a>
+        </div>
+        
+        <button type="submit" class="login-button">Sign In</button>
+        
+        <div class="signup-link">
+          Don't have an account? <a href="#">Contact us</a> to get started.
+        </div>
+      </form>
+      
+      <div class="security-notice">
+        <i class="fas fa-shield-alt"></i>
+        <div>We use advanced encryption to keep your information secure.</div>
+      </div>
+    </div>
+  </div>
 
-  <footer>
-    &copy; 2025 Bank Management System | All Rights Reserved
-  </footer>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const loginForm = document.getElementById('loginForm');
+      
+      loginForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const rememberMe = document.getElementById('remember').checked;
+        
+        // Simple validation
+        if (!username || !password) {
+          alert('Please enter both username and password');
+          return;
+        }
+        
+        // Simulate login process
+        simulateLogin(username, password, rememberMe);
+      });
+      
+      function simulateLogin(username, password, rememberMe) {
+        // Show loading state
+        const loginButton = document.querySelector('.login-button');
+        const originalText = loginButton.textContent;
+        loginButton.textContent = 'Signing in...';
+        loginButton.disabled = true;
+        
+        // Simulate API call
+        setTimeout(() => {
+          // For demo purposes, accept any non-empty credentials
+          if (username && password) {
+            alert('Login successful! Redirecting to dashboard...');
+            // Redirect to dashboard (in a real application)
+            window.location.href = 'dashboard.html';
+          } else {
+            alert('Invalid credentials. Please try again.');
+            loginButton.textContent = originalText;
+            loginButton.disabled = false;
+          }
+        }, 1500);
+      }
+    });
+  </script>
 </body>
 </html>
