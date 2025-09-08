@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>APEX Bank - Profile</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --gold: #e7d38e;
+      --gold-light: #F1E5AC;
+      --gold-dark: #100d08;
+      --light-bg: #f8fafc;
+      --light-panel: #ffffff;
+      --text: #374151;
+      --text-light: #6b7280;
+      --border: #e5e7eb;
+      --success: #10b981;
+      --danger: #ef4444;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+      font-family: 'Montserrat', sans-serif;
+      overflow-x: hidden;
+      color: var(--text);
+    }
+
+    /* Layout */
+    .dashboard-container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 260px;
+      background: var(--light-panel);
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+      padding: 25px 0;
+      display: flex;
+      flex-direction: column;
+      z-index: 10;
+    }
+
+    .logo-container {
+      padding: 0 25px 25px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 25px;
+    }
+
+    .bank-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--gold-dark);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+    }
+
+    .bank-logo i {
+      margin-right: 10px;
+      color: var(--gold);
+    }
+
+    .nav-menu {
+      flex: 1;
+    }
+
+    .nav-item {
+      padding: 15px 25px;
+      display: flex;
+      align-items: center;
+      color: var(--text);
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    .nav-item:hover, .nav-item.active {
+      background-color: #fef7e0;
+      color: var(--gold-dark);
+      border-right: 3px solid var(--gold);
+    }
+
+    .nav-item i {
+      margin-right: 15px;
+      width: 20px;
+      text-align: center;
+      color: var(--gold);
+    }
+
+    .user-section {
+      padding: 20px 25px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+    }
+
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      margin-right: 15px;
+    }
+
+    .user-info {
+      flex: 1;
+    }
+
+    .user-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .user-role {
+      font-size: 0.8rem;
+      color: var(--text-light);
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      padding: 25px;
+      overflow-y: auto;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .page-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--gold-dark);
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 15px;
+    }
+
+    .header-action-btn {
+      padding: 10px 15px;
+      background: var(--light-panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .header-action-btn:hover {
+      border-color: var(--gold);
+      background: #fef7e0;
+    }
+
+    .header-action-btn i {
+      margin-right: 8px;
+      color: var(--gold);
+    }
+
+    /* Profile Page Styles */
+    .profile-page {
+      display: none;
+    }
+    
+    .profile-page.active {
+      display: block;
+    }
+    
+    .profile-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .profile-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background-color: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 1.8rem;
+      margin-right: 20px;
+    }
+    
+    .profile-info h2 {
+      font-family: 'Playfair Display', serif;
+      color: var(--gold-dark);
+      margin-bottom: 5px;
+    }
+    
+    .profile-info p {
+      color: var(--text-light);
+    }
+    
+    .profile-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+    }
+    
+    .profile-card {
+      background: var(--light-panel);
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border);
+    }
+    
+    .profile-card h3 {
+      font-family: 'Playfair Display', serif;
+      color: var(--gold-dark);
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: var(--text);
+    }
+    
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s;
+    }
+    
+    .form-group input:focus, .form-group select:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(231, 211, 142, 0.2);
+    }
+    
+    .save-btn {
+      padding: 12px 25px;
+      background: var(--gold);
+      color: var(--gold-dark);
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .save-btn:hover {
+      background: #d4bc6a;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(231, 211, 142, 0.3);
+    }
+    
+    .security-settings {
+      margin-top: 25px;
+    }
+    
+    .security-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .security-item:last-child {
+      border-bottom: none;
+    }
+    
+    .security-info h4 {
+      margin-bottom: 5px;
+    }
+    
+    .security-info p {
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+    
+    .toggle-btn {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 24px;
+    }
+    
+    .toggle-btn input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 24px;
+    }
+    
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+    
+    input:checked + .slider {
+      background-color: var(--gold);
+    }
+    
+    input:checked + .slider:before {
+      transform: translateX(26px);
+    }
+    
+    .notification-settings {
+      margin-top: 25px;
+    }
+    
+    .notification-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .notification-item:last-child {
+      border-bottom: none;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .profile-content {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .dashboard-container {
+        flex-direction: column;
+      }
+      
+      .sidebar {
+        width: 100%;
+        padding: 15px;
+      }
+      
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+      }
+      
+      .header-actions {
+        width: 100%;
+        justify-content: space-between;
+      }
+      
+      .profile-header {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .profile-avatar {
+        margin-right: 0;
+        margin-bottom: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo-container">
+        <div class="bank-logo">
+          <i class="fas fa-landmark"></i>
+          APEX BANK
+        </div>
+      </div>
+      
+      <nav class="nav-menu">
+        <a href="#" class="nav-item" data-page="dashboard">
+          <i class="fas fa-home"></i>
+          Dashboard
+        </a>
+        <a href="#" class="nav-item" data-page="accounts">
+          <i class="fas fa-wallet"></i>
+          Accounts
+        </a>
+        <a href="#" class="nav-item" data-page="transactions">
+          <i class="fas fa-exchange-alt"></i>
+          Transactions
+        </a>
+        <a href="#" class="nav-item" data-page="transfers">
+          <i class="fas fa-money-check-alt"></i>
+          Transfers
+        </a>
+        <a href="#" class="nav-item" data-page="investments">
+          <i class="fas fa-chart-line"></i>
+          Investments
+        </a>
+        <a href="#" class="nav-item" data-page="cards">
+          <i class="fas fa-credit-card"></i>
+          Cards
+        </a>
+        <a href="#" class="nav-item active" data-page="profile">
+          <i class="fas fa-user"></i>
+          Profile
+        </a>
+        <a href="#" class="nav-item" data-page="settings">
+          <i class="fas fa-cog"></i>
+          Settings
+        </a>
+      </nav>
+      
+      <div class="user-section">
+        <div class="user-avatar">AJ</div>
+        <div class="user-info">
+          <div class="user-name">Alice Johnson</div>
+          <div class="user-role">Premium Account</div>
+        </div>
+      </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Profile Page -->
+      <div class="profile-page active" id="profile-page">
+        <div class="profile-header">
+          <div class="profile-avatar">AJ</div>
+          <div class="profile-info">
+            <h2>Alice Johnson</h2>
+            <p>Premium Banking Member since 2021</p>
+          </div>
+        </div>
+        
+        <div class="profile-content">
+          <div class="profile-card">
+            <h3>Personal Information</h3>
+            <div class="form-group">
+              <label for="fullName">Full Name</label>
+              <input type="text" id="fullName" value="Alice Johnson">
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" value="alice.johnson@example.com">
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" value="(555) 123-4567">
+            </div>
+            <div class="form-group">
+              <label for="address">Address</label>
+              <input type="text" id="address" value="123 Main Street, New York, NY 10001">
+            </div>
+            <button class="save-btn">Save Changes</button>
+            
+            <div class="security-settings">
+              <h3>Security</h3>
+              <div class="security-item">
+                <div class="security-info">
+                  <h4>Two-Factor Authentication</h4>
+                  <p>Add an extra layer of security to your account</p>
+                </div>
+                <label class="toggle-btn">
+                  <input type="checkbox" checked>
+                  <span class="slider"></span>
+                </label>
+              </div>
+              <div class="security-item">
+                <div class="security-info">
+                  <h4>Biometric Login</h4>
+                  <p>Use fingerprint or face recognition to log in</p>
+                </div>
+                <label class="toggle-btn">
+                  <input type="checkbox">
+                  <span class="slider"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="profile-card">
+            <h3>Account Preferences</h3>
+            <div class="form-group">
+              <label for="language">Language</label>
+              <select id="language">
+                <option selected>English</option>
+                <option>Spanish</option>
+                <option>French</option>
+                <option>German</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="currency">Currency</label>
+              <select id="currency">
+                <option selected>US Dollar (USD)</option>
+                <option>Euro (EUR)</option>
+                <option>British Pound (GBP)</option>
+                <option>Japanese Yen (JPY)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="timezone">Timezone</label>
+              <select id="timezone">
+                <option selected>Eastern Time (ET)</option>
+                <option>Central Time (CT)</option>
+                <option>Mountain Time (MT)</option>
+                <option>Pacific Time (PT)</option>
+              </select>
+            </div>
+            <button class="save-btn">Save Preferences</button>
+            
+            <div class="notification-settings">
+              <h3>Notification Preferences</h3>
+              <div class="notification-item">
+                <div class="security-info">
+                  <h4>Email Notifications</h4>
+                  <p>Receive account updates via email</p>
+                </div>
+                <label class="toggle-btn">
+                  <input type="checkbox" checked>
+                  <span class="slider"></span>
+                </label>
+              </div>
+              <div class="notification-item">
+                <div class="security-info">
+                  <h4>SMS Alerts</h4>
+                  <p>Get important alerts via text message</p>
+                </div>
+                <label class="toggle-btn">
+                  <input type="checkbox" checked>
+                  <span class="slider"></span>
+                </label>
+              </div>
+              <div class="notification-item">
+                <div class="security-info">
+                  <h4>Push Notifications</h4>
+                  <p>Receive app notifications on your device</p>
+                </div>
+                <label class="toggle-btn">
+                  <input type="checkbox">
+                  <span class="slider"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Page Navigation
+      const navItems = document.querySelectorAll('.nav-item');
+      const pages = document.querySelectorAll('.page');
+      
+      navItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+          e.preventDefault();
+          const targetPage = this.getAttribute('data-page');
+          
+          // Update active nav item
+          navItems.forEach(i => i.classList.remove('active'));
+          this.classList.add('active');
+          
+          // Show target page, hide others
+          pages.forEach(page => {
+            if (page.id === `${targetPage}-page`) {
+              page.classList.add('active');
+              document.querySelector('.page-title').textContent = 
+                targetPage.charAt(0).toUpperCase() + targetPage.slice(1);
+            } else {
+              page.classList.remove('active');
+            }
+          });
+        });
+      });
+      
+      // Save button functionality
+      const saveButtons = document.querySelectorAll('.save-btn');
+      saveButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          alert('Settings saved successfully!');
+        });
+      });
+    });
+  </script>
+</body>
+</html>
