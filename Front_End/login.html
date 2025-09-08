@@ -3,97 +3,125 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>APEX Bank - Login</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <title>APEX Bank - Secure Login</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --accent-primary: #D4B254;
+      --accent-hover: #C8A447;
+      --text-primary: #1F2937;    /* Dark slate for main text */
+      --text-secondary: #6B7280;  /* Gray for subtitles & secondary text */
+      --border-color: #E5E7EB;    /* Light gray for borders */
+      --bg-primary: #F8F9FA;      /* Very light gray main background */
+      --bg-secondary: #FFFFFF;    /* White for cards */
+      --shadow-soft: 0px 8px 25px rgba(0, 0, 0, 0.08);
+    }
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
-    :root {
-      --gold: #e7d38e;
-      --gold-light: #F1E5AC;
-      --gold-dark: #100d08;
-      --light-bg: #f8fafc;
-      --light-panel: #ffffff;
-      --text: #374151;
-      --text-light: #6b7280;
-      --border: #e5e7eb;
-    }
-
     body {
-      margin: 0;
-      padding: 0;
+      font-family: 'Poppins', sans-serif;
       min-height: 100vh;
-      background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
-      font-family: 'Montserrat', sans-serif;
-      overflow-x: hidden;
-      color: var(--text);
+      color: var(--text-primary);
       display: flex;
       align-items: center;
       justify-content: center;
-    }
-
-    .login-container {
-      width: 100%;
-      max-width: 420px;
-      padding: 20px;
-    }
-
-    .login-card {
-      background: var(--light-panel);
-      border-radius: 16px;
-      padding: 40px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-      border: 1px solid var(--border);
-      text-align: center;
+      background: var(--bg-primary);
+      overflow: hidden; /* Hide overflowing shapes */
       position: relative;
-      overflow: hidden;
     }
 
-    .login-card::before {
-      content: '';
+    /* --- NEW: Abstract Background Shapes --- */
+    .background-shapes {
       position: absolute;
       top: 0;
       left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .shape {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(212, 178, 84, 0.08);
+        filter: blur(120px);
+        animation: move 35s infinite alternate ease-in-out;
+    }
+
+    .shape1 {
+        width: 450px;
+        height: 450px;
+        top: -120px;
+        left: -180px;
+    }
+
+    .shape2 {
+        width: 550px;
+        height: 550px;
+        bottom: -220px;
+        right: -250px;
+        animation-duration: 45s;
+    }
+
+    @keyframes move {
+        from {
+            transform: translate(0, 0) rotate(0deg);
+        }
+        to {
+            transform: translate(40px, -60px) rotate(70deg);
+        }
+    }
+
+
+    .login-container {
+      width: 100%;
+      max-width: 460px; /* Increased from 420px */
+      padding: 20px;
+      z-index: 1; /* Ensure login is above shapes */
+    }
+
+    .login-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 50px; /* Increased from 40px */
+      box-shadow: var(--shadow-soft);
+      text-align: center;
+      position: relative;
     }
 
     .bank-logo {
-      font-family: 'Playfair Display', serif;
       font-size: 2.2rem;
-      color: var(--gold-dark);
+      color: var(--text-primary);
       font-weight: 700;
       display: flex;
       align-items: center;
       justify-content: center;
       margin-bottom: 30px;
     }
-
+    
     .bank-logo i {
       margin-right: 12px;
-      color: var(--gold);
-    }
-
-    .welcome-text {
-      margin-bottom: 30px;
+      color: var(--accent-primary);
     }
 
     .welcome-text h1 {
-      font-family: 'Playfair Display', serif;
       font-size: 1.8rem;
-      color: var(--gold-dark);
       margin-bottom: 10px;
     }
 
     .welcome-text p {
-      color: var(--text-light);
+      color: var(--text-secondary);
       font-size: 1rem;
+      margin-bottom: 30px;
     }
 
     .login-form {
@@ -108,7 +136,8 @@
       display: block;
       margin-bottom: 8px;
       font-weight: 500;
-      color: var(--text);
+      color: var(--text-secondary);
+      font-size: 0.9rem;
     }
 
     .input-with-icon {
@@ -120,22 +149,29 @@
       left: 15px;
       top: 50%;
       transform: translateY(-50%);
-      color: var(--gold);
+      color: var(--accent-primary);
     }
 
     .input-with-icon input {
       width: 100%;
       padding: 14px 15px 14px 45px;
-      border: 1px solid var(--border);
+      border: 1px solid var(--border-color);
       border-radius: 8px;
       font-size: 1rem;
       transition: all 0.3s;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+    }
+
+    .input-with-icon input::placeholder {
+      color: #9CA3AF;
     }
 
     .input-with-icon input:focus {
       outline: none;
-      border-color: var(--gold);
-      box-shadow: 0 0 0 3px rgba(231, 211, 142, 0.2);
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 0 3px rgba(212, 178, 84, 0.2);
+      background: var(--bg-secondary);
     }
 
     .remember-forgot {
@@ -149,29 +185,35 @@
     .remember-me {
       display: flex;
       align-items: center;
+      color: var(--text-secondary);
     }
 
     .remember-me input {
       margin-right: 8px;
-      accent-color: var(--gold);
+      accent-color: var(--accent-primary);
+    }
+    
+    .remember-me label {
+        color: var(--text-primary);
     }
 
+
     .forgot-password {
-      color: var(--gold);
+      color: var(--accent-primary);
       text-decoration: none;
       transition: color 0.3s;
     }
 
     .forgot-password:hover {
-      color: var(--gold-dark);
+      color: var(--text-primary);
       text-decoration: underline;
     }
 
     .login-button {
       width: 100%;
       padding: 14px;
-      background: var(--gold);
-      color: var(--gold-dark);
+      background: var(--accent-primary);
+      color: #111827;
       border: none;
       border-radius: 8px;
       font-size: 1rem;
@@ -182,76 +224,41 @@
     }
 
     .login-button:hover {
-      background: #d4bc6a;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(231, 211, 142, 0.3);
+      background: var(--accent-hover);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(212, 178, 84, 0.25);
     }
-
-    .login-button:active {
-      transform: translateY(0);
-    }
-
+    
     .signup-link {
-      color: var(--text-light);
+      color: var(--text-secondary);
       font-size: 0.9rem;
     }
 
     .signup-link a {
-      color: var(--gold);
+      color: var(--accent-primary);
       text-decoration: none;
       font-weight: 500;
       transition: color 0.3s;
     }
 
     .signup-link a:hover {
-      color: var(--gold-dark);
+      color: var(--text-primary);
       text-decoration: underline;
     }
 
-    .security-notice {
-      margin-top: 30px;
-      padding: 15px;
-      background: #fef7e0;
-      border-radius: 8px;
-      font-size: 0.8rem;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-    }
-
-    .security-notice i {
-      color: var(--gold);
-      margin-right: 10px;
-      font-size: 1.2rem;
-    }
-
-    /* Responsive Design */
     @media (max-width: 480px) {
-      .login-container {
-        padding: 15px;
-      }
-      
-      .login-card {
-        padding: 30px 25px;
-      }
-      
-      .bank-logo {
-        font-size: 1.8rem;
-      }
-      
-      .welcome-text h1 {
-        font-size: 1.5rem;
-      }
-      
-      .remember-forgot {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-      }
+      .login-card { padding: 40px 25px; } /* Adjust padding for smaller screens */
+      .remember-forgot { flex-direction: column; align-items: flex-start; gap: 10px; }
     }
   </style>
 </head>
 <body>
+
+  <div class="background-shapes">
+    <div class="shape shape1"></div>
+    <div class="shape shape2"></div>
+  </div>
+
   <div class="login-container">
     <div class="login-card">
       <div class="bank-logo">
@@ -260,16 +267,16 @@
       </div>
       
       <div class="welcome-text">
-        <h1>Welcome Back</h1>
-        <p>Sign in to access your accounts</p>
+        <h1>Secure Portal</h1>
+        <p>Access your elevated banking experience.</p>
       </div>
       
       <form class="login-form" id="loginForm">
         <div class="form-group">
           <label for="username">Username</label>
           <div class="input-with-icon">
-            <i class="fas fa-user"></i>
-            <input type="text" id="username" placeholder="Enter your username" required>
+            <i class="fas fa-user-circle"></i>
+            <input type="text" id="username" placeholder="e.g., apex_user_77" required>
           </div>
         </div>
         
@@ -289,17 +296,12 @@
           <a href="#" class="forgot-password">Forgot password?</a>
         </div>
         
-        <button type="submit" class="login-button">Sign In</button>
+        <button type="submit" class="login-button">Sign In Securely</button>
         
         <div class="signup-link">
-          Don't have an account? <a href="#">Contact us</a> to get started.
+          Don't have an account? <a href="open-account.html">Open One Now</a>.
         </div>
       </form>
-      
-      <div class="security-notice">
-        <i class="fas fa-shield-alt"></i>
-        <div>We use advanced encryption to keep your information secure.</div>
-      </div>
     </div>
   </div>
 
@@ -312,40 +314,30 @@
         
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
-        const rememberMe = document.getElementById('remember').checked;
         
-        // Simple validation
         if (!username || !password) {
+          // A non-alert way to show message would be better in a real app
           alert('Please enter both username and password');
           return;
         }
         
-        // Simulate login process
-        simulateLogin(username, password, rememberMe);
-      });
-      
-      function simulateLogin(username, password, rememberMe) {
-        // Show loading state
         const loginButton = document.querySelector('.login-button');
         const originalText = loginButton.textContent;
-        loginButton.textContent = 'Signing in...';
+        loginButton.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Authenticating...`;
         loginButton.disabled = true;
         
-        // Simulate API call
         setTimeout(() => {
-          // For demo purposes, accept any non-empty credentials
-          if (username && password) {
-            alert('Login successful! Redirecting to dashboard...');
-            // Redirect to dashboard (in a real application)
-            window.location.href = 'main.html';
-          } else {
-            alert('Invalid credentials. Please try again.');
-            loginButton.textContent = originalText;
-            loginButton.disabled = false;
-          }
+          alert('Login successful! Redirecting to dashboard...');
+          // In a real application, you would redirect to the dashboard
+          // window.location.href = 'dashboard.html'; 
+          
+          // For now, just reset the button
+          loginButton.innerHTML = originalText;
+          loginButton.disabled = false;
         }, 1500);
-      }
+      });
     });
   </script>
 </body>
 </html>
+
