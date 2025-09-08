@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apex Bank - Transfers</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f7f9fc;
+      color: #333;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 230px;
+      height: 100vh;
+      background: #fff;
+      position: fixed;
+      left: 0;
+      top: 0;
+      border-right: 1px solid #eee;
+      padding: 20px;
+    }
+
+    .logo {
+      font-weight: bold;
+      font-size: 20px;
+      margin-bottom: 40px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar ul li {
+      margin: 18px 0;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .sidebar ul li:hover {
+      background: #f9f9f9;
+    }
+
+    .sidebar ul li.active {
+      background: #f5f2e8;
+      font-weight: 600;
+    }
+
+    /* Main Content */
+    .main {
+      margin-left: 250px;
+      padding: 30px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+
+    .header h1 {
+      font-size: 26px;
+      font-weight: 600;
+    }
+
+    /* Card */
+    .card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 25px;
+      margin-bottom: 25px;
+      box-shadow: 0px 6px 18px rgba(0,0,0,0.05);
+    }
+
+    .card h3 {
+      margin-bottom: 20px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      font-weight: 500;
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      font-size: 14px;
+      outline: none;
+      transition: border 0.3s;
+    }
+
+    .form-group input:focus, .form-group select:focus {
+      border-color: #c6a94c;
+    }
+
+    .btn {
+      background: #c6a94c;
+      color: white;
+      border: none;
+      padding: 12px 22px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background: #b59840;
+    }
+
+    /* Table */
+    .recent-transfers h3 {
+      margin-bottom: 15px;
+    }
+
+    .recent-transfers table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0px 6px 18px rgba(0,0,0,0.05);
+    }
+
+    .recent-transfers th, .recent-transfers td {
+      padding: 15px;
+      text-align: left;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 14px;
+    }
+
+    .recent-transfers th {
+      background: #fafafa;
+      font-weight: 600;
+    }
+
+    .recent-transfers tr:hover {
+      background: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="logo">🏛 APEX BANK</div>
+    <ul>
+      <li>Dashboard</li>
+      <li>Accounts</li>
+      <li>Transactions</li>
+      <li class="active">Transfers</li>
+      <li>Investments</li>
+      <li>Cards</li>
+      <li>Settings</li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main">
+    <div class="header">
+      <h1>Transfers</h1>
+    </div>
+
+    <!-- Transfer Form -->
+    <div class="card">
+      <h3>Make a Transfer</h3>
+      <form>
+        <div class="form-group">
+          <label for="fromAccount">From Account</label>
+          <select id="fromAccount">
+            <option>Checking - ****1234</option>
+            <option>Savings - ****5678</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="toAccount">To Account / Beneficiary</label>
+          <input type="text" id="toAccount" placeholder="Enter account number or name">
+        </div>
+        <div class="form-group">
+          <label for="amount">Amount ($)</label>
+          <input type="number" id="amount" placeholder="Enter amount">
+        </div>
+        <div class="form-group">
+          <label for="note">Note (optional)</label>
+          <input type="text" id="note" placeholder="Add a note">
+        </div>
+        <button type="submit" class="btn">Transfer</button>
+      </form>
+    </div>
+
+    <!-- Recent Transfers -->
+    <div class="recent-transfers">
+      <h3>Recent Transfers</h3>
+      <table>
+        <tr>
+          <th>Date</th>
+          <th>To</th>
+          <th>Amount</th>
+          <th>Status</th>
+        </tr>
+        <tr>
+          <td>05 Sep 2025</td>
+          <td>John Doe</td>
+          <td>$450.00</td>
+          <td>Completed</td>
+        </tr>
+        <tr>
+          <td>02 Sep 2025</td>
+          <td>Alice Smith</td>
+          <td>$1,200.00</td>
+          <td>Completed</td>
+        </tr>
+        <tr>
+          <td>28 Aug 2025</td>
+          <td>Electric Bill</td>
+          <td>$90.50</td>
+          <td>Pending</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+</body>
+</html>
