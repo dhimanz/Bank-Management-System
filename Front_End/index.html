@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Apex Bank offers modern, secure, and simple banking solutions. Open an account today for seamless digital banking, smart savings, and 24/7 support.">
+  <title>Apex Bank - Modern Banking, Elevated</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    /* ------------------- */
+    /* -- Root Variables (APPLIED Dashboard Theme) -- */
+    /* ------------------- */
+    :root {
+      --bg-primary: #F8F9FA;      /* Very light gray main background */
+      --bg-secondary: #FFFFFF;    /* White for cards and sections */
+      --accent-primary: #D4B254;  /* Soft gold for highlights */
+      --accent-hover: #C8A447;    /* Darker gold for hover */
+      --text-primary: #1F2937;    /* Dark slate for main text */
+      --text-secondary: #6B7280;  /* Gray for subtitles & secondary text */
+      --border-color: #E5E7EB;    /* Light gray for borders */
+      --border-radius-md: 12px;
+      --border-radius-lg: 50px;
+      --shadow-soft: 0px 5px 20px rgba(0, 0, 0, 0.07);
+    }
+
+    /* ------------------- */
+    /* --- Base Styles --- */
+    /* ------------------- */
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Poppins", sans-serif; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; }
+    section { padding: 100px 8%; }
+    a { text-decoration: none; }
+    h1, h2, h3, h4, h5 { font-weight: 600; }
+
+    /* ------------------- */
+    /* ----- Navbar ------ */
+    /* ------------------- */
+    .navbar {
+      position: fixed; top: 0; width: 100%; z-index: 1000;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 20px 8%;
+      background: rgba(255, 255, 255, 0.7); /* --bg-secondary with alpha */
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-color);
+      transition: background 0.3s ease;
+    }
+    .navbar h1 { font-family:'Playfair Display',serif;font-size: 1.8rem; color: var(--text-primary); font-weight: 700; }
+    .navbar ul { display: flex; list-style: none; }
+    .navbar ul li { margin: 0 18px; }
+    .navbar ul li a { color: var(--text-primary); font-weight: 500; transition: color 0.3s; }
+    .navbar ul li a:hover, .navbar ul li a.active { color: var(--accent-primary); }
+
+    /* ------------------- */
+    /* -- Hero Section --- */
+    /* ------------------- */
+    .hero {
+      height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      background-image: url("https://images.unsplash.com/photo-1521791055366-0d553872125f?auto=format&fit=crop&w=1600&q=80");
+      background-position: center; background-size: cover;
+      text-align: center;
+    }
+    .hero-content {
+      max-width: 800px;
+      animation: fadeInUp 1s ease-out;
+      /* Added background for text readability on complex image */
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(5px);
+      padding: 40px;
+      border-radius: var(--border-radius-md);
+    }
+    .hero h2 {
+      font-size: 4rem; margin-bottom: 20px; line-height: 1.2;
+      color: var(--text-primary);
+    }
+    .hero h2 span { color: var(--accent-primary); } /* Accent word */
+    .hero p { font-size: 1.25rem; margin-bottom: 30px; color: var(--text-secondary); }
+    .btn {
+      padding: 15px 35px;
+      background: var(--accent-primary);
+      border: 2px solid transparent; /* Added for alignment with outline btn */
+      border-radius: var(--border-radius-lg);
+      color: var(--text-primary);
+      font-weight: bold;
+      transition: all 0.3s ease;
+      box-shadow: 0px 5px 20px rgba(212, 178, 84, 0.3);
+      display: inline-block;
+      width: 100%;
+      max-width: 300px; /* Set a max-width for buttons */
+    }
+    .btn:hover {
+      background: var(--accent-hover);
+      transform: translateY(-5px);
+      box-shadow: 0px 8px 25px rgba(212, 178, 84, 0.4);
+    }
+    
+    /* --- NEW: Hero Button Container --- */
+    .hero-actions {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    /* --- NEW: Outline/Secondary Button Style --- */
+    .btn.btn-outline {
+        background: transparent;
+        border: 2px solid var(--accent-primary);
+        color: var(--text-primary);
+        box-shadow: none;
+    }
+
+    .btn.btn-outline:hover {
+        background: var(--accent-primary);
+        transform: translateY(-3px); /* Different hover effect */
+        box-shadow: 0px 5px 15px rgba(212, 178, 84, 0.2);
+    }
+
+
+    /* ------------------- */
+    /* ---- Features ----- */
+    /* ------------------- */
+    .features { background: var(--bg-primary); text-align: center; }
+    .section-title { font-size: 2.8rem; margin-bottom: 50px; color: var(--text-primary); animation: slideIn 1s ease-out; }
+    .feature-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+    .feature-card {
+      background: var(--bg-secondary);
+      padding: 35px;
+      border-radius: var(--border-radius-md);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-align: center;
+      animation: fadeInUp 1.2s ease-out;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-soft);
+    }
+    .feature-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.1);
+    }
+    .feature-card img { width: 64px; margin-bottom: 20px; }
+    .feature-card h4 { margin-bottom: 10px; color: var(--text-primary); font-size: 1.5rem; }
+    .feature-card p { color: var(--text-secondary); font-size: 0.95rem; }
+
+    /* ------------------- */
+    /* --- Testimonials -- */
+    /* ------------------- */
+    .testimonials { background: var(--bg-primary); text-align: center; }
+    .testimonial-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+    .testimonial-card {
+      background: var(--bg-secondary);
+      padding: 30px;
+      border-radius: var(--border-radius-md);
+      transition: transform 0.3s ease;
+      border-left: 4px solid var(--accent-primary);
+      text-align: left;
+      position: relative;
+      box-shadow: var(--shadow-soft);
+    }
+    .testimonial-card:hover { transform: scale(1.02); }
+    .testimonial-card::before {
+        content: '\f10d';
+        font-family: 'Font Awesome 6 Free';
+        font-weight: 900;
+        position: absolute;
+        top: 20px;
+        right: 25px;
+        font-size: 2.5rem;
+        color: rgba(31, 41, 55, 0.05); /* Dark transparent quote */
+    }
+    .testimonial-card p { font-style: italic; margin-bottom: 20px; font-size: 1.05rem; color: var(--text-primary); }
+    .testimonial-card h5 { color: var(--text-secondary); font-weight: 500; font-size: 1rem; }
+
+    /* ------------------- */
+    /* --- Newsletter ---- */
+    /* ------------------- */
+    .newsletter {
+      padding: 80px 8%; text-align: center;
+      background: var(--bg-secondary);
+      border-radius: var(--border-radius-md);
+      margin: 0 8%;
+    }
+    .newsletter h3 { font-size: 2.2rem; margin-bottom: 15px; color: var(--text-primary); }
+    .newsletter p { margin-bottom: 25px; max-width: 500px; margin-left: auto; margin-right: auto; color: var(--text-secondary); }
+    .newsletter-form {
+      display: flex; justify-content: center; max-width: 500px;
+      margin: 0 auto;
+    }
+    .newsletter-form input {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      padding: 15px 20px; border: 1px solid var(--border-color);
+      border-right: none;
+      border-radius: var(--border-radius-lg) 0 0 var(--border-radius-lg);
+      outline: none; width: 100%; font-size: 1rem;
+    }
+    .newsletter-form input:focus { border-color: var(--accent-primary); }
+    .newsletter-form button {
+      padding: 15px 30px; border: none; background: var(--accent-primary);
+      border-radius: 0 var(--border-radius-lg) var(--border-radius-lg) 0;
+      font-weight: bold; cursor: pointer; color: var(--text-primary);
+      transition: background-color 0.3s;
+    }
+    .newsletter-form button:hover { background: var(--accent-hover); }
+
+    /* ------------------- */
+    /* ------ Footer ----- */
+    /* ------------------- */
+    .footer {
+      background: var(--bg-secondary); color: var(--text-primary); padding: 80px 8% 40px;
+      margin-top: 100px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 30px;
+      border-top: 1px solid var(--border-color);
+    }
+    .footer-col h4 { margin-bottom: 20px; color: var(--text-primary); font-size: 1.2rem; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin: 10px 0; }
+    .footer-col ul li a { color: var(--text-secondary); transition: color 0.3s, padding-left 0.3s; }
+    .footer-col ul li a:hover { color: var(--accent-primary); padding-left: 5px; }
+    .socials a {
+      margin-right: 15px; font-size: 1.5rem; color: var(--text-secondary);
+      display: inline-block;
+      transition: color 0.3s, transform 0.3s;
+    }
+    .socials a:hover { color: var(--accent-primary); transform: translateY(-3px); }
+
+    /* ------------------- */
+    /* --- Animations ---- */
+    /* ------------------- */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-50px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    
+    /* ------------------- */
+    /* -- Media Queries -- */
+    /* ------------------- */
+    @media (max-width: 768px) {
+      .navbar { flex-direction: column; padding: 15px; }
+      .navbar ul { margin-top: 15px; }
+      .navbar ul li { margin: 0 10px; }
+      .hero h2 { font-size: 2.8rem; }
+      .hero p { font-size: 1.1rem; }
+      section, .newsletter { padding: 80px 5%; margin: 0 5%;}
+      .footer { text-align: center; }
+      .socials { margin-top: 10px; }
+    }
+
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <h1>APEX BANK</h1>
+    <ul>
+      <li><a href="#" class="active">Home</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#">Loans</a></li>
+      <li><a href="#">About Us</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-content">
+      <h2>Modern Banking, <span>Elevated</span></h2>
+      <p>Welcome to Apex Bank – where trust meets technology. Manage your money, track expenses, and achieve financial freedom with our secure, user-friendly platform.</p>
+      <div class="hero-actions">
+        <a href="openaccount.html" class="btn">Open an Account Today</a>
+        <a href="#" class="btn btn-outline">Login to Your Account</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="features" class="features">
+      <h3 class="section-title">Why Choose Apex Bank?</h3>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <img src="https://img.icons8.com/fluency/96/000000/online-payment.png" alt="Digital Banking Icon">
+          <h4>Digital Banking</h4>
+          <p>Seamlessly manage accounts, transfer funds, and pay bills online anytime, anywhere.</p>
+        </div>
+        <div class="feature-card">
+          <img src="https://img.icons8.com/fluency/96/000000/security-shield-green.png" alt="Security Icon">
+          <h4>Secure Transactions</h4>
+          <p>Industry-leading encryption ensures your money and personal data are always safe.</p>
+        </div>
+        <div class="feature-card">
+          <img src="https://img.icons8.com/fluency/96/000000/iphone-x.png" alt="Mobile App Icon">
+          <h4>Intuitive Mobile App</h4>
+          <p>Stay in control of your finances with our beautifully designed, easy-to-use mobile app.</p>
+        </div>
+        <div class="feature-card">
+          <img src="https://img.icons8.com/fluency/96/000000/money-box.png" alt="Savings Icon">
+          <h4>Smart Savings</h4>
+          <p>Grow your wealth with high-interest savings accounts and investment plans tailored to you.</p>
+        </div>
+        <div class="feature-card">
+          <img src="https://img.icons8.com/fluency/96/000000/loan.png" alt="Loans Icon">
+          <h4>Flexible Loans</h4>
+          <p>Affordable home, personal, and business loans with transparent terms and quick approval.</p>
+        </div>
+        <div class="feature-card">
+            <img src="https://img.icons8.com/fluency/96/000000/stocks-growth.png" alt="Investment Icon">
+            <h4>Investment Portfolio</h4>
+            <p>Diversify your assets and build a strong financial future with our expert investment guidance.</p>
+        </div>
+        <div class="feature-card">
+          <img src="https://img.icons8.com/fluency/96/000000/globe-asia.png" alt="Global Access Icon">
+          <h4>Global Access</h4>
+          <p>Use your Apex card worldwide and enjoy seamless international transactions with low fees.</p>
+        </div>
+        <div class="feature-card">
+          <img src="https://img.icons8.com/fluency/96/000000/headset.png" alt="Support Icon">
+          <h4>24/7 Support</h4>
+          <p>Our dedicated support team is available round the clock to assist you with any queries.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="testimonials">
+      <h3 class="section-title">What Our Customers Say</h3>
+      <div class="testimonial-grid">
+        <div class="testimonial-card">
+          <p>"Apex Bank made managing my business finances effortless. Their digital services are top-notch and incredibly intuitive!"</p>
+          <h5>- Rajesh K., Small Business Owner</h5>
+        </div>
+        <div class="testimonial-card">
+          <p>"I love their mobile app – it's so easy to use and I feel completely secure. Transferring money takes just a few seconds."</p>
+          <h5>- Priya S., Freelance Designer</h5>
+        </div>
+        <div class="testimonial-card">
+          <p>"The best bank for savings. Their competitive interest rates and fantastic customer support are truly unbeatable."</p>
+          <h5>- Arjun M., University Student</h5>
+        </div>
+      </div>
+    </section>
+
+    <section class="newsletter">
+      <h3>Stay Updated With Apex Bank</h3>
+      <p>Subscribe to our newsletter for the latest market insights, special offers, and new feature announcements.</p>
+      <form class="newsletter-form">
+        <input type="email" placeholder="Enter your email address" required>
+        <button type="submit">Subscribe</button>
+      </form>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-col">
+      <h4>About Apex Bank</h4>
+      <p style="color: var(--text-secondary); font-size: 0.9rem;">Your trusted partner in achieving financial freedom through innovative and secure banking solutions.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#">Accounts</a></li>
+        <li><a href="#">Loans</a></li>
+        <li><a href="#">Investments</a></li>
+        <li><a href="#">Careers</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Support</h4>
+      <ul>
+        <li><a href="#">Help Center</a></li>
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Follow Us</h4>
+      <div class="socials">
+        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
