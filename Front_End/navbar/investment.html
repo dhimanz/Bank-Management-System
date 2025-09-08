@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Investments - APEX Bank</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --gold: #e7d38e;
+      --gold-light: #F1E5AC;
+      --gold-dark: #100d08;
+      --light-bg: #f8fafc;
+      --light-panel: #ffffff;
+      --text: #374151;
+      --text-light: #6b7280;
+      --border: #e5e7eb;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+      font-family: 'Montserrat', sans-serif;
+      overflow-x: hidden;
+      color: var(--text);
+    }
+
+    /* Layout */
+    .dashboard-container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 260px;
+      background: var(--light-panel);
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+      padding: 25px 0;
+      display: flex;
+      flex-direction: column;
+      z-index: 10;
+    }
+
+    .logo-container {
+      padding: 0 25px 25px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 25px;
+    }
+
+    .bank-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--gold-dark);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+    }
+
+    .bank-logo i {
+      margin-right: 10px;
+      color: var(--gold);
+    }
+
+    .nav-menu {
+      flex: 1;
+    }
+
+    .nav-item {
+      padding: 15px 25px;
+      display: flex;
+      align-items: center;
+      color: var(--text);
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    .nav-item:hover, .nav-item.active {
+      background-color: #fef7e0;
+      color: var(--gold-dark);
+      border-right: 3px solid var(--gold);
+    }
+
+    .nav-item i {
+      margin-right: 15px;
+      width: 20px;
+      text-align: center;
+      color: var(--gold);
+    }
+
+    .user-section {
+      padding: 20px 25px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+    }
+
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      margin-right: 15px;
+    }
+
+    .user-info {
+      flex: 1;
+    }
+
+    .user-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .user-role {
+      font-size: 0.8rem;
+      color: var(--text-light);
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      padding: 25px;
+      overflow-y: auto;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .page-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--gold-dark);
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 15px;
+    }
+
+    .header-action-btn {
+      padding: 10px 15px;
+      background: var(--light-panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .header-action-btn:hover {
+      border-color: var(--gold);
+      background: #fef7e0;
+    }
+
+    .header-action-btn i {
+      margin-right: 8px;
+      color: var(--gold);
+    }
+
+    /* Investment Overview */
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .overview-card {
+      background: var(--light-panel);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border);
+    }
+
+    .overview-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .overview-card-title {
+      font-size: 0.9rem;
+      color: var(--text-light);
+    }
+
+    .overview-card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: #fef7e0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold-dark);
+    }
+
+    .overview-card-value {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--gold-dark);
+      margin-bottom: 5px;
+    }
+
+    .overview-card-change {
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .change-positive {
+      color: #10b981;
+    }
+
+    .change-negative {
+      color: #ef4444;
+    }
+
+    /* Investment Cards */
+    .investments-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .investment-card {
+      background: var(--light-panel);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border);
+      transition: all 0.3s;
+    }
+
+    .investment-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      border-color: var(--gold);
+    }
+
+    .investment-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .investment-name {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--gold-dark);
+    }
+
+    .investment-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: #fef7e0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold-dark);
+    }
+
+    .investment-details {
+      margin-bottom: 20px;
+    }
+
+    .investment-detail {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .investment-label {
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+    .investment-value {
+      font-weight: 500;
+    }
+
+    .investment-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      flex: 1;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--gold-dark);
+    }
+
+    .btn-primary:hover {
+      background: #d4bc6a;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(231, 211, 142, 0.3);
+    }
+
+    .btn-secondary {
+      background: #f8f9fa;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      background: #e9ecef;
+    }
+
+    /* Performance Chart */
+    .performance-card {
+      background: var(--light-panel);
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border);
+      margin-bottom: 30px;
+    }
+
+    .performance-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .performance-title {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .performance-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .performance-action-btn {
+      padding: 6px 12px;
+      background: #f8f9fa;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+
+    .performance-action-btn.active {
+      background: var(--gold);
+      color: var(--gold-dark);
+      border-color: var(--gold);
+    }
+
+    .chart-container {
+      height: 250px;
+      position: relative;
+      background: #fef7e0;
+      border-radius: 8px;
+      padding: 15px;
+      display: flex;
+      align-items: flex-end;
+      gap: 10px;
+    }
+
+    .chart-bar {
+      flex: 1;
+      background: var(--gold);
+      border-radius: 4px 4px 0 0;
+      position: relative;
+      transition: height 0.5s ease;
+    }
+
+    .chart-label {
+      position: absolute;
+      bottom: -25px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-light);
+    }
+
+    .chart-value {
+      position: absolute;
+      top: -25px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--gold-dark);
+    }
+
+    /* Investment Opportunities */
+    .opportunities-card {
+      background: var(--light-panel);
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border);
+    }
+
+    .opportunities-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .opportunities-title {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .view-all-btn {
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .view-all-btn i {
+      margin-left: 5px;
+    }
+
+    .opportunities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .opportunity-card {
+      background: #fef7e0;
+      border-radius: 8px;
+      padding: 15px;
+      border: 1px solid var(--gold);
+    }
+
+    .opportunity-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .opportunity-name {
+      font-weight: 600;
+      color: var(--gold-dark);
+    }
+
+    .opportunity-risk {
+      font-size: 0.8rem;
+      padding: 3px 8px;
+      border-radius: 12px;
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .opportunity-details {
+      margin-bottom: 15px;
+    }
+
+    .opportunity-detail {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+      font-size: 0.9rem;
+    }
+
+    .opportunity-label {
+      color: var(--text-light);
+    }
+
+    .opportunity-value {
+      font-weight: 500;
+    }
+
+    .opportunity-actions {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 15px 20px;
+      background: var(--gold);
+      color: var(--gold-dark);
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      display: flex;
+      align-items: center;
+      z-index: 1000;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .toast i {
+      margin-right: 10px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .investments-grid, .opportunities-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .dashboard-container {
+        flex-direction: column;
+      }
+      
+      .sidebar {
+        width: 100%;
+        padding: 15px;
+      }
+      
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+      }
+      
+      .header-actions {
+        width: 100%;
+        justify-content: space-between;
+      }
+      
+      .overview-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .investment-actions {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo-container">
+        <div class="bank-logo">
+          <i class="fas fa-landmark"></i>
+          APEX BANK
+        </div>
+      </div>
+      
+      <nav class="nav-menu">
+        <a href="dashboard.html" class="nav-item">
+          <i class="fas fa-home"></i>
+          Dashboard
+        </a>
+        <a href="account.html" class="nav-item">
+          <i class="fas fa-wallet"></i>
+          Accounts
+        </a>
+        <a href="transactions.html" class="nav-item">
+          <i class="fas fa-exchange-alt"></i>
+          Transactions
+        </a>
+        <a href="transfers.html" class="nav-item">
+          <i class="fas fa-money-check-alt"></i>
+          Transfers
+        </a>
+        <a href="investments.html" class="nav-item active">
+          <i class="fas fa-chart-line"></i>
+          Investments
+        </a>
+        <a href="cards.html" class="nav-item">
+          <i class="fas fa-credit-card"></i>
+          Cards
+        </a>
+        <a href="profile.html" class="nav-item">
+          <i class="fas fa-user"></i>
+          Profile
+        </a>
+        <a href="settings.html" class="nav-item">
+          <i class="fas fa-cog"></i>
+          Settings
+        </a>
+      </nav>
+      
+      <div class="user-section">
+        <div class="user-avatar">C</div>
+        <div class="user-info">
+          <div class="user-name">Customer</div>
+          <div class="user-role">Premium Account</div>
+        </div>
+      </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="header">
+        <h1 class="page-title">Investment Portfolio</h1>
+        <div class="header-actions">
+          <div class="header-action-btn">
+            <i class="fas fa-search"></i>
+            Search
+          </div>
+          <div class="header-action-btn">
+            <i class="fas fa-bell"></i>
+            Notifications
+          </div>
+          <div class="header-action-btn">
+            <i class="fas fa-question-circle"></i>
+            Help
+          </div>
+        </div>
+      </div>
+      
+      <!-- Overview Cards -->
+      <div class="overview-grid">
+        <div class="overview-card">
+          <div class="overview-card-header">
+            <div class="overview-card-title">Portfolio Value</div>
+            <div class="overview-card-icon">
+              <i class="fas fa-chart-pie"></i>
+            </div>
+          </div>
+          <div class="overview-card-value">$18,739.25</div>
+          <div class="overview-card-change change-positive">
+            <i class="fas fa-arrow-up"></i> 3.8% ($684.50)
+          </div>
+        </div>
+        
+        <div class="overview-card">
+          <div class="overview-card-header">
+            <div class="overview-card-title">Total Gain</div>
+            <div class="overview-card-icon">
+              <i class="fas fa-coins"></i>
+            </div>
+          </div>
+          <div class="overview-card-value">$2,450.80</div>
+          <div class="overview-card-change change-positive">
+            <i class="fas fa-arrow-up"></i> 15.2% since inception
+          </div>
+        </div>
+        
+        <div class="overview-card">
+          <div class="overview-card-header">
+            <div class="overview-card-title">Annual Return</div>
+            <div class="overview-card-icon">
+              <i class="fas fa-percentage"></i>
+            </div>
+          </div>
+          <div class="overview-card-value">7.2%</div>
+          <div class="overview-card-change change-positive">
+            <i class="fas fa-arrow-up"></i> 1.2% from last year
+          </div>
+        </div>
+      </div>
+      
+      <!-- Current Investments -->
+      <div class="investments-grid">
+        <div class="investment-card">
+          <div class="investment-card-header">
+            <div class="investment-name">S&P 500 Index Fund</div>
+            <div class="investment-icon">
+              <i class="fas fa-chart-line"></i>
+            </div>
+          </div>
+          <div class="investment-details">
+            <div class="investment-detail">
+              <span class="investment-label">Shares</span>
+              <span class="investment-value">12.45</span>
+            </div>
+            <div class="investment-detail">
+              <span class="investment-label">Current Value</span>
+              <span class="investment-value">$6,842.50</span>
+            </div>
+            <div class="investment-detail">
+              <span class="investment-label">Gain/Loss</span>
+              <span class="investment-value change-positive">+$423.15 (+6.6%)</span>
+            </div>
+          </div>
+          <div class="investment-actions">
+            <button class="btn btn-secondary">Sell</button>
+            <button class="btn btn-primary">Buy More</button>
+          </div>
+        </div>
+        
+        <div class="investment-card">
+          <div class="investment-card-header">
+            <div class="investment-name">Technology ETF</div>
+            <div class="investment-icon">
+              <i class="fas fa-microchip"></i>
+            </div>
+          </div>
+          <div class="investment-details">
+            <div class="investment-detail">
+              <span class="investment-label">Shares</span>
+              <span class="investment-value">8.75</span>
+            </div>
+            <div class="investment-detail">
+              <span class="investment-label">Current Value</span>
+              <span class="investment-value">$4,312.80</span>
+            </div>
+            <div class="investment-detail">
+              <span class="investment-label">Gain/Loss</span>
+              <span class="investment-value change-positive">+$312.40 (+7.8%)</span>
+            </div>
+          </div>
+          <div class="investment-actions">
+            <button class="btn btn-secondary">Sell</button>
+            <button class="btn btn-primary">Buy More</button>
+          </div>
+        </div>
+        
+        <div class="investment-card">
+          <div class="investment-card-header">
+            <div class="investment-name">Government Bonds</div>
+            <div class="investment-icon">
+              <i class="fas fa-university"></i>
+            </div>
+          </div>
+          <div class="investment-details">
+            <div class="investment-detail">
+              <span class="investment-label">Units</span>
+              <span class="investment-value">25</span>
+            </div>
+            <div class="investment-detail">
+              <span class="investment-label">Current Value</span>
+              <span class="investment-value">$7,584.95</span>
+            </div>
+            <div class="investment-detail">
+              <span class="investment-label">Gain/Loss</span>
+              <span class="investment-value change-positive">+$251.30 (+3.4%)</span>
+            </div>
+          </div>
+          <div class="investment-actions">
+            <button class="btn btn-secondary">Sell</button>
+            <button class="btn btn-primary">Buy More</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Performance Chart -->
+      <div class="performance-card">
+        <div class="performance-header">
+          <div class="performance-title">Portfolio Performance</div>
+          <div class="performance-actions">
+            <button class="performance-action-btn active">1M</button>
+            <button class="performance-action-btn">3M</button>
+            <button class="performance-action-btn">1Y</button>
+            <button class="performance-action-btn">All</button>
+          </div>
+        </div>
+        <div class="chart-container" id="performanceChart">
+          <!-- Chart will be generated by JavaScript -->
+        </div>
+      </div>
+      
+      <!-- Investment Opportunities -->
+      <div class="opportunities-card">
+        <div class="opportunities-header">
+          <div class="opportunities-title">Investment Opportunities</div>
+          <a href="#" class="view-all-btn">
+            View All <i class="fas fa-chevron-right"></i>
+          </a>
+        </div>
+        <div class="opportunities-grid">
+          <div class="opportunity-card">
+            <div class="opportunity-header">
+              <div class="opportunity-name">Green Energy Fund</div>
+              <div class="opportunity-risk">Medium Risk</div>
+            </div>
+            <div class="opportunity-details">
+              <div class="opportunity-detail">
+                <span class="opportunity-label">Expected Return</span>
+                <span class="opportunity-value">9.5%</span>
+              </div>
+              <div class="opportunity-detail">
+                <span class="opportunity-label">Minimum Investment</span>
+                <span class="opportunity-value">$1,000</span>
+              </div>
+            </div>
+            <div class="opportunity-actions">
+              <button class="btn btn-primary">Invest Now</button>
+            </div>
+          </div>
+          
+          <div class="opportunity-card">
+            <div class="opportunity-header">
+              <div class="opportunity-name">AI Technology ETF</div>
+              <div class="opportunity-risk">High Risk</div>
+            </div>
+            <div class="opportunity-details">
+              <div class="opportunity-detail">
+                <span class="opportunity-label">Expected Return</span>
+                <span class="opportunity-value">12.8%</span>
+              </div>
+              <div class="opportunity-detail">
+                <span class="opportunity-label">Minimum Investment</span>
+                <span class="opportunity-value">$500</span>
+              </div>
+            </div>
+            <div class="opportunity-actions">
+              <button class="btn btn-primary">Invest Now</button>
+            </div>
+          </div>
+          
+          <div class="opportunity-card">
+            <div class="opportunity-header">
+              <div class="opportunity-name">Real Estate Trust</div>
+              <div class="opportunity-risk">Low Risk</div>
+            </div>
+            <div class="opportunity-details">
+              <div class="opportunity-detail">
+                <span class="opportunity-label">Expected Return</span>
+                <span class="opportunity-value">5.2%</span>
+              </div>
+              <div class="opportunity-detail">
+                <span class="opportunity-label">Minimum Investment</span>
+                <span class="opportunity-value">$2,500</span>
+              </div>
+            </div>
+            <div class="opportunity-actions">
+              <button class="btn btn-primary">Invest Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">
+    <i class="fas fa-check-circle"></i>
+    <span id="toast-message">Investment purchased successfully!</span>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Performance chart data
+      const performanceData = [
+        { month: 'Jan', value: 16500 },
+        { month: 'Feb', value: 16800 },
+        { month: 'Mar', value: 17200 },
+        { month: 'Apr', value: 16900 },
+        { month: 'May', value: 17400 },
+        { month: 'Jun', value: 17800 },
+        { month: 'Jul', value: 18250 },
+        { month: 'Aug', value: 18739 }
+      ];
+      
+      // DOM elements
+      const performanceChart = document.getElementById('performanceChart');
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toast-message');
+      const performanceActions = document.querySelectorAll('.performance-action-btn');
+      const investButtons = document.querySelectorAll('.opportunity-actions .btn');
+      const buyButtons = document.querySelectorAll('.investment-actions .btn-primary');
+      const sellButtons = document.querySelectorAll('.investment-actions .btn-secondary');
+      
+      // Render performance chart
+      function renderPerformanceChart() {
+        performanceChart.innerHTML = '';
+        
+        const maxValue = Math.max(...performanceData.map(item => item.value));
+        const minValue = Math.min(...performanceData.map(item => item.value));
+        const chartHeight = performanceChart.offsetHeight - 40;
+        
+        performanceData.forEach(item => {
+          const barHeight = ((item.value - minValue) / (maxValue - minValue)) * chartHeight;
+          const bar = document.createElement('div');
+          bar.className = 'chart-bar';
+          bar.style.height = `${barHeight}px`;
+          
+          const valueLabel = document.createElement('div');
+          valueLabel.className = 'chart-value';
+          valueLabel.textContent = `$${item.value.toLocaleString()}`;
+          
+          const monthLabel = document.createElement('div');
+          monthLabel.className = 'chart-label';
+          monthLabel.textContent = item.month;
+          
+          bar.appendChild(valueLabel);
+          bar.appendChild(monthLabel);
+          performanceChart.appendChild(bar);
+        });
+      }
+      
+      // Toast notification function
+      function showToast(message) {
+        toastMessage.textContent = message;
+        toast.classList.add('show');
+        
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, 3000);
+      }
+      
+      // Event listeners for performance period buttons
+      performanceActions.forEach(button => {
+        button.addEventListener('click', function() {
+          performanceActions.forEach(btn => btn.classList.remove('active'));
+          this.classList.add('active');
+          showToast(`Showing performance for ${this.textContent} period`);
+        });
+      });
+      
+      // Event listeners for investment buttons
+      investButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const opportunityName = this.closest('.opportunity-card').querySelector('.opportunity-name').textContent;
+          showToast(`Opening investment window for ${opportunityName}`);
+        });
+      });
+      
+      // Event listeners for buy/sell buttons
+      buyButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const investmentName = this.closest('.investment-card').querySelector('.investment-name').textContent;
+          showToast(`Buy more ${investmentName}`);
+        });
+      });
+      
+      sellButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const investmentName = this.closest('.investment-card').querySelector('.investment-name').textContent;
+          showToast(`Sell ${investmentName}`);
+        });
+      });
+      
+      // Navigation active state
+      const navItems = document.querySelectorAll('.nav-item');
+      navItems.forEach(item => {
+        item.addEventListener('click', function() {
+          navItems.forEach(i => i.classList.remove('active'));
+          this.classList.add('active');
+        });
+      });
+      
+      // Initialize the performance chart
+      renderPerformanceChart();
+      
+      // Update chart on window resize
+      window.addEventListener('resize', renderPerformanceChart);
+    });
+  </script>
+</body>
+</html>

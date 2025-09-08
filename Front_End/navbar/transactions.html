@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transactions - APEX Bank</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --gold: #e7d38e;
+      --gold-light: #F1E5AC;
+      --gold-dark: #100d08;
+      --light-bg: #f8fafc;
+      --light-panel: #ffffff;
+      --text: #374151;
+      --text-light: #6b7280;
+      --border: #e5e7eb;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+      font-family: 'Montserrat', sans-serif;
+      overflow-x: hidden;
+      color: var(--text);
+    }
+
+    /* Layout */
+    .dashboard-container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 260px;
+      background: var(--light-panel);
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+      padding: 25px 0;
+      display: flex;
+      flex-direction: column;
+      z-index: 10;
+    }
+
+    .logo-container {
+      padding: 0 25px 25px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 25px;
+    }
+
+    .bank-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--gold-dark);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+    }
+
+    .bank-logo i {
+      margin-right: 10px;
+      color: var(--gold);
+    }
+
+    .nav-menu {
+      flex: 1;
+    }
+
+    .nav-item {
+      padding: 15px 25px;
+      display: flex;
+      align-items: center;
+      color: var(--text);
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    .nav-item:hover, .nav-item.active {
+      background-color: #fef7e0;
+      color: var(--gold-dark);
+      border-right: 3px solid var(--gold);
+    }
+
+    .nav-item i {
+      margin-right: 15px;
+      width: 20px;
+      text-align: center;
+      color: var(--gold);
+    }
+
+    .user-section {
+      padding: 20px 25px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+    }
+
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      margin-right: 15px;
+    }
+
+    .user-info {
+      flex: 1;
+    }
+
+    .user-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .user-role {
+      font-size: 0.8rem;
+      color: var(--text-light);
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      padding: 25px;
+      overflow-y: auto;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .page-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--gold-dark);
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 15px;
+    }
+
+    .header-action-btn {
+      padding: 10px 15px;
+      background: var(--light-panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .header-action-btn:hover {
+      border-color: var(--gold);
+      background: #fef7e0;
+    }
+
+    .header-action-btn i {
+      margin-right: 8px;
+      color: var(--gold);
+    }
+
+    /* Filters and Search */
+    .filters-container {
+      background: var(--light-panel);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border);
+      margin-bottom: 30px;
+    }
+
+    .filters-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .filters-title {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .filters-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .filter-group {
+      margin-bottom: 15px;
+    }
+
+    .filter-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .filter-group input, .filter-group select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+    }
+
+    .filter-group input:focus, .filter-group select:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(231, 211, 142, 0.2);
+    }
+
+    .filter-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--gold-dark);
+    }
+
+    .btn-primary:hover {
+      background: #d4bc6a;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(231, 211, 142, 0.3);
+    }
+
+    .btn-secondary {
+      background: #f8f9fa;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      background: #e9ecef;
+    }
+
+    /* Transactions Table */
+    .transactions-card {
+      background: var(--light-panel);
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border);
+    }
+
+    .transactions-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .transactions-title {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .export-btn {
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      font-weight: 500;
+    }
+
+    .export-btn i {
+      margin-left: 5px;
+    }
+
+    .transactions-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .transactions-table th {
+      text-align: left;
+      padding: 12px 15px;
+      border-bottom: 2px solid var(--border);
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .transactions-table td {
+      padding: 15px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .transactions-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .transactions-table tr:hover {
+      background-color: #fef7e0;
+    }
+
+    .transaction-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: #f8f9fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 12px;
+      color: var(--gold-dark);
+    }
+
+    .transaction-details {
+      display: flex;
+      align-items: center;
+    }
+
+    .transaction-name {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .transaction-category {
+      font-size: 0.8rem;
+      color: var(--text-light);
+    }
+
+    .transaction-amount {
+      font-weight: 600;
+      text-align: right;
+    }
+
+    .amount-negative {
+      color: var(--text);
+    }
+
+    .amount-positive {
+      color: #10b981;
+    }
+
+    .transaction-date {
+      color: var(--text-light);
+    }
+
+    .transaction-status {
+      font-size: 0.8rem;
+      padding: 4px 8px;
+      border-radius: 12px;
+      display: inline-block;
+    }
+
+    .status-completed {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .status-pending {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .status-failed {
+      background: #fee2e2;
+      color: #b91c1c;
+    }
+
+    /* Pagination */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      margin-top: 25px;
+      gap: 8px;
+    }
+
+    .pagination-btn {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--light-panel);
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .pagination-btn:hover, .pagination-btn.active {
+      background: var(--gold);
+      color: var(--gold-dark);
+      border-color: var(--gold);
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 15px 20px;
+      background: var(--gold);
+      color: var(--gold-dark);
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      display: flex;
+      align-items: center;
+      z-index: 1000;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .toast i {
+      margin-right: 10px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .filters-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .dashboard-container {
+        flex-direction: column;
+      }
+      
+      .sidebar {
+        width: 100%;
+        padding: 15px;
+      }
+      
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+      }
+      
+      .header-actions {
+        width: 100%;
+        justify-content: space-between;
+      }
+      
+      .filters-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .transactions-table {
+        display: block;
+        overflow-x: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo-container">
+        <div class="bank-logo">
+          <i class="fas fa-landmark"></i>
+          APEX BANK
+        </div>
+      </div>
+      
+      <nav class="nav-menu">
+        <a href="dashboard.html" class="nav-item">
+          <i class="fas fa-home"></i>
+          Dashboard
+        </a>
+        <a href="account.html" class="nav-item">
+          <i class="fas fa-wallet"></i>
+          Accounts
+        </a>
+        <a href="transactions.html" class="nav-item active">
+          <i class="fas fa-exchange-alt"></i>
+          Transactions
+        </a>
+        <a href="transfers.html" class="nav-item">
+          <i class="fas fa-money-check-alt"></i>
+          Transfers
+        </a>
+        <a href="investments.html" class="nav-item">
+          <i class="fas fa-chart-line"></i>
+          Investments
+        </a>
+        <a href="cards.html" class="nav-item">
+          <i class="fas fa-credit-card"></i>
+          Cards
+        </a>
+        <a href="profile.html" class="nav-item">
+          <i class="fas fa-user"></i>
+          Profile
+        </a>
+        <a href="settings.html" class="nav-item">
+          <i class="fas fa-cog"></i>
+          Settings
+        </a>
+      </nav>
+      
+      <div class="user-section">
+        <div class="user-avatar">C</div>
+        <div class="user-info">
+          <div class="user-name">Customer</div>
+          <div class="user-role">Premium Account</div>
+        </div>
+      </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="header">
+        <h1 class="page-title">Transactions</h1>
+        <div class="header-actions">
+          <div class="header-action-btn">
+            <i class="fas fa-search"></i>
+            Search
+          </div>
+          <div class="header-action-btn">
+            <i class="fas fa-bell"></i>
+            Notifications
+          </div>
+          <div class="header-action-btn">
+            <i class="fas fa-question-circle"></i>
+            Help
+          </div>
+        </div>
+      </div>
+      
+      <!-- Filters and Search -->
+      <div class="filters-container">
+        <div class="filters-header">
+          <div class="filters-title">Filter Transactions</div>
+        </div>
+        
+        <div class="filters-grid">
+          <div class="filter-group">
+            <label for="dateFrom">Date From</label>
+            <input type="date" id="dateFrom">
+          </div>
+          
+          <div class="filter-group">
+            <label for="dateTo">Date To</label>
+            <input type="date" id="dateTo">
+          </div>
+          
+          <div class="filter-group">
+            <label for="transactionType">Transaction Type</label>
+            <select id="transactionType">
+              <option value="">All Types</option>
+              <option value="income">Income</option>
+              <option value="expense">Expense</option>
+              <option value="transfer">Transfer</option>
+            </select>
+          </div>
+          
+          <div class="filter-group">
+            <label for="category">Category</label>
+            <select id="category">
+              <option value="">All Categories</option>
+              <option value="shopping">Shopping</option>
+              <option value="bills">Bills & Utilities</option>
+              <option value="food">Food & Dining</option>
+              <option value="transportation">Transportation</option>
+              <option value="entertainment">Entertainment</option>
+              <option value="salary">Salary</option>
+              <option value="transfer">Transfer</option>
+            </select>
+          </div>
+          
+          <div class="filter-group">
+            <label for="minAmount">Min Amount</label>
+            <input type="number" id="minAmount" placeholder="0.00" step="0.01">
+          </div>
+          
+          <div class="filter-group">
+            <label for="maxAmount">Max Amount</label>
+            <input type="number" id="maxAmount" placeholder="0.00" step="0.01">
+          </div>
+        </div>
+        
+        <div class="filter-actions">
+          <button class="btn btn-secondary" id="resetFilters">Reset</button>
+          <button class="btn btn-primary" id="applyFilters">Apply Filters</button>
+        </div>
+      </div>
+      
+      <!-- Transactions Table -->
+      <div class="transactions-card">
+        <div class="transactions-header">
+          <div class="transactions-title">Transaction History</div>
+          <a href="#" class="export-btn">
+            Export <i class="fas fa-download"></i>
+          </a>
+        </div>
+        
+        <table class="transactions-table">
+          <thead>
+            <tr>
+              <th>Description</th>
+              <th>Date</th>
+              <th>Category</th>
+              <th>Status</th>
+              <th class="text-right">Amount</th>
+            </tr>
+          </thead>
+          <tbody id="transactionsTableBody">
+            <!-- Transactions will be populated by JavaScript -->
+          </tbody>
+        </table>
+        
+        <!-- Pagination -->
+        <div class="pagination">
+          <button class="pagination-btn" id="prevPage"><i class="fas fa-chevron-left"></i></button>
+          <button class="pagination-btn active">1</button>
+          <button class="pagination-btn">2</button>
+          <button class="pagination-btn">3</button>
+          <button class="pagination-btn" id="nextPage"><i class="fas fa-chevron-right"></i></button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">
+    <i class="fas fa-check-circle"></i>
+    <span id="toast-message">Filters applied successfully!</span>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Sample transaction data
+      const transactions = [
+        {
+          id: 1,
+          name: "Grocery Store",
+          date: "2023-08-28",
+          category: "Shopping",
+          type: "expense",
+          amount: -86.42,
+          status: "completed",
+          icon: "fas fa-shopping-bag"
+        },
+        {
+          id: 2,
+          name: "Rent Payment",
+          date: "2023-08-27",
+          category: "Bills & Utilities",
+          type: "expense",
+          amount: -1200.00,
+          status: "completed",
+          icon: "fas fa-home"
+        },
+        {
+          id: 3,
+          name: "Salary Deposit",
+          date: "2023-08-25",
+          category: "Salary",
+          type: "income",
+          amount: 4250.00,
+          status: "completed",
+          icon: "fas fa-building"
+        },
+        {
+          id: 4,
+          name: "Restaurant",
+          date: "2023-08-24",
+          category: "Food & Dining",
+          type: "expense",
+          amount: -64.35,
+          status: "completed",
+          icon: "fas fa-utensils"
+        },
+        {
+          id: 5,
+          name: "Gas Station",
+          date: "2023-08-23",
+          category: "Transportation",
+          type: "expense",
+          amount: -45.20,
+          status: "completed",
+          icon: "fas fa-gas-pump"
+        },
+        {
+          id: 6,
+          name: "Online Subscription",
+          date: "2023-08-22",
+          category: "Entertainment",
+          type: "expense",
+          amount: -14.99,
+          status: "pending",
+          icon: "fas fa-tv"
+        },
+        {
+          id: 7,
+          name: "Stock Dividend",
+          date: "2023-08-20",
+          category: "Investment",
+          type: "income",
+          amount: 32.50,
+          status: "completed",
+          icon: "fas fa-chart-line"
+        },
+        {
+          id: 8,
+          name: "Transfer to Savings",
+          date: "2023-08-19",
+          category: "Transfer",
+          type: "transfer",
+          amount: -500.00,
+          status: "completed",
+          icon: "fas fa-exchange-alt"
+        },
+        {
+          id: 9,
+          name: "Coffee Shop",
+          date: "2023-08-18",
+          category: "Food & Dining",
+          type: "expense",
+          amount: -5.75,
+          status: "completed",
+          icon: "fas fa-coffee"
+        },
+        {
+          id: 10,
+          name: "Phone Bill",
+          date: "2023-08-15",
+          category: "Bills & Utilities",
+          type: "expense",
+          amount: -85.60,
+          status: "completed",
+          icon: "fas fa-mobile-alt"
+        }
+      ];
+
+      // DOM elements
+      const transactionsTableBody = document.getElementById('transactionsTableBody');
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toast-message');
+      const applyFiltersBtn = document.getElementById('applyFilters');
+      const resetFiltersBtn = document.getElementById('resetFilters');
+      
+      // Initialize with today's date for date filters
+      const today = new Date().toISOString().split('T')[0];
+      const firstDayOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 2).toISOString().split('T')[0];
+      
+      document.getElementById('dateFrom').value = firstDayOfMonth;
+      document.getElementById('dateTo').value = today;
+      
+      // Render transactions table
+      function renderTransactions(transactionsToRender) {
+        transactionsTableBody.innerHTML = '';
+        
+        if (transactionsToRender.length === 0) {
+          transactionsTableBody.innerHTML = `
+            <tr>
+              <td colspan="5" style="text-align: center; padding: 30px; color: var(--text-light);">
+                <i class="fas fa-receipt" style="font-size: 2rem; margin-bottom: 15px; display: block;"></i>
+                <p>No transactions found matching your criteria</p>
+              </td>
+            </tr>
+          `;
+          return;
+        }
+        
+        transactionsToRender.forEach(transaction => {
+          const row = document.createElement('tr');
+          
+          // Format date for display
+          const transactionDate = new Date(transaction.date);
+          const formattedDate = transactionDate.toLocaleDateString('en-US', { 
+            year: 'numeric', 
+            month: 'short', 
+            day: 'numeric' 
+          });
+          
+          // Determine amount class and formatted amount
+          const amountClass = transaction.amount >= 0 ? 'amount-positive' : 'amount-negative';
+          const formattedAmount = transaction.amount >= 0 ? 
+            `+$${Math.abs(transaction.amount).toFixed(2)}` : 
+            `-$${Math.abs(transaction.amount).toFixed(2)}`;
+          
+          // Determine status class and text
+          let statusClass = '';
+          let statusText = '';
+          
+          switch(transaction.status) {
+            case 'completed':
+              statusClass = 'status-completed';
+              statusText = 'Completed';
+              break;
+            case 'pending':
+              statusClass = 'status-pending';
+              statusText = 'Pending';
+              break;
+            case 'failed':
+              statusClass = 'status-failed';
+              statusText = 'Failed';
+              break;
+          }
+          
+          row.innerHTML = `
+            <td>
+              <div class="transaction-details">
+                <div class="transaction-icon">
+                  <i class="${transaction.icon}"></i>
+                </div>
+                <div>
+                  <div class="transaction-name">${transaction.name}</div>
+                  <div class="transaction-category">${transaction.category}</div>
+                </div>
+              </div>
+            </td>
+            <td class="transaction-date">${formattedDate}</td>
+            <td>${transaction.category}</td>
+            <td><span class="transaction-status ${statusClass}">${statusText}</span></td>
+            <td class="transaction-amount ${amountClass}">${formattedAmount}</td>
+          `;
+          
+          transactionsTableBody.appendChild(row);
+        });
+      }
+      
+      // Filter transactions based on criteria
+      function filterTransactions() {
+        const dateFrom = new Date(document.getElementById('dateFrom').value);
+        const dateTo = new Date(document.getElementById('dateTo').value);
+        const transactionType = document.getElementById('transactionType').value;
+        const category = document.getElementById('category').value;
+        const minAmount = document.getElementById('minAmount').value ? parseFloat(document.getElementById('minAmount').value) : null;
+        const maxAmount = document.getElementById('maxAmount').value ? parseFloat(document.getElementById('maxAmount').value) : null;
+        
+        const filteredTransactions = transactions.filter(transaction => {
+          const transactionDate = new Date(transaction.date);
+          
+          // Date filter
+          if (dateFrom && transactionDate < dateFrom) return false;
+          if (dateTo && transactionDate > dateTo) return false;
+          
+          // Type filter
+          if (transactionType && transaction.type !== transactionType) return false;
+          
+          // Category filter
+          if (category && transaction.category !== category) return false;
+          
+          // Amount filters
+          if (minAmount !== null && Math.abs(transaction.amount) < minAmount) return false;
+          if (maxAmount !== null && Math.abs(transaction.amount) > maxAmount) return false;
+          
+          return true;
+        });
+        
+        renderTransactions(filteredTransactions);
+        showToast('Filters applied successfully!');
+      }
+      
+      // Reset all filters
+      function resetFilters() {
+        document.getElementById('dateFrom').value = firstDayOfMonth;
+        document.getElementById('dateTo').value = today;
+        document.getElementById('transactionType').value = '';
+        document.getElementById('category').value = '';
+        document.getElementById('minAmount').value = '';
+        document.getElementById('maxAmount').value = '';
+        
+        renderTransactions(transactions);
+        showToast('Filters reset successfully!');
+      }
+      
+      // Toast notification function
+      function showToast(message) {
+        toastMessage.textContent = message;
+        toast.classList.add('show');
+        
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, 3000);
+      }
+      
+      // Event listeners
+      applyFiltersBtn.addEventListener('click', filterTransactions);
+      resetFiltersBtn.addEventListener('click', resetFilters);
+      
+      // Initialize with all transactions
+      renderTransactions(transactions);
+      
+      // Pagination buttons
+      const paginationButtons = document.querySelectorAll('.pagination-btn');
+      paginationButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          if (this.id === 'prevPage' || this.id === 'nextPage') return;
+          
+          paginationButtons.forEach(btn => btn.classList.remove('active'));
+          this.classList.add('active');
+          
+          // In a real app, you would fetch the page data here
+          showToast(`Page ${this.textContent} loaded`);
+        });
+      });
+      
+      // Navigation active state
+      const navItems = document.querySelectorAll('.nav-item');
+      navItems.forEach(item => {
+        item.addEventListener('click', function() {
+          navItems.forEach(i => i.classList.remove('active'));
+          this.classList.add('active');
+        });
+      });
+    });
+  </script>
+</body>
+</html>
