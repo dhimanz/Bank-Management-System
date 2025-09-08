@@ -595,33 +595,57 @@
     </main>
   </div>
 
-  <script>
+<script>
     document.addEventListener('DOMContentLoaded', function() {
       // Page Navigation
       const navItems = document.querySelectorAll('.nav-item');
       const pages = document.querySelectorAll('.page');
       
-      navItems.forEach(item => {
-        item.addEventListener('click', function(e) {
-          e.preventDefault();
-          const targetPage = this.getAttribute('data-page');
-          
-          // Update active nav item
-          navItems.forEach(i => i.classList.remove('active'));
-          this.classList.add('active');
-          
-          // Show target page, hide others
-          pages.forEach(page => {
-            if (page.id === `${targetPage}-page`) {
-              page.classList.add('active');
+      // Function to handle navigation
+      function navigateToPage(targetPage) {
+        // Update active nav item
+        navItems.forEach(item => {
+          if (item.getAttribute('data-page') === targetPage) {
+            item.classList.add('active');
+          } else {
+            item.classList.remove('active');
+          }
+        });
+        
+        // Show target page, hide others
+        pages.forEach(page => {
+          if (page.id === `${targetPage}-page`) {
+            page.classList.add('active');
+            if (document.querySelector('.page-title')) {
               document.querySelector('.page-title').textContent = 
                 targetPage.charAt(0).toUpperCase() + targetPage.slice(1);
-            } else {
-              page.classList.remove('active');
             }
-          });
+          } else {
+            page.classList.remove('active');
+          }
+        });
+      }
+      
+      // Add click event to all navigation items
+      navItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+          // Only prevent default for single-page app navigation
+          if (this.hasAttribute('data-page')) {
+            e.preventDefault();
+            const targetPage = this.getAttribute('data-page');
+            navigateToPage(targetPage);
+            
+            // Update URL hash for deep linking
+            window.location.hash = targetPage;
+          }
         });
       });
+      
+      // Check URL hash on page load
+      if (window.location.hash) {
+        const targetPage = window.location.hash.substring(1); // Remove # symbol
+        navigateToPage(targetPage);
+      }
       
       // Save button functionality
       const saveButtons = document.querySelectorAll('.save-btn');
