@@ -1053,31 +1053,12 @@
         dashboardPage.id = 'dashboard-page';
         dashboardPage.className = 'page';
         dashboardPage.innerHTML = `
-          <h1 class="page-title">Dashboard</h1>
-          <div class="dashboard-content">
-            <p>Welcome to your APEX Bank dashboard. Here you can view your accounts, transactions, and more.</p>
-            <!-- Add more dashboard content here -->
-          </div>
-        `;
+        
         document.querySelector('.main-content').appendChild(dashboardPage);
       }
       
       // Create other pages if they don't exist
-      const pageIds = ['accounts', 'transactions', 'transfers', 'investments', 'cards', 'settings'];
-      pageIds.forEach(pageId => {
-        if (!document.getElementById(`${pageId}-page`)) {
-          const page = document.createElement('div');
-          page.id = `${pageId}-page`;
-          page.className = 'page';
-          page.innerHTML = `
-            <h1 class="page-title">${pageId.charAt(0).toUpperCase() + pageId.slice(1)}</h1>
-            <div class="page-content">
-              <p>This is the ${pageId} page. Content coming soon.</p>
-            </div>
-          `;
-          document.querySelector('.main-content').appendChild(page);
-        }
-      });
+     
     });
   </script>
 </body>
