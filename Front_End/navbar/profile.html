@@ -616,6 +616,7 @@
         pages.forEach(page => {
           if (page.id === `${targetPage}-page`) {
             page.classList.add('active');
+            // Update page title if it exists
             if (document.querySelector('.page-title')) {
               document.querySelector('.page-title').textContent = 
                 targetPage.charAt(0).toUpperCase() + targetPage.slice(1);
@@ -624,20 +625,20 @@
             page.classList.remove('active');
           }
         });
+        
+        // Update URL hash for deep linking
+        window.location.hash = targetPage;
+        
+        // Scroll to top of page
+        window.scrollTo(0, 0);
       }
       
       // Add click event to all navigation items
       navItems.forEach(item => {
         item.addEventListener('click', function(e) {
-          // Only prevent default for single-page app navigation
-          if (this.hasAttribute('data-page')) {
-            e.preventDefault();
-            const targetPage = this.getAttribute('data-page');
-            navigateToPage(targetPage);
-            
-            // Update URL hash for deep linking
-            window.location.hash = targetPage;
-          }
+          e.preventDefault();
+          const targetPage = this.getAttribute('data-page');
+          navigateToPage(targetPage);
         });
       });
       
@@ -647,12 +648,73 @@
         navigateToPage(targetPage);
       }
       
+      // Handle browser back/forward buttons
+      window.addEventListener('hashchange', function() {
+        const targetPage = window.location.hash.substring(1);
+        navigateToPage(targetPage);
+      });
+      
       // Save button functionality
       const saveButtons = document.querySelectorAll('.save-btn');
       saveButtons.forEach(button => {
         button.addEventListener('click', function() {
-          alert('Settings saved successfully!');
+          // Create a temporary notification element
+          const notification = document.createElement('div');
+          notification.textContent = 'Settings saved successfully!';
+          notification.style.position = 'fixed';
+          notification.style.top = '20px';
+          notification.style.right = '20px';
+          notification.style.backgroundColor = 'var(--gold)';
+          notification.style.color = 'var(--gold-dark)';
+          notification.style.padding = '12px 20px';
+          notification.style.borderRadius = '8px';
+          notification.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1)';
+          notification.style.zIndex = '1000';
+          notification.style.fontWeight = '500';
+          
+          document.body.appendChild(notification);
+          
+          // Remove notification after 3 seconds
+          setTimeout(() => {
+            notification.style.opacity = '0';
+            notification.style.transition = 'opacity 0.5s ease-out';
+            setTimeout(() => {
+              document.body.removeChild(notification);
+            }, 500);
+          }, 3000);
         });
+      });
+      
+      // Create dashboard page content (if it doesn't exist)
+      if (!document.getElementById('dashboard-page')) {
+        const dashboardPage = document.createElement('div');
+        dashboardPage.id = 'dashboard-page';
+        dashboardPage.className = 'page';
+        dashboardPage.innerHTML = `
+          <h1 class="page-title">Dashboard</h1>
+          <div class="dashboard-content">
+            <p>Welcome to your APEX Bank dashboard. Here you can view your accounts, transactions, and more.</p>
+            <!-- Add more dashboard content here -->
+          </div>
+        `;
+        document.querySelector('.main-content').appendChild(dashboardPage);
+      }
+      
+      // Create other pages if they don't exist
+      const pageIds = ['accounts', 'transactions', 'transfers', 'investments', 'cards', 'settings'];
+      pageIds.forEach(pageId => {
+        if (!document.getElementById(`${pageId}-page`)) {
+          const page = document.createElement('div');
+          page.id = `${pageId}-page`;
+          page.className = 'page';
+          page.innerHTML = `
+            <h1 class="page-title">${pageId.charAt(0).toUpperCase() + pageId.slice(1)}</h1>
+            <div class="page-content">
+              <p>This is the ${pageId} page. Content coming soon.</p>
+            </div>
+          `;
+          document.querySelector('.main-content').appendChild(page);
+        }
       });
     });
   </script>
