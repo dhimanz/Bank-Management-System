@@ -470,7 +470,7 @@
     <!-- Main Content -->
     <main class="main-content">
       <!-- Profile Page -->
-      <div class="profile-page active" id="profile-page">
+      <div class="profile-page page active" id="profile-page">
         <div class="profile-header">
           <div class="profile-avatar">AJ</div>
           <div class="profile-info">
@@ -594,129 +594,136 @@
       </div>
     </main>
   </div>
-
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Page Navigation
-      const navItems = document.querySelectorAll('.nav-item');
-      const pages = document.querySelectorAll('.page');
-      
-      // Function to handle navigation
-      function navigateToPage(targetPage) {
-        // Update active nav item
-        navItems.forEach(item => {
-          if (item.getAttribute('data-page') === targetPage) {
-            item.classList.add('active');
-          } else {
-            item.classList.remove('active');
-          }
-        });
-        
-        // Show target page, hide others
-        pages.forEach(page => {
-          if (page.id === `${targetPage}-page`) {
-            page.classList.add('active');
-            // Update page title if it exists
-            if (document.querySelector('.page-title')) {
-              document.querySelector('.page-title').textContent = 
-                targetPage.charAt(0).toUpperCase() + targetPage.slice(1);
-            }
-          } else {
-            page.classList.remove('active');
-          }
-        });
-        
-        // Update URL hash for deep linking
-        window.location.hash = targetPage;
-        
-        // Scroll to top of page
-        window.scrollTo(0, 0);
-      }
-      
-      // Add click event to all navigation items
-      navItems.forEach(item => {
-        item.addEventListener('click', function(e) {
-          e.preventDefault();
-          const targetPage = this.getAttribute('data-page');
-          navigateToPage(targetPage);
-        });
-      });
-      
-      // Check URL hash on page load
-      if (window.location.hash) {
-        const targetPage = window.location.hash.substring(1); // Remove # symbol
-        navigateToPage(targetPage);
-      }
-      
-      // Handle browser back/forward buttons
-      window.addEventListener('hashchange', function() {
-        const targetPage = window.location.hash.substring(1);
-        navigateToPage(targetPage);
-      });
-      
-      // Save button functionality
-      const saveButtons = document.querySelectorAll('.save-btn');
-      saveButtons.forEach(button => {
-        button.addEventListener('click', function() {
-          // Create a temporary notification element
-          const notification = document.createElement('div');
-          notification.textContent = 'Settings saved successfully!';
-          notification.style.position = 'fixed';
-          notification.style.top = '20px';
-          notification.style.right = '20px';
-          notification.style.backgroundColor = 'var(--gold)';
-          notification.style.color = 'var(--gold-dark)';
-          notification.style.padding = '12px 20px';
-          notification.style.borderRadius = '8px';
-          notification.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1)';
-          notification.style.zIndex = '1000';
-          notification.style.fontWeight = '500';
-          
-          document.body.appendChild(notification);
-          
-          // Remove notification after 3 seconds
-          setTimeout(() => {
-            notification.style.opacity = '0';
-            notification.style.transition = 'opacity 0.5s ease-out';
-            setTimeout(() => {
-              document.body.removeChild(notification);
-            }, 500);
-          }, 3000);
-        });
-      });
-      
-      // Create dashboard page content (if it doesn't exist)
-      if (!document.getElementById('dashboard-page')) {
-        const dashboardPage = document.createElement('div');
-        dashboardPage.id = 'dashboard-page';
-        dashboardPage.className = 'page';
-        dashboardPage.innerHTML = `
-          <h1 class="page-title">Dashboard</h1>
-          <div class="dashboard-content">
-            <p>Welcome to your APEX Bank dashboard. Here you can view your accounts, transactions, and more.</p>
-            <!-- Add more dashboard content here -->
+  document.addEventListener('DOMContentLoaded', function() {
+    // Page Navigation
+    const navItems = document.querySelectorAll('.nav-item');
+    
+    // NOTE: We removed `const pages = document.querySelectorAll('.page');` from here.
+
+    // --- DYNAMIC PAGE CREATION (moved up for clarity) ---
+    // This part of your code creates the other pages dynamically.
+    // It's good practice to have it run before setting up navigation that depends on it.
+    
+    // Create dashboard page content (if it doesn't exist)
+    if (!document.getElementById('dashboard-page')) {
+      const dashboardPage = document.createElement('div');
+      dashboardPage.id = 'dashboard-page';
+      // Add the 'page' class so it can be found by our navigation function
+      dashboardPage.className = 'page'; 
+      dashboardPage.style.display = 'none'; // Hide by default
+      dashboardPage.innerHTML = `
+        <h1 class="page-title">Dashboard</h1>
+        <div class="dashboard-content">
+          <p>Welcome to your APEX Bank dashboard. Here you can view your accounts, transactions, and more.</p>
+        </div>
+      `;
+      document.querySelector('.main-content').appendChild(dashboardPage);
+    }
+    
+    // Create other pages if they don't exist
+    const pageIds = ['accounts', 'transactions', 'transfers', 'investments', 'cards', 'settings'];
+    pageIds.forEach(pageId => {
+      if (!document.getElementById(`${pageId}-page`)) {
+        const page = document.createElement('div');
+        page.id = `${pageId}-page`;
+        // Add the 'page' class
+        page.className = 'page';
+        page.style.display = 'none'; // Hide by default
+        page.innerHTML = `
+          <h1 class="page-title">${pageId.charAt(0).toUpperCase() + pageId.slice(1)}</h1>
+          <div class="page-content">
+            <p>This is the ${pageId} page. Content coming soon.</p>
           </div>
         `;
-        document.querySelector('.main-content').appendChild(dashboardPage);
+        document.querySelector('.main-content').appendChild(page);
       }
+    });
+
+
+    // --- NAVIGATION LOGIC ---
+
+    // Function to handle navigation
+    function navigateToPage(targetPage) {
+      // **THE FIX**: Select all pages *every time* the function is called.
+      const pages = document.querySelectorAll('.page');
+
+      // Update active nav item
+      navItems.forEach(item => {
+        item.classList.toggle('active', item.getAttribute('data-page') === targetPage);
+      });
       
-      // Create other pages if they don't exist
-      const pageIds = ['accounts', 'transactions', 'transfers', 'investments', 'cards', 'settings'];
-      pageIds.forEach(pageId => {
-        if (!document.getElementById(`${pageId}-page`)) {
-          const page = document.createElement('div');
-          page.id = `${pageId}-page`;
-          page.className = 'page';
-          page.innerHTML = `
-            <h1 class="page-title">${pageId.charAt(0).toUpperCase() + pageId.slice(1)}</h1>
-            <div class="page-content">
-              <p>This is the ${pageId} page. Content coming soon.</p>
-            </div>
-          `;
-          document.querySelector('.main-content').appendChild(page);
+      // Show target page, hide others
+      pages.forEach(page => {
+        // We use .style.display here since the 'active' class was only on the profile page
+        if (page.id === `${targetPage}-page`) {
+          page.style.display = 'block';
+        } else {
+          page.style.display = 'none';
         }
       });
+      
+      // Update URL hash for deep linking
+      window.location.hash = targetPage;
+      
+      // Scroll to top of page
+      window.scrollTo(0, 0);
+    }
+    
+    // Add click event to all navigation items
+    navItems.forEach(item => {
+      item.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetPage = this.getAttribute('data-page');
+        navigateToPage(targetPage);
+      });
     });
-  </script>
+    
+    // Check URL hash on page load to show the correct page
+    let initialPage = 'profile'; // Default to profile page
+    if (window.location.hash) {
+      initialPage = window.location.hash.substring(1); // Remove # symbol
+    }
+    navigateToPage(initialPage);
+    
+    
+    // Handle browser back/forward buttons
+    window.addEventListener('hashchange', function() {
+      const targetPage = window.location.hash.substring(1);
+      if(targetPage) {
+        navigateToPage(targetPage);
+      }
+    });
+    
+    // Save button functionality (no changes needed here)
+    const saveButtons = document.querySelectorAll('.save-btn');
+    saveButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const notification = document.createElement('div');
+        notification.textContent = 'Settings saved successfully!';
+        notification.style.position = 'fixed';
+        notification.style.top = '20px';
+        notification.style.right = '20px';
+        notification.style.backgroundColor = 'var(--gold)';
+        notification.style.color = 'var(--gold-dark)';
+        notification.style.padding = '12px 20px';
+        notification.style.borderRadius = '8px';
+        notification.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1)';
+        notification.style.zIndex = '1000';
+        notification.style.fontWeight = '500';
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+          notification.style.opacity = '0';
+          notification.style.transition = 'opacity 0.5s ease-out';
+          setTimeout(() => {
+            document.body.removeChild(notification);
+          }, 500);
+        }, 3000);
+      });
+    });
+  });
+</script>
 </body>
 </html>
