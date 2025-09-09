@@ -49,7 +49,8 @@
       padding: 25px 0;
       display: flex;
       flex-direction: column;
-      z-index: 10;
+      z-index: 100; /* Increased for mobile overlay */
+      transition: transform 0.3s ease-in-out;
     }
 
     .logo-container {
@@ -137,6 +138,7 @@
       flex: 1;
       padding: 25px;
       overflow-y: auto;
+      width: 100%;
     }
 
     .header {
@@ -144,6 +146,10 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 30px;
+    }
+    
+    .mobile-header-elements {
+        display: none; /* Hidden on desktop */
     }
 
     .page-title {
@@ -176,6 +182,25 @@
     .header-action-btn i {
       margin-right: 8px;
       color: var(--gold);
+    }
+    
+    .menu-toggle {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: var(--text);
+    }
+    
+    .overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.4);
+        z-index: 99;
     }
 
     /* Dashboard Cards */
@@ -614,8 +639,9 @@
 
     /* Responsive Design */
     @media (max-width: 1024px) {
+      /* HIDE CHARTS ON TABLETS AND SMALLER */
       .charts-row {
-        grid-template-columns: 1fr;
+        display: none;
       }
       
       .profile-content {
@@ -629,23 +655,52 @@
       }
       
       .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 100vh;
+        transform: translateX(-100%);
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .overlay.active {
+        display: block;
+      }
+
+      .main-content {
         width: 100%;
-        padding: 15px;
+        padding-top: 80px; /* Space for the mobile header */
+      }
+      
+      .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+        padding: 15px 25px;
+        z-index: 50;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        justify-content: space-between; /* Align hamburger and logo */
+        margin-bottom: 0;
+      }
+
+      .mobile-header-elements {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .page-title, .header-actions {
+        display: none; /* Hide desktop elements */
       }
       
       .stats-grid {
         grid-template-columns: 1fr;
-      }
-      
-      .header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
-      }
-      
-      .header-actions {
-        width: 100%;
-        justify-content: space-between;
       }
       
       .quick-actions {
@@ -672,7 +727,6 @@
 </head>
 <body>
   <div class="dashboard-container">
-    <!-- Sidebar -->
     <aside class="sidebar">
       <div class="logo-container">
         <div class="bank-logo">
@@ -682,54 +736,64 @@
       </div>
       
      <nav class="nav-menu">
-  <a href="dashboard.html" class="nav-item">
-    <i class="fas fa-home"></i>
-    Dashboard
-  </a>
-  <a href="account.html" class="nav-item active">
-    <i class="fas fa-wallet"></i>
-    Accounts
-  </a>
-  <a href="transactions.html" class="nav-item">
-    <i class="fas fa-exchange-alt"></i>
-    Transactions
-  </a>
-  <a href="transfers.html" class="nav-item">
-    <i class="fas fa-money-check-alt"></i>
-    Transfers
-  </a>
-  <a href="investments.html" class="nav-item">
-    <i class="fas fa-chart-line"></i>
-    Investments
-  </a>
-  <a href="cards.html" class="nav-item">
-    <i class="fas fa-credit-card"></i>
-    Cards
-  </a>
-  <a href="profile.html" class="nav-item" data-page="profile">
-          <i class="fas fa-user"></i>
-          Profile
+        <a href="dashboard.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            Dashboard
         </a>
-  <a href="settings.html" class="nav-item">
-    <i class="fas fa-cog"></i>
-    Settings
-  </a>
-</nav>
+        <a href="account.html" class="nav-item active">
+            <i class="fas fa-wallet"></i>
+            Accounts
+        </a>
+        <a href="transactions.html" class="nav-item">
+            <i class="fas fa-exchange-alt"></i>
+            Transactions
+        </a>
+        <a href="transfers.html" class="nav-item">
+            <i class="fas fa-money-check-alt"></i>
+            Transfers
+        </a>
+        <a href="investments.html" class="nav-item">
+            <i class="fas fa-chart-line"></i>
+            Investments
+        </a>
+        <a href="cards.html" class="nav-item">
+            <i class="fas fa-credit-card"></i>
+            Cards
+        </a>
+        <a href="profile.html" class="nav-item" data-page="profile">
+            <i class="fas fa-user"></i>
+            Profile
+        </a>
+        <a href="settings.html" class="nav-item">
+            <i class="fas fa-cog"></i>
+            Settings
+        </a>
+    </nav>
       
       <div class="user-section">
-        <!-- <div class="user-avatar">AJ</div> -->
-        <!-- <div class="user-info">
+        <div class="user-avatar">AJ</div>
+        <div class="user-info">
           <div class="user-name">Alice Johnson</div>
           <div class="user-role">Premium Account</div>
-        </div> -->
+        </div>
       </div>
     </aside>
+
+    <div class="overlay"></div>
     
-    <!-- Main Content -->
     <main class="main-content">
-      <!-- Dashboard Page -->
       <div class="page active" id="dashboard-page">
         <div class="header">
+          <div class="mobile-header-elements">
+              <button class="menu-toggle" id="menu-toggle">
+                  <i class="fas fa-bars"></i>
+              </button>
+              <div class="bank-logo">
+                  <i class="fas fa-landmark"></i>
+                  APEX
+              </div>
+          </div>
+
           <h1 class="page-title">Dashboard</h1>
           <div class="header-actions">
             <div class="header-action-btn">
@@ -747,7 +811,6 @@
           </div>
         </div>
         
-        <!-- Stats Overview -->
         <div class="stats-grid">
           <div class="stat-card">
             <div class="stat-card-header">
@@ -789,7 +852,6 @@
           </div>
         </div>
         
-        <!-- Quick Actions - Moved Above Charts -->
         <div class="quick-actions">
           <div class="action-card">
             <div class="action-icon">
@@ -824,7 +886,6 @@
           </div>
         </div>
         
-        <!-- Charts Section -->
         <div class="charts-row">
           <div class="chart-card">
             <div class="chart-header">
@@ -853,7 +914,6 @@
           </div>
         </div>
         
-        <!-- Recent Transactions -->
         <div class="transactions-card">
           <div class="transactions-header">
             <div class="transactions-title">Recent Transactions</div>
@@ -908,14 +968,13 @@
         </div>
       </div>
       
-      <!-- Profile Page -->
-      <div class="profile-page" id="profile-page">
+      <div class="profile-page page" id="profile-page">
         <div class="profile-header">
           <div class="profile-avatar">AJ</div>
-          <!-- <div class="profile-info">
+          <div class="profile-info">
             <h2>Alice Johnson</h2>
             <p>Premium Banking Member since 2021</p>
-          </div> -->
+          </div>
         </div>
         
         <div class="profile-content">
@@ -1036,87 +1095,106 @@
 
  <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Expenses Chart
-      const expensesCtx = document.getElementById('expensesChart').getContext('2d');
-      const expensesChart = new Chart(expensesCtx, {
-        type: 'line',
-        data: {
-          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
-          datasets: [{
-            label: 'Spending',
-            data: [3200, 2900, 3500, 3800, 3700, 3900, 4300, 4100],
-            borderColor: '#e7d38e',
-            backgroundColor: 'rgba(231, 211, 142, 0.1)',
-            tension: 0.3,
-            fill: true
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              display: false
-            }
-          },
-          scales: {
-            y: {
-              beginAtZero: true,
-              grid: {
-                drawBorder: false
-              }
+        // --- RESPONSIVE NAVIGATION ---
+        const menuToggle = document.getElementById('menu-toggle');
+        const sidebar = document.querySelector('.sidebar');
+        const overlay = document.querySelector('.overlay');
+
+        function closeMenu() {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('active');
+        }
+
+        if (menuToggle) {
+            menuToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+            });
+        }
+        
+        if (overlay) {
+            overlay.addEventListener('click', closeMenu);
+        }
+
+      // --- CHARTS LOGIC ---
+      // Check if the charts container exists before trying to render charts
+      if (document.getElementById('expensesChart')) {
+        const expensesCtx = document.getElementById('expensesChart').getContext('2d');
+        const expensesChart = new Chart(expensesCtx, {
+            type: 'line',
+            data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
+            datasets: [{
+                label: 'Spending',
+                data: [3200, 2900, 3500, 3800, 3700, 3900, 4300, 4100],
+                borderColor: '#e7d38e',
+                backgroundColor: 'rgba(231, 211, 142, 0.1)',
+                tension: 0.3,
+                fill: true
+            }]
             },
-            x: {
-              grid: {
+            options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
                 display: false
-              }
+                }
+            },
+            scales: {
+                y: {
+                beginAtZero: true,
+                grid: {
+                    drawBorder: false
+                }
+                },
+                x: {
+                grid: {
+                    display: false
+                }
+                }
             }
-          }
-        }
-      });
-      
-      // Accounts Chart
-      const accountsCtx = document.getElementById('accountsChart').getContext('2d');
-      const accountsChart = new Chart(accountsCtx, {
-        type: 'doughnut',
-        data: {
-          labels: ['Checking', 'Savings', 'Investment'],
-          datasets: [{
-            data: [8450, 12612, 18739],
-            backgroundColor: [
-              '#e7d38e',
-              '#d4bc6a',
-              '#b8a04c'
-            ],
-            borderWidth: 0
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              position: 'bottom'
             }
-          },
-          cutout: '70%'
-        }
-      });
+        });
+      }
       
-      // Page Navigation
+      if (document.getElementById('accountsChart')) {
+        const accountsCtx = document.getElementById('accountsChart').getContext('2d');
+        const accountsChart = new Chart(accountsCtx, {
+            type: 'doughnut',
+            data: {
+            labels: ['Checking', 'Savings', 'Investment'],
+            datasets: [{
+                data: [8450, 12612, 18739],
+                backgroundColor: [
+                '#e7d38e',
+                '#d4bc6a',
+                '#b8a04c'
+                ],
+                borderWidth: 0
+            }]
+            },
+            options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                position: 'bottom'
+                }
+            },
+            cutout: '70%'
+            }
+        });
+      }
+      
+      // --- PAGE NAVIGATION ---
       const navItems = document.querySelectorAll('.nav-item');
       const pages = document.querySelectorAll('.page');
       
-      // Function to set active navigation item based on current page
       function setActiveNavItem() {
-        // Get current page filename
         const currentPage = window.location.pathname.split('/').pop() || 'dashboard.html';
-        
-        // Remove active class from all items
         navItems.forEach(item => {
           item.classList.remove('active');
-          
-          // Check if this item links to the current page
           const href = item.getAttribute('href');
           if (href === currentPage) {
             item.classList.add('active');
@@ -1124,36 +1202,30 @@
         });
       }
       
-      // Handle navigation clicks
       navItems.forEach(item => {
         item.addEventListener('click', function(e) {
-          // For multi-page applications, let the link work normally
+          closeMenu(); // Close mobile menu on item click
+
           if (!this.hasAttribute('data-page')) return;
           
           e.preventDefault();
           const targetPage = this.getAttribute('data-page');
           
-          // Update active nav item
           navItems.forEach(i => i.classList.remove('active'));
           this.classList.add('active');
           
-          // Show target page, hide others
           pages.forEach(page => {
+            page.classList.remove('active');
             if (page.id === `${targetPage}-page`) {
               page.classList.add('active');
-              document.querySelector('.page-title').textContent = 
-                targetPage.charAt(0).toUpperCase() + targetPage.slice(1);
-            } else {
-              page.classList.remove('active');
             }
           });
         });
       });
       
-      // Set active nav item on page load
       setActiveNavItem();
       
-      // Add interaction to action cards
+      // --- INTERACTION LOGIC ---
       const actionCards = document.querySelectorAll('.action-card');
       actionCards.forEach(card => {
         card.addEventListener('click', function() {
@@ -1161,7 +1233,6 @@
         });
       });
       
-      // Save button functionality
       const saveButtons = document.querySelectorAll('.save-btn');
       saveButtons.forEach(button => {
         button.addEventListener('click', function() {
