@@ -570,6 +570,50 @@
       margin-right: 10px;
     }
 
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1001;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background-color: var(--light-panel);
+      border-radius: 12px;
+      padding: 30px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .modal-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--gold-dark);
+    }
+
+    .close-modal {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text-light);
+    }
+
     /* Responsive Design */
     @media (max-width: 1024px) {
       .profile-container {
@@ -736,13 +780,13 @@
           </div>
           
           <div class="profile-actions">
-            <button class="profile-action-btn">
+            <button class="profile-action-btn" id="export-data-btn">
               <i class="fas fa-download"></i> Export Data
             </button>
-            <button class="profile-action-btn">
+            <button class="profile-action-btn" id="statements-btn">
               <i class="fas fa-file-pdf"></i> Statements
             </button>
-            <button class="profile-action-btn">
+            <button class="profile-action-btn" id="privacy-btn">
               <i class="fas fa-shield-alt"></i> Privacy Settings
             </button>
           </div>
@@ -764,7 +808,7 @@
           
           <!-- Personal Information Panel -->
           <div class="profile-panel active" id="personal-panel">
-            <form class="settings-form">
+            <form class="settings-form" id="personal-form">
               <div class="form-grid">
                 <div class="form-group">
                   <label for="firstName">First Name</label>
@@ -823,7 +867,7 @@
                   <div class="security-description">Add an extra layer of security to your account</div>
                 </div>
                 <span class="security-status status-active">Active</span>
-                <button class="btn btn-secondary">Manage</button>
+                <button class="btn btn-secondary" id="manage-2fa">Manage</button>
               </div>
               
               <div class="security-item">
@@ -832,7 +876,7 @@
                   <div class="security-description">Use fingerprint or face recognition to log in</div>
                 </div>
                 <span class="security-status status-inactive">Inactive</span>
-                <button class="btn btn-primary">Enable</button>
+                <button class="btn btn-primary" id="enable-biometric">Enable</button>
               </div>
               
               <div class="security-item">
@@ -840,7 +884,7 @@
                   <div class="security-title">Password</div>
                   <div class="security-description">Last changed 3 months ago</div>
                 </div>
-                <button class="btn btn-primary">Change Password</button>
+                <button class="btn btn-primary" id="change-password">Change Password</button>
               </div>
               
               <div class="security-item">
@@ -848,7 +892,7 @@
                   <div class="security-title">Active Sessions</div>
                   <div class="security-description">View and manage your active login sessions</div>
                 </div>
-                <button class="btn btn-secondary">Manage Sessions</button>
+                <button class="btn btn-secondary" id="manage-sessions">Manage Sessions</button>
               </div>
             </div>
           </div>
@@ -862,7 +906,7 @@
                   <div class="notification-description">Receive account updates via email</div>
                 </div>
                 <label class="toggle-btn">
-                  <input type="checkbox" checked>
+                  <input type="checkbox" checked id="email-notifications">
                   <span class="slider"></span>
                 </label>
               </div>
@@ -873,7 +917,7 @@
                   <div class="notification-description">Get important alerts via text message</div>
                 </div>
                 <label class="toggle-btn">
-                  <input type="checkbox" checked>
+                  <input type="checkbox" checked id="sms-alerts">
                   <span class="slider"></span>
                 </label>
               </div>
@@ -884,7 +928,7 @@
                   <div class="notification-description">Receive app notifications on your device</div>
                 </div>
                 <label class="toggle-btn">
-                  <input type="checkbox">
+                  <input type="checkbox" id="push-notifications">
                   <span class="slider"></span>
                 </label>
               </div>
@@ -895,7 +939,7 @@
                   <div class="notification-description">Get notified for transactions above $100</div>
                 </div>
                 <label class="toggle-btn">
-                  <input type="checkbox" checked>
+                  <input type="checkbox" checked id="transaction-alerts">
                   <span class="slider"></span>
                 </label>
               </div>
@@ -906,14 +950,14 @@
                   <div class="notification-description">Get notified about security events</div>
                 </div>
                 <label class="toggle-btn">
-                  <input type="checkbox" checked>
+                  <input type="checkbox" checked id="security-alerts">
                   <span class="slider"></span>
                 </label>
               </div>
             </div>
             
             <div class="form-actions">
-              <button class="btn btn-secondary">Cancel</button>
+              <button class="btn btn-secondary" id="cancel-notifications">Cancel</button>
               <button class="btn btn-primary" id="save-notifications">Save Preferences</button>
             </div>
           </div>
@@ -926,13 +970,13 @@
                 <p style="margin-bottom: 15px; color: var(--text-light);">Download your account statements and documents</p>
                 
                 <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                  <button class="btn btn-secondary">
+                  <button class="btn btn-secondary" id="monthly-statements">
                     <i class="fas fa-file-pdf"></i> Monthly Statements
                   </button>
-                  <button class="btn btn-secondary">
+                  <button class="btn btn-secondary" id="tax-documents">
                     <i class="fas fa-file-contract"></i> Tax Documents
                   </button>
-                  <button class="btn btn-secondary">
+                  <button class="btn btn-secondary" id="account-agreement">
                     <i class="fas fa-file-alt"></i> Account Agreement
                   </button>
                 </div>
@@ -941,7 +985,7 @@
             
             <div class="form-group">
               <label>Upload Documents</label>
-              <div style="border: 2px dashed var(--border); padding: 30px; text-align: center; border-radius: 8px; margin-top: 10px; cursor: pointer;">
+              <div id="upload-area" style="border: 2px dashed var(--border); padding: 30px; text-align: center; border-radius: 8px; margin-top: 10px; cursor: pointer;">
                 <i class="fas fa-cloud-upload-alt" style="font-size: 2rem; color: var(--gold); margin-bottom: 10px;"></i>
                 <p style="color: var(--text-light);">Click to upload or drag and drop files here</p>
                 <p style="font-size: 0.8rem; color: var(--text-light); margin-top: 5px;">PDF, JPG, PNG files (Max 10MB)</p>
@@ -959,6 +1003,58 @@
     <span id="toast-message">Profile updated successfully!</span>
   </div>
 
+  <!-- Change Password Modal -->
+  <div class="modal" id="password-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Change Password</h3>
+        <button class="close-modal">&times;</button>
+      </div>
+      <form id="password-form">
+        <div class="form-group">
+          <label for="current-password">Current Password</label>
+          <input type="password" id="current-password" required>
+        </div>
+        <div class="form-group">
+          <label for="new-password">New Password</label>
+          <input type="password" id="new-password" required>
+        </div>
+        <div class="form-group">
+          <label for="confirm-password">Confirm New Password</label>
+          <input type="password" id="confirm-password" required>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" id="cancel-password">Cancel</button>
+          <button type="submit" class="btn btn-primary">Update Password</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Avatar Upload Modal -->
+  <div class="modal" id="avatar-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Change Profile Picture</h3>
+        <button class="close-modal">&times;</button>
+      </div>
+      <div style="text-align: center; margin-bottom: 20px;">
+        <div class="profile-avatar" style="margin: 0 auto 20px;">
+          AJ
+        </div>
+        <p style="color: var(--text-light); margin-bottom: 20px;">Upload a new profile picture</p>
+      </div>
+      <div class="form-group">
+        <input type="file" id="avatar-upload" accept="image/*" style="display: none;">
+        <button type="button" class="btn btn-primary" style="width: 100%;" id="select-avatar">Select Image</button>
+      </div>
+      <div class="form-actions">
+        <button type="button" class="btn btn-secondary" id="cancel-avatar">Cancel</button>
+        <button type="button" class="btn btn-primary" id="save-avatar">Save</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       // DOM elements
@@ -966,8 +1062,87 @@
       const toastMessage = document.getElementById('toast-message');
       const profileTabs = document.querySelectorAll('.profile-tab');
       const profilePanels = document.querySelectorAll('.profile-panel');
-      const saveButtons = document.querySelectorAll('.btn-primary');
       const avatarChange = document.querySelector('.avatar-change');
+      const passwordModal = document.getElementById('password-modal');
+      const avatarModal = document.getElementById('avatar-modal');
+      const closeModals = document.querySelectorAll('.close-modal');
+      const cancelButtons = document.querySelectorAll('.btn-secondary[id^="cancel"]');
+      const selectAvatarBtn = document.getElementById('select-avatar');
+      const avatarUpload = document.getElementById('avatar-upload');
+      const uploadArea = document.getElementById('upload-area');
+      
+      // User data (simulating data from backend)
+      let userData = {
+        firstName: 'Alice',
+        lastName: 'Johnson',
+        email: 'al1cejohnson@example.com',
+        phone: '(555) 123-4567',
+        dob: '2001-06-15',
+        address: '123 Main Street',
+        city: 'New York',
+        zipCode: '10001',
+        notifications: {
+          email: true,
+          sms: true,
+          push: false,
+          transaction: true,
+          security: true
+        },
+        security: {
+          twoFactor: true,
+          biometric: false
+        }
+      };
+      
+      // Initialize the page with user data
+      function initializePage() {
+        // Set form values from user data
+        document.getElementById('firstName').value = userData.firstName;
+        document.getElementById('lastName').value = userData.lastName;
+        document.getElementById('email').value = userData.email;
+        document.getElementById('phone').value = userData.phone;
+        document.getElementById('dob').value = userData.dob;
+        document.getElementById('address').value = userData.address;
+        document.getElementById('city').value = userData.city;
+        document.getElementById('zipCode').value = userData.zipCode;
+        
+        // Set notification toggles
+        document.getElementById('email-notifications').checked = userData.notifications.email;
+        document.getElementById('sms-alerts').checked = userData.notifications.sms;
+        document.getElementById('push-notifications').checked = userData.notifications.push;
+        document.getElementById('transaction-alerts').checked = userData.notifications.transaction;
+        document.getElementById('security-alerts').checked = userData.notifications.security;
+        
+        // Update security status
+        updateSecurityStatus();
+      }
+      
+      // Update security status display
+      function updateSecurityStatus() {
+        const twoFactorStatus = document.querySelector('.security-item:nth-child(1) .security-status');
+        const biometricStatus = document.querySelector('.security-item:nth-child(2) .security-status');
+        const biometricButton = document.getElementById('enable-biometric');
+        
+        if (userData.security.twoFactor) {
+          twoFactorStatus.textContent = 'Active';
+          twoFactorStatus.className = 'security-status status-active';
+        } else {
+          twoFactorStatus.textContent = 'Inactive';
+          twoFactorStatus.className = 'security-status status-inactive';
+        }
+        
+        if (userData.security.biometric) {
+          biometricStatus.textContent = 'Active';
+          biometricStatus.className = 'security-status status-active';
+          biometricButton.textContent = 'Manage';
+          biometricButton.className = 'btn btn-secondary';
+        } else {
+          biometricStatus.textContent = 'Inactive';
+          biometricStatus.className = 'security-status status-inactive';
+          biometricButton.textContent = 'Enable';
+          biometricButton.className = 'btn btn-primary';
+        }
+      }
       
       // Tab switching functionality
       profileTabs.forEach(tab => {
@@ -988,22 +1163,198 @@
         });
       });
       
-      // Save buttons functionality
-      saveButtons.forEach(button => {
-        button.addEventListener('click', function() {
-          let message = 'Profile updated successfully!';
-          
-          if (this.id === 'save-notifications') {
-            message = 'Notification preferences saved';
-          }
-          
-          showToast(message);
-        });
+      // Save personal information
+      document.getElementById('save-personal').addEventListener('click', function() {
+        // Get form values
+        userData.firstName = document.getElementById('firstName').value;
+        userData.lastName = document.getElementById('lastName').value;
+        userData.email = document.getElementById('email').value;
+        userData.phone = document.getElementById('phone').value;
+        userData.dob = document.getElementById('dob').value;
+        userData.address = document.getElementById('address').value;
+        userData.city = document.getElementById('city').value;
+        userData.zipCode = document.getElementById('zipCode').value;
+        
+        // Update profile name display
+        document.querySelector('.profile-name').textContent = `${userData.firstName} ${userData.lastName}`;
+        
+        // Show success message
+        showToast('Personal information updated successfully!');
+        
+        // In a real app, you would send this data to the server here
+        console.log('Updated user data:', userData);
+      });
+      
+      // Save notification preferences
+      document.getElementById('save-notifications').addEventListener('click', function() {
+        // Get notification settings
+        userData.notifications.email = document.getElementById('email-notifications').checked;
+        userData.notifications.sms = document.getElementById('sms-alerts').checked;
+        userData.notifications.push = document.getElementById('push-notifications').checked;
+        userData.notifications.transaction = document.getElementById('transaction-alerts').checked;
+        userData.notifications.security = document.getElementById('security-alerts').checked;
+        
+        // Show success message
+        showToast('Notification preferences saved!');
+        
+        // In a real app, you would send this data to the server here
+        console.log('Updated notification settings:', userData.notifications);
+      });
+      
+      // Security settings functionality
+      document.getElementById('manage-2fa').addEventListener('click', function() {
+        userData.security.twoFactor = !userData.security.twoFactor;
+        updateSecurityStatus();
+        showToast(`Two-factor authentication ${userData.security.twoFactor ? 'enabled' : 'disabled'}`);
+      });
+      
+      document.getElementById('enable-biometric').addEventListener('click', function() {
+        userData.security.biometric = !userData.security.biometric;
+        updateSecurityStatus();
+        showToast(`Biometric login ${userData.security.biometric ? 'enabled' : 'disabled'}`);
+      });
+      
+      document.getElementById('change-password').addEventListener('click', function() {
+        passwordModal.style.display = 'flex';
+      });
+      
+      document.getElementById('manage-sessions').addEventListener('click', function() {
+        showToast('Active sessions management opened');
+      });
+      
+      // Document download buttons
+      document.getElementById('monthly-statements').addEventListener('click', function() {
+        showToast('Monthly statements download started');
+      });
+      
+      document.getElementById('tax-documents').addEventListener('click', function() {
+        showToast('Tax documents download started');
+      });
+      
+      document.getElementById('account-agreement').addEventListener('click', function() {
+        showToast('Account agreement download started');
+      });
+      
+      // Profile sidebar actions
+      document.getElementById('export-data-btn').addEventListener('click', function() {
+        showToast('Data export process started');
+      });
+      
+      document.getElementById('statements-btn').addEventListener('click', function() {
+        showToast('Account statements opened');
+      });
+      
+      document.getElementById('privacy-btn').addEventListener('click', function() {
+        showToast('Privacy settings opened');
       });
       
       // Avatar change functionality
       avatarChange.addEventListener('click', function() {
-        showToast('Avatar change feature opened');
+        avatarModal.style.display = 'flex';
+      });
+      
+      selectAvatarBtn.addEventListener('click', function() {
+        avatarUpload.click();
+      });
+      
+      avatarUpload.addEventListener('change', function() {
+        if (this.files && this.files[0]) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            // In a real app, you would upload the image to the server here
+            showToast('Profile picture updated successfully!');
+          };
+          reader.readAsDataURL(this.files[0]);
+        }
+      });
+      
+      document.getElementById('save-avatar').addEventListener('click', function() {
+        avatarModal.style.display = 'none';
+        showToast('Profile picture updated successfully!');
+      });
+      
+      // File upload area
+      uploadArea.addEventListener('click', function() {
+        // In a real app, you would trigger a file input here
+        showToast('Document upload feature opened');
+      });
+      
+      uploadArea.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        this.style.borderColor = 'var(--gold)';
+        this.style.backgroundColor = '#fef7e0';
+      });
+      
+      uploadArea.addEventListener('dragleave', function() {
+        this.style.borderColor = 'var(--border)';
+        this.style.backgroundColor = '';
+      });
+      
+      uploadArea.addEventListener('drop', function(e) {
+        e.preventDefault();
+        this.style.borderColor = 'var(--border)';
+        this.style.backgroundColor = '';
+        
+        if (e.dataTransfer.files.length) {
+          showToast('Document uploaded successfully!');
+          // In a real app, you would handle the file upload here
+        }
+      });
+      
+      // Password form submission
+      document.getElementById('password-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const currentPassword = document.getElementById('current-password').value;
+        const newPassword = document.getElementById('new-password').value;
+        const confirmPassword = document.getElementById('confirm-password').value;
+        
+        // Simple validation
+        if (newPassword !== confirmPassword) {
+          showToast('New passwords do not match!', 'error');
+          return;
+        }
+        
+        if (newPassword.length < 8) {
+          showToast('Password must be at least 8 characters long!', 'error');
+          return;
+        }
+        
+        // In a real app, you would send this to the server
+        showToast('Password updated successfully!');
+        passwordModal.style.display = 'none';
+        this.reset();
+      });
+      
+      // Modal close functionality
+      closeModals.forEach(button => {
+        button.addEventListener('click', function() {
+          this.closest('.modal').style.display = 'none';
+        });
+      });
+      
+      cancelButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          if (this.id === 'cancel-password') {
+            passwordModal.style.display = 'none';
+            document.getElementById('password-form').reset();
+          } else if (this.id === 'cancel-avatar') {
+            avatarModal.style.display = 'none';
+          } else if (this.id === 'cancel-notifications') {
+            // Reset notification toggles to saved values
+            document.getElementById('email-notifications').checked = userData.notifications.email;
+            document.getElementById('sms-alerts').checked = userData.notifications.sms;
+            document.getElementById('push-notifications').checked = userData.notifications.push;
+            document.getElementById('transaction-alerts').checked = userData.notifications.transaction;
+            document.getElementById('security-alerts').checked = userData.notifications.security;
+          }
+        });
+      });
+      
+      // Close modal when clicking outside
+      window.addEventListener('click', function(e) {
+        if (e.target.classList.contains('modal')) {
+          e.target.style.display = 'none';
+        }
       });
       
       // Toast notification function
@@ -1014,9 +1365,11 @@
         if (type === 'error') {
           toast.style.background = '#fef3f2';
           toast.style.color = '#dc2626';
+          toast.querySelector('i').className = 'fas fa-exclamation-circle';
         } else {
           toast.style.background = 'var(--gold)';
           toast.style.color = 'var(--gold-dark)';
+          toast.querySelector('i').className = 'fas fa-check-circle';
         }
         
         // Show toast
@@ -1043,22 +1396,12 @@
         toggle.addEventListener('change', function() {
           const settingName = this.closest('.notification-item').querySelector('.notification-title').textContent;
           const action = this.checked ? 'enabled' : 'disabled';
-          showToast(`${settingName} ${action}`);
+          // Don't show toast here to avoid spamming when saving all preferences
         });
       });
       
-      // Create dashboard page content (if it doesn't exist)
-      if (!document.getElementById('dashboard-page')) {
-        const dashboardPage = document.createElement('div');
-        dashboardPage.id = 'dashboard-page';
-        dashboardPage.className = 'page';
-        dashboardPage.innerHTML = `
-        
-        document.querySelector('.main-content').appendChild(dashboardPage);
-      }
-      
-      // Create other pages if they don't exist
-     
+      // Initialize the page with user data
+      initializePage();
     });
   </script>
 </body>
