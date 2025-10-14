@@ -22,6 +22,9 @@
       --text: #374151;
       --text-light: #6b7280;
       --border: #e5e7eb;
+      --success: #10b981;
+      --error: #ef4444;
+      --warning: #f59e0b;
     }
 
     body {
@@ -266,6 +269,31 @@
       background: #e9ecef;
     }
 
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn:disabled:hover {
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* Account Balance */
+    .account-balance {
+      display: flex;
+      align-items: center;
+      margin-top: 5px;
+      font-size: 0.9rem;
+      color: var(--text-light);
+    }
+
+    .balance-amount {
+      font-weight: 600;
+      margin-left: 5px;
+    }
+
     /* Recent Transfers */
     .transfers-card {
       background: var(--light-panel);
@@ -345,7 +373,7 @@
     }
 
     .amount-positive {
-      color: #10b981;
+      color: var(--success);
     }
 
     .transfer-status {
@@ -363,6 +391,11 @@
     .status-pending {
       background: #fef3c7;
       color: #92400e;
+    }
+
+    .status-failed {
+      background: #fee2e2;
+      color: #991b1b;
     }
 
     /* Toast Notification */
@@ -392,6 +425,81 @@
       margin-right: 10px;
     }
 
+    .toast-error {
+      background: #fef3f2;
+      color: var(--error);
+    }
+
+    .toast-processing {
+      background: #fffbeb;
+      color: var(--warning);
+    }
+
+    .toast-success {
+      background: var(--gold);
+      color: var(--gold-dark);
+    }
+
+    /* Transfer History Filter */
+    .transfer-filters {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .filter-btn {
+      padding: 8px 16px;
+      background: var(--light-panel);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .filter-btn.active {
+      background: var(--gold);
+      color: var(--gold-dark);
+      border-color: var(--gold);
+    }
+
+    /* Transfer Limits */
+    .transfer-limits {
+      background: #fef7e0;
+      border-radius: 8px;
+      padding: 15px;
+      margin-top: 20px;
+      font-size: 0.9rem;
+    }
+
+    .limit-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .limit-item:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Form Validation */
+    .error-message {
+      color: var(--error);
+      font-size: 0.8rem;
+      margin-top: 5px;
+      display: none;
+    }
+
+    .form-group.error input,
+    .form-group.error select,
+    .form-group.error textarea {
+      border-color: var(--error);
+    }
+
+    .form-group.error .error-message {
+      display: block;
+    }
+
     /* Responsive Design */
     @media (max-width: 1024px) {
       .form-grid {
@@ -418,6 +526,10 @@
       .header-actions {
         width: 100%;
         justify-content: space-between;
+      }
+
+      .transfer-filters {
+        flex-wrap: wrap;
       }
     }
   </style>
@@ -507,19 +619,22 @@
               <label for="fromAccount">From Account</label>
               <select id="fromAccount" required>
                 <option value="">Select an account</option>
-                <option value="checking">Checking Account (****4582) - $8,450.00</option>
-                <option value="savings">Savings Account (****7821) - $12,612.50</option>
               </select>
+              <div class="account-balance">
+                Balance: <span class="balance-amount" id="fromAccountBalance">$0.00</span>
+              </div>
+              <div class="error-message" id="fromAccountError">Please select a source account</div>
             </div>
             
             <div class="form-group">
               <label for="toAccount">To Account</label>
               <select id="toAccount" required>
                 <option value="">Select recipient</option>
-                <option value="external">External Account</option>
-                <option value="savings">My Savings Account (****7821)</option>
-                <option value="loan">Loan Account (****3095)</option>
               </select>
+              <div class="account-balance">
+                Balance: <span class="balance-amount" id="toAccountBalance">$0.00</span>
+              </div>
+              <div class="error-message" id="toAccountError">Please select a destination account</div>
             </div>
           </div>
           
@@ -527,11 +642,13 @@
             <div class="form-group">
               <label for="amount">Amount</label>
               <input type="number" id="amount" placeholder="0.00" min="0.01" step="0.01" required>
+              <div class="error-message" id="amountError">Please enter a valid amount</div>
             </div>
             
             <div class="form-group">
               <label for="date">Transfer Date</label>
               <input type="date" id="date" required>
+              <div class="error-message" id="dateError">Please select a transfer date</div>
             </div>
           </div>
           
@@ -545,9 +662,20 @@
             <textarea id="notes" rows="3" placeholder="Any additional information about this transfer"></textarea>
           </div>
           
+          <div class="transfer-limits">
+            <div class="limit-item">
+              <span>Daily Transfer Limit:</span>
+              <span>$10,000.00</span>
+            </div>
+            <div class="limit-item">
+              <span>Remaining Today:</span>
+              <span id="remainingLimit">$10,000.00</span>
+            </div>
+          </div>
+          
           <div class="form-actions">
             <button type="reset" class="btn btn-secondary">Cancel</button>
-            <button type="submit" class="btn btn-primary">Confirm Transfer</button>
+            <button type="submit" class="btn btn-primary" id="submitBtn">Confirm Transfer</button>
           </div>
         </form>
       </div>
@@ -561,52 +689,15 @@
           </a>
         </div>
         
-        <div class="transfer-item">
-          <div class="transfer-icon">
-            <i class="fas fa-building"></i>
-          </div>
-          <div class="transfer-details">
-            <div class="transfer-name">Rent Payment</div>
-            <div class="transfer-date">Aug 27, 2023 • To: John Smith</div>
-          </div>
-          <div class="transfer-amount amount-negative">-$1,200.00</div>
-          <span class="transfer-status status-completed">Completed</span>
+        <div class="transfer-filters">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="completed">Completed</button>
+          <button class="filter-btn" data-filter="pending">Pending</button>
+          <button class="filter-btn" data-filter="failed">Failed</button>
         </div>
         
-        <div class="transfer-item">
-          <div class="transfer-icon">
-            <i class="fas fa-piggy-bank"></i>
-          </div>
-          <div class="transfer-details">
-            <div class="transfer-name">Savings Transfer</div>
-            <div class="transfer-date">Aug 20, 2023 • To: My Savings</div>
-          </div>
-          <div class="transfer-amount amount-negative">-$500.00</div>
-          <span class="transfer-status status-completed">Completed</span>
-        </div>
-        
-        <div class="transfer-item">
-          <div class="transfer-icon">
-            <i class="fas fa-bolt"></i>
-          </div>
-          <div class="transfer-details">
-            <div class="transfer-name">Electricity Bill</div>
-            <div class="transfer-date">Aug 15, 2023 • To: Power Company Inc.</div>
-          </div>
-          <div class="transfer-amount amount-negative">-$125.50</div>
-          <span class="transfer-status status-completed">Completed</span>
-        </div>
-        
-        <div class="transfer-item">
-          <div class="transfer-icon">
-            <i class="fas fa-phone"></i>
-          </div>
-          <div class="transfer-details">
-            <div class="transfer-name">Phone Bill</div>
-            <div class="transfer-date">Aug 5, 2023 • To: Telecom Provider</div>
-          </div>
-          <div class="transfer-amount amount-negative">-$85.75</div>
-          <span class="transfer-status status-completed">Completed</span>
+        <div id="transfersList">
+          <!-- Dynamic content will be inserted here -->
         </div>
       </div>
     </main>
@@ -619,7 +710,34 @@
   </div>
 
   <script>
+    // Data models
+    const accounts = [
+      { id: 'checking', name: 'Checking Account', number: '4582', balance: 8450.00, type: 'checking' },
+      { id: 'savings', name: 'Savings Account', number: '7821', balance: 12612.50, type: 'savings' },
+      { id: 'loan', name: 'Loan Account', number: '3095', balance: -15000.00, type: 'loan' }
+    ];
+
+    const recipients = [
+      { id: 'john-smith', name: 'John Smith', account: 'External Bank', type: 'external' },
+      { id: 'power-company', name: 'Power Company Inc.', account: 'External Account', type: 'external' },
+      { id: 'telecom-provider', name: 'Telecom Provider', account: 'External Account', type: 'external' }
+    ];
+
+    let transfers = [
+      { id: 1, from: 'checking', to: 'john-smith', amount: 1200.00, date: '2023-08-27', description: 'Rent Payment', status: 'completed', type: 'expense' },
+      { id: 2, from: 'checking', to: 'savings', amount: 500.00, date: '2023-08-20', description: 'Savings Transfer', status: 'completed', type: 'transfer' },
+      { id: 3, from: 'checking', to: 'power-company', amount: 125.50, date: '2023-08-15', description: 'Electricity Bill', status: 'completed', type: 'expense' },
+      { id: 4, from: 'checking', to: 'telecom-provider', amount: 85.75, date: '2023-08-05', description: 'Phone Bill', status: 'completed', type: 'expense' },
+      { id: 5, from: 'savings', to: 'checking', amount: 1000.00, date: '2023-09-01', description: 'Emergency Funds', status: 'pending', type: 'transfer' }
+    ];
+
+    const dailyLimit = 10000;
+    let remainingLimit = dailyLimit;
+
     document.addEventListener('DOMContentLoaded', function() {
+      // Initialize the application
+      initApp();
+      
       // Set today's date as default for the date field
       const today = new Date().toISOString().split('T')[0];
       document.getElementById('date').value = today;
@@ -628,83 +746,363 @@
       const transferForm = document.getElementById('transferForm');
       const toast = document.getElementById('toast');
       const toastMessage = document.getElementById('toast-message');
+      const submitBtn = document.getElementById('submitBtn');
       
       transferForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
-        // Get form values
-        const fromAccount = document.getElementById('fromAccount').value;
-        const toAccount = document.getElementById('toAccount').value;
-        const amount = document.getElementById('amount').value;
-        const date = document.getElementById('date').value;
-        const description = document.getElementById('description').value;
-        
-        // Simple validation
-        if (!fromAccount || !toAccount || !amount || !date) {
-          showToast('Please fill in all required fields', 'error');
+        // Validate form
+        if (!validateForm()) {
           return;
         }
         
-        if (parseFloat(amount) <= 0) {
-          showToast('Amount must be greater than zero', 'error');
-          return;
-        }
+        // Disable submit button during processing
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Processing...';
         
         // Simulate transfer processing
         showToast('Processing your transfer...', 'processing');
         
         // Simulate API call delay
         setTimeout(() => {
-          showToast(`Transfer of $${amount} completed successfully!`, 'success');
-          transferForm.reset();
-          document.getElementById('date').value = today;
-          
-          // In a real app, you would update the recent transfers list here
+          processTransfer();
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Confirm Transfer';
         }, 2000);
       });
       
-      // Toast notification function
-      function showToast(message, type = 'success') {
-        toastMessage.textContent = message;
-        
-        // Change toast style based on type
-        if (type === 'error') {
-          toast.style.background = '#fef3f2';
-          toast.style.color = '#dc2626';
-        } else if (type === 'processing') {
-          toast.style.background = '#fffbeb';
-          toast.style.color = '#d97706';
-        } else {
-          toast.style.background = 'var(--gold)';
-          toast.style.color = 'var(--gold-dark)';
-        }
-        
-        // Show toast
-        toast.classList.add('show');
-        
-        // Hide toast after 3 seconds
-        setTimeout(() => {
-          toast.classList.remove('show');
-        }, 3000);
-      }
-      
-      // Update amount field to always show 2 decimal places
-      const amountField = document.getElementById('amount');
-      amountField.addEventListener('blur', function() {
-        if (this.value) {
-          this.value = parseFloat(this.value).toFixed(2);
-        }
+      // Form reset handling
+      transferForm.addEventListener('reset', function() {
+        clearErrors();
+        updateAccountBalances();
       });
       
-      // Navigation active state
-      const navItems = document.querySelectorAll('.nav-item');
-      navItems.forEach(item => {
-        item.addEventListener('click', function() {
-          navItems.forEach(i => i.classList.remove('active'));
+      // Account selection change
+      document.getElementById('fromAccount').addEventListener('change', function() {
+        updateAccountBalances();
+        validateAmount();
+      });
+      
+      document.getElementById('toAccount').addEventListener('change', function() {
+        updateAccountBalances();
+      });
+      
+      // Amount input validation
+      document.getElementById('amount').addEventListener('input', function() {
+        validateAmount();
+      });
+      
+      // Filter buttons
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
           this.classList.add('active');
+          filterTransfers(this.dataset.filter);
         });
       });
     });
+
+    function initApp() {
+      populateAccountSelects();
+      updateAccountBalances();
+      updateRemainingLimit();
+      renderTransfers();
+    }
+
+    function populateAccountSelects() {
+      const fromAccountSelect = document.getElementById('fromAccount');
+      const toAccountSelect = document.getElementById('toAccount');
+      
+      // Clear existing options
+      fromAccountSelect.innerHTML = '<option value="">Select an account</option>';
+      toAccountSelect.innerHTML = '<option value="">Select recipient</option>';
+      
+      // Add accounts to "From" dropdown
+      accounts.forEach(account => {
+        if (account.balance > 0) { // Only show accounts with positive balance
+          const option = document.createElement('option');
+          option.value = account.id;
+          option.textContent = `${account.name} (****${account.number}) - $${account.balance.toFixed(2)}`;
+          fromAccountSelect.appendChild(option);
+        }
+      });
+      
+      // Add accounts to "To" dropdown
+      accounts.forEach(account => {
+        const option = document.createElement('option');
+        option.value = account.id;
+        option.textContent = `${account.name} (****${account.number})`;
+        toAccountSelect.appendChild(option);
+      });
+      
+      // Add external recipients
+      recipients.forEach(recipient => {
+        const option = document.createElement('option');
+        option.value = recipient.id;
+        option.textContent = `${recipient.name} (${recipient.account})`;
+        toAccountSelect.appendChild(option);
+      });
+    }
+
+    function updateAccountBalances() {
+      const fromAccountId = document.getElementById('fromAccount').value;
+      const toAccountId = document.getElementById('toAccount').value;
+      
+      // Update "From" account balance
+      if (fromAccountId) {
+        const fromAccount = accounts.find(acc => acc.id === fromAccountId);
+        document.getElementById('fromAccountBalance').textContent = `$${fromAccount.balance.toFixed(2)}`;
+      } else {
+        document.getElementById('fromAccountBalance').textContent = '$0.00';
+      }
+      
+      // Update "To" account balance
+      if (toAccountId && accounts.find(acc => acc.id === toAccountId)) {
+        const toAccount = accounts.find(acc => acc.id === toAccountId);
+        document.getElementById('toAccountBalance').textContent = `$${toAccount.balance.toFixed(2)}`;
+      } else {
+        document.getElementById('toAccountBalance').textContent = '$0.00';
+      }
+    }
+
+    function updateRemainingLimit() {
+      // Calculate remaining daily limit
+      const today = new Date().toISOString().split('T')[0];
+      const todayTransfers = transfers.filter(t => t.date === today && t.status === 'completed');
+      const todayTotal = todayTransfers.reduce((sum, transfer) => sum + transfer.amount, 0);
+      remainingLimit = Math.max(0, dailyLimit - todayTotal);
+      
+      document.getElementById('remainingLimit').textContent = `$${remainingLimit.toFixed(2)}`;
+    }
+
+    function validateForm() {
+      let isValid = true;
+      
+      // Clear previous errors
+      clearErrors();
+      
+      // Validate From Account
+      const fromAccount = document.getElementById('fromAccount');
+      if (!fromAccount.value) {
+        markError(fromAccount, 'fromAccountError', 'Please select a source account');
+        isValid = false;
+      }
+      
+      // Validate To Account
+      const toAccount = document.getElementById('toAccount');
+      if (!toAccount.value) {
+        markError(toAccount, 'toAccountError', 'Please select a destination account');
+        isValid = false;
+      }
+      
+      // Validate Amount
+      if (!validateAmount()) {
+        isValid = false;
+      }
+      
+      // Validate Date
+      const date = document.getElementById('date');
+      if (!date.value) {
+        markError(date, 'dateError', 'Please select a transfer date');
+        isValid = false;
+      }
+      
+      return isValid;
+    }
+
+    function validateAmount() {
+      const amountInput = document.getElementById('amount');
+      const amount = parseFloat(amountInput.value);
+      const fromAccountId = document.getElementById('fromAccount').value;
+      let isValid = true;
+      
+      // Clear previous error
+      clearError(amountInput, 'amountError');
+      
+      if (!amount || amount <= 0) {
+        markError(amountInput, 'amountError', 'Please enter a valid amount');
+        isValid = false;
+      } else if (fromAccountId) {
+        const fromAccount = accounts.find(acc => acc.id === fromAccountId);
+        if (amount > fromAccount.balance) {
+          markError(amountInput, 'amountError', 'Insufficient funds');
+          isValid = false;
+        } else if (amount > remainingLimit) {
+          markError(amountInput, 'amountError', `Amount exceeds daily limit of $${dailyLimit.toFixed(2)}`);
+          isValid = false;
+        }
+      }
+      
+      return isValid;
+    }
+
+    function markError(inputElement, errorId, message) {
+      inputElement.parentElement.classList.add('error');
+      document.getElementById(errorId).textContent = message;
+      document.getElementById(errorId).style.display = 'block';
+    }
+
+    function clearError(inputElement, errorId) {
+      inputElement.parentElement.classList.remove('error');
+      document.getElementById(errorId).style.display = 'none';
+    }
+
+    function clearErrors() {
+      document.querySelectorAll('.form-group').forEach(group => {
+        group.classList.remove('error');
+      });
+      document.querySelectorAll('.error-message').forEach(msg => {
+        msg.style.display = 'none';
+      });
+    }
+
+    function processTransfer() {
+      // Get form values
+      const fromAccountId = document.getElementById('fromAccount').value;
+      const toAccountId = document.getElementById('toAccount').value;
+      const amount = parseFloat(document.getElementById('amount').value);
+      const date = document.getElementById('date').value;
+      const description = document.getElementById('description').value || 'Transfer';
+      const notes = document.getElementById('notes').value;
+      
+      // Find accounts
+      const fromAccount = accounts.find(acc => acc.id === fromAccountId);
+      const toAccount = accounts.find(acc => acc.id === toAccountId);
+      const recipient = recipients.find(rec => rec.id === toAccountId);
+      
+      // Update account balances
+      fromAccount.balance -= amount;
+      
+      if (toAccount) {
+        toAccount.balance += amount;
+      }
+      
+      // Create new transfer record
+      const newTransfer = {
+        id: transfers.length + 1,
+        from: fromAccountId,
+        to: toAccountId,
+        amount: amount,
+        date: date,
+        description: description,
+        status: 'completed',
+        type: toAccount ? 'transfer' : 'expense'
+      };
+      
+      transfers.unshift(newTransfer);
+      
+      // Update UI
+      updateAccountBalances();
+      updateRemainingLimit();
+      renderTransfers();
+      
+      // Show success message
+      showToast(`Transfer of $${amount.toFixed(2)} completed successfully!`, 'success');
+      
+      // Reset form
+      document.getElementById('transferForm').reset();
+      document.getElementById('date').value = new Date().toISOString().split('T')[0];
+    }
+
+    function renderTransfers(filter = 'all') {
+      const transfersList = document.getElementById('transfersList');
+      transfersList.innerHTML = '';
+      
+      let filteredTransfers = transfers;
+      
+      if (filter !== 'all') {
+        filteredTransfers = transfers.filter(t => t.status === filter);
+      }
+      
+      if (filteredTransfers.length === 0) {
+        transfersList.innerHTML = '<div class="transfer-item"><div class="transfer-details">No transfers found</div></div>';
+        return;
+      }
+      
+      filteredTransfers.forEach(transfer => {
+        const fromAccount = accounts.find(acc => acc.id === transfer.from);
+        let toName = '';
+        
+        if (accounts.find(acc => acc.id === transfer.to)) {
+          toName = accounts.find(acc => acc.id === transfer.to).name;
+        } else if (recipients.find(rec => rec.id === transfer.to)) {
+          toName = recipients.find(rec => rec.id === transfer.to).name;
+        }
+        
+        const transferItem = document.createElement('div');
+        transferItem.className = 'transfer-item';
+        
+        // Determine icon based on transfer type
+        let iconClass = 'fas fa-exchange-alt';
+        if (transfer.type === 'expense') {
+          iconClass = transfer.description.toLowerCase().includes('rent') ? 'fas fa-building' : 
+                      transfer.description.toLowerCase().includes('electric') ? 'fas fa-bolt' : 
+                      transfer.description.toLowerCase().includes('phone') ? 'fas fa-phone' : 'fas fa-money-bill-wave';
+        } else if (transfer.type === 'transfer') {
+          iconClass = 'fas fa-piggy-bank';
+        }
+        
+        // Format date
+        const transferDate = new Date(transfer.date);
+        const formattedDate = transferDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        
+        transferItem.innerHTML = `
+          <div class="transfer-icon">
+            <i class="${iconClass}"></i>
+          </div>
+          <div class="transfer-details">
+            <div class="transfer-name">${transfer.description}</div>
+            <div class="transfer-date">${formattedDate} • To: ${toName}</div>
+          </div>
+          <div class="transfer-amount amount-negative">-$${transfer.amount.toFixed(2)}</div>
+          <span class="transfer-status status-${transfer.status}">${transfer.status.charAt(0).toUpperCase() + transfer.status.slice(1)}</span>
+        `;
+        
+        transfersList.appendChild(transferItem);
+      });
+    }
+
+    function filterTransfers(filter) {
+      renderTransfers(filter);
+    }
+
+    function showToast(message, type = 'success') {
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toast-message');
+      
+      toastMessage.textContent = message;
+      
+      // Remove previous type classes
+      toast.classList.remove('toast-error', 'toast-processing', 'toast-success');
+      
+      // Add appropriate class based on type
+      if (type === 'error') {
+        toast.classList.add('toast-error');
+      } else if (type === 'processing') {
+        toast.classList.add('toast-processing');
+      } else {
+        toast.classList.add('toast-success');
+      }
+      
+      // Update icon based on type
+      const icon = toast.querySelector('i');
+      if (type === 'error') {
+        icon.className = 'fas fa-exclamation-circle';
+      } else if (type === 'processing') {
+        icon.className = 'fas fa-spinner fa-spin';
+      } else {
+        icon.className = 'fas fa-check-circle';
+      }
+      
+      // Show toast
+      toast.classList.add('show');
+      
+      // Hide toast after 3 seconds (5 for processing)
+      const hideTime = type === 'processing' ? 5000 : 3000;
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, hideTime);
+    }
   </script>
 </body>
 </html>
