@@ -594,7 +594,7 @@
         
         <div class="signup-section">
           <p class="signup-text">
-            Don't have an account? <a href="open-account.html" class="signup-link">Open One Now</a>
+            Don't have an account? <a href="openaccount.html" class="signup-link">Open One Now</a>
           </p>
         </div>
       </form>
@@ -608,116 +608,116 @@
   </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const loginForm = document.getElementById('loginForm');
-      const loginButton = document.getElementById('loginButton');
-      const passwordToggle = document.getElementById('passwordToggle');
-      const passwordInput = document.getElementById('password');
-      const rememberCheckbox = document.getElementById('rememberCheckbox');
-      const customCheckbox = rememberCheckbox.querySelector('.custom-checkbox');
-      const toast = document.getElementById('toast');
-      const toastMessage = document.getElementById('toast-message');
-      
-      // Password visibility toggle
-      passwordToggle.addEventListener('click', function() {
-        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-        passwordInput.setAttribute('type', type);
-        this.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
-      });
-      
-      // Custom checkbox functionality
-      rememberCheckbox.addEventListener('click', function() {
-        customCheckbox.classList.toggle('checked');
-      });
-      
-      // Form submission
-      loginForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
-        const rememberMe = customCheckbox.classList.contains('checked');
-        
-        // Validation
-        if (!username || !password) {
-          showToast('Please enter both username and password', 'error');
-          return;
-        }
-        
-        // Simulate login process
-        simulateLogin(username, password, rememberMe);
-      });
-      
-      function simulateLogin(username, password, rememberMe) {
-        // Show loading state
-        loginButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Authenticating...';
-        loginButton.disabled = true;
-        
-        // Simulate API call delay
-        setTimeout(() => {
-          // For demo purposes, accept any non-empty credentials
-          if (username && password) {
-            showToast('Login successful! Redirecting to dashboard...', 'success');
-            
-            // Simulate redirect after successful login
-            setTimeout(() => {
-              // In a real application, this would redirect to the dashboard
-              // window.location.href = 'dashboard.html';
-              console.log('Redirecting to dashboard...');
-              
-              // Reset form for demo purposes
-              loginButton.innerHTML = '<i class="fas fa-lock"></i> Sign In Securely';
-              loginButton.disabled = false;
-              loginForm.reset();
-              customCheckbox.classList.remove('checked');
-            }, 2000);
+  document.addEventListener('DOMContentLoaded', function() {
+    const loginForm = document.getElementById('loginForm');
+    const loginButton = document.getElementById('loginButton');
+    const passwordToggle = document.getElementById('passwordToggle');
+    const passwordInput = document.getElementById('password');
+    const rememberCheckbox = document.getElementById('rememberCheckbox');
+    const customCheckbox = rememberCheckbox.querySelector('.custom-checkbox');
+    const toast = document.getElementById('toast');
+    const toastMessage = document.getElementById('toast-message');
+
+    // Demo credentials (You can change or add registration logic)
+    if (!localStorage.getItem('apexUser')) {
+      localStorage.setItem('apexUser', 'demo_user');
+      localStorage.setItem('apexPass', btoa('demo123')); // store encoded password
+    }
+
+    // Password visibility toggle
+    passwordToggle.addEventListener('click', function() {
+      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput.setAttribute('type', type);
+      this.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+    });
+
+    // Custom checkbox functionality
+    rememberCheckbox.addEventListener('click', function() {
+      customCheckbox.classList.toggle('checked');
+    });
+
+    // Form submission
+    loginForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const rememberMe = customCheckbox.classList.contains('checked');
+
+      if (!username || !password) {
+        showToast('Please enter both username and password', 'error');
+        return;
+      }
+
+      verifyLogin(username, password, rememberMe);
+    });
+
+    // Function to verify login credentials
+    function verifyLogin(username, password, rememberMe) {
+      loginButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Authenticating...';
+      loginButton.disabled = true;
+
+      setTimeout(() => {
+        const storedUser = localStorage.getItem('apexUser');
+        const storedPass = localStorage.getItem('apexPass'); // encoded password
+
+        if (username === storedUser && btoa(password) === storedPass) {
+          showToast('Login successful! Redirecting...', 'success');
+
+          if (rememberMe) {
+            localStorage.setItem('rememberUser', username);
           } else {
-            showToast('Invalid credentials. Please try again.', 'error');
+            localStorage.removeItem('rememberUser');
+          }
+
+          setTimeout(() => {
+            console.log('Redirecting to dashboard...');
+           window.location.href = 'dashboard.html'; // enable when real page exists
             loginButton.innerHTML = '<i class="fas fa-lock"></i> Sign In Securely';
             loginButton.disabled = false;
-          }
-        }, 1500);
-      }
-      
-      function showToast(message, type = 'success') {
-        toastMessage.textContent = message;
-        
-        // Remove previous type classes
-        toast.classList.remove('toast-error', 'toast-processing', 'toast-success');
-        
-        // Add appropriate class based on type
-        if (type === 'error') {
-          toast.classList.add('toast-error');
-        } else if (type === 'processing') {
-          toast.classList.add('toast-processing');
+            loginForm.reset();
+            customCheckbox.classList.remove('checked');
+          }, 2000);
         } else {
-          toast.classList.add('toast-success');
+          showToast('Invalid username or password', 'error');
+          loginButton.innerHTML = '<i class="fas fa-lock"></i> Sign In Securely';
+          loginButton.disabled = false;
         }
-        
-        // Update icon based on type
-        const icon = toast.querySelector('i');
-        if (type === 'error') {
-          icon.className = 'fas fa-exclamation-circle';
-        } else if (type === 'processing') {
-          icon.className = 'fas fa-spinner fa-spin';
-        } else {
-          icon.className = 'fas fa-check-circle';
-        }
-        
-        // Show toast
-        toast.classList.add('show');
-        
-        // Hide toast after 3 seconds
-        setTimeout(() => {
-          toast.classList.remove('show');
-        }, 3000);
-      }
-      
-      // Add some demo credentials for testing
-      console.log('Demo credentials:');
-      console.log('Username: demo_user');
-      console.log('Password: demo123');
-    });
-  </script>
+      }, 1200);
+    }
+
+    // Show toast notifications
+    function showToast(message, type = 'success') {
+      toastMessage.textContent = message;
+      toast.classList.remove('toast-error', 'toast-processing', 'toast-success');
+
+      if (type === 'error') toast.classList.add('toast-error');
+      else if (type === 'processing') toast.classList.add('toast-processing');
+      else toast.classList.add('toast-success');
+
+      const icon = toast.querySelector('i');
+      if (type === 'error') icon.className = 'fas fa-exclamation-circle';
+      else if (type === 'processing') icon.className = 'fas fa-spinner fa-spin';
+      else icon.className = 'fas fa-check-circle';
+
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    // Auto-fill if "Remember Me" was checked before
+    const savedUser = localStorage.getItem('rememberUser');
+    if (savedUser) {
+      document.getElementById('username').value = savedUser;
+      customCheckbox.classList.add('checked');
+    }
+
+    // Log demo credentials
+    console.log('Demo credentials:');
+    console.log('Username: demo_user');
+    console.log('Password: demo123');
+  });
+</script>
+
+
 </body>
 </html>

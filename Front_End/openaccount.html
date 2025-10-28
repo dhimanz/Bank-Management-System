@@ -301,64 +301,114 @@
 
     </div>
   </main>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const nextBtn1 = document.getElementById('next1');
+  const nextBtn2 = document.getElementById('next2');
+  const prevBtn2 = document.getElementById('prev2');
+  const prevBtn3 = document.getElementById('prev3');
+  const submitBtn = document.getElementById('submit');
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const nextBtn1 = document.getElementById('next1');
-        const nextBtn2 = document.getElementById('next2');
-        const prevBtn2 = document.getElementById('prev2');
-        const prevBtn3 = document.getElementById('prev3');
-        const submitBtn = document.getElementById('submit');
+  const form = document.querySelector('form');
+  const multiStepForm = document.getElementById('multiStepForm');
+  const successMessage = document.getElementById('success-message');
 
-        const form = document.querySelector('form');
-        const multiStepForm = document.getElementById('multiStepForm');
-        const successMessage = document.getElementById('success-message');
+  const steps = document.querySelectorAll('.form-step');
+  const progressSteps = document.querySelectorAll('.progress-bar .step');
+  let currentStep = 1;
 
-        const steps = document.querySelectorAll('.form-step');
-        const progressSteps = document.querySelectorAll('.progress-bar .step');
-        let currentStep = 1;
+  const updateStep = () => {
+    steps.forEach(step => step.classList.remove('active'));
+    document.getElementById(`step${currentStep}`).classList.add('active');
 
-        const updateStep = () => {
-            steps.forEach(step => step.classList.remove('active'));
-            document.getElementById(`step${currentStep}`).classList.add('active');
-
-            progressSteps.forEach((step, index) => {
-                if (index < currentStep) {
-                    step.classList.add('active');
-                } else {
-                    step.classList.remove('active');
-                }
-            });
-        };
-
-        nextBtn1.addEventListener('click', () => {
-            currentStep = 2;
-            updateStep();
-        });
-
-        nextBtn2.addEventListener('click', () => {
-            currentStep = 3;
-            updateStep();
-        });
-
-        prevBtn2.addEventListener('click', () => {
-            currentStep = 1;
-            updateStep();
-        });
-
-        prevBtn3.addEventListener('click', () => {
-            currentStep = 2;
-            updateStep();
-        });
-
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            // Here you would typically handle form submission to a server
-            multiStepForm.style.display = 'none';
-            successMessage.style.display = 'block';
-        });
+    progressSteps.forEach((step, index) => {
+      if (index < currentStep) {
+        step.classList.add('active');
+      } else {
+        step.classList.remove('active');
+      }
     });
-  </script>
+  };
+
+  nextBtn1.addEventListener('click', () => {
+    currentStep = 2;
+    updateStep();
+  });
+
+  nextBtn2.addEventListener('click', () => {
+    currentStep = 3;
+    updateStep();
+  });
+
+  prevBtn2.addEventListener('click', () => {
+    currentStep = 1;
+    updateStep();
+  });
+
+  prevBtn3.addEventListener('click', () => {
+    currentStep = 2;
+    updateStep();
+  });
+
+  // Utility function for hashing password using SHA-256
+  async function hashPassword(password) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(password);
+    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const firstName = document.getElementById('firstName').value.trim();
+    const lastName = document.getElementById('lastName').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+
+    // Validate password
+    if (password !== confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
+    // Hash password before saving
+    const hashedPassword = await hashPassword(password);
+
+    // Store credentials securely in localStorage
+    const userData = {
+      firstName,
+      lastName,
+      email,
+      passwordHash: hashedPassword
+    };
+    localStorage.setItem("apexUser", JSON.stringify(userData));
+
+    // Success UI
+    multiStepForm.style.display = 'none';
+    successMessage.style.display = 'block';
+  });
+
+  // 🔐 Optional: Add a simple login check (for testing/demo)
+  window.verifyLogin = async function(email, password) {
+    const storedUser = JSON.parse(localStorage.getItem("apexUser"));
+    if (!storedUser) {
+      alert("No registered user found. Please register first.");
+      return;
+    }
+
+    const inputHash = await hashPassword(password);
+    if (storedUser.email === email && storedUser.passwordHash === inputHash) {
+      alert(`✅ Welcome back, ${storedUser.firstName}!`);
+    } else {
+      alert("❌ Invalid email or password.");
+    }
+  };
+});
+</script>
+
 
 </body>
 </html>
