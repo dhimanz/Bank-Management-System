@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unlock | APEX Bank</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --gold: #e7d38e;
+      --gold-light: #F1E5AC;
+      --gold-dark: #100d08;
+      --light-bg: #f8fafc;
+      --light-panel: #ffffff;
+      --text: #374151;
+      --text-light: #6b7280;
+      --border: #e5e7eb;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+      font-family: 'Montserrat', sans-serif;
+      overflow: hidden;
+      position: relative;
+      color: var(--text);
+    }
+
+    /* Light background pattern */
+    .light-pattern {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(circle at 5% 10%, rgba(212, 175, 55, 0.03) 0px, transparent 50px),
+        radial-gradient(circle at 95% 10%, rgba(212, 175, 55, 0.03) 0px, transparent 50px),
+        radial-gradient(circle at 50% 90%, rgba(212, 175, 55, 0.03) 0px, transparent 50px);
+      z-index: 1;
+    }
+
+    /* Decorative elements */
+    .decorative-corner {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      z-index: 2;
+    }
+
+    .corner-top-left {
+      top: 30px;
+      left: 30px;
+      border-top: 2px solid var(--gold);
+      border-left: 2px solid var(--gold);
+      opacity: 0.5;
+    }
+
+    .corner-top-right {
+      top: 30px;
+      right: 30px;
+      border-top: 2px solid var(--gold);
+      border-right: 2px solid var(--gold);
+      opacity: 0.5;
+    }
+
+    .corner-bottom-left {
+      bottom: 30px;
+      left: 30px;
+      border-bottom: 2px solid var(--gold);
+      border-left: 2px solid var(--gold);
+      opacity: 0.5;
+    }
+
+    .corner-bottom-right {
+      bottom: 30px;
+      right: 30px;
+      border-bottom: 2px solid var(--gold);
+      border-right: 2px solid var(--gold);
+      opacity: 0.5;
+    }
+
+    .accent-dots {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background-color: var(--gold);
+      border-radius: 50%;
+      opacity: 0.7;
+    }
+
+    .dot-1 { top: 35px; left: 35px; }
+    .dot-2 { top: 35px; right: 35px; }
+    .dot-3 { bottom: 35px; left: 35px; }
+    .dot-4 { bottom: 35px; right: 35px; }
+
+    .unlock-container {
+      position: relative;
+      z-index: 3;
+      width: 100%;
+      max-width: 450px;
+      padding: 50px 40px;
+      background: var(--light-panel);
+      backdrop-filter: blur(12px);
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 5px 10px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .unlock-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+    }
+
+    .unlock-container::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+    }
+
+    .bank-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      letter-spacing: 3px;
+      margin-bottom: 20px;
+      color: var(--gold-dark);
+      font-weight: 700;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+      letter-spacing: 1px;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    .user-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin-right: 15px;
+    }
+
+    .user-details {
+      text-align: left;
+    }
+
+    .user-name {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .user-email {
+      font-size: 0.9rem;
+      color: var(--text-light);
+    }
+
+    .passcode-display {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+      gap: 15px;
+    }
+
+    .passcode-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 2px solid var(--gold);
+      transition: all 0.2s ease;
+    }
+
+    .passcode-dot.filled {
+      background-color: var(--gold);
+    }
+
+    .passcode-dot.error {
+      border-color: #ff4757;
+      background-color: #ff4757;
+      animation: shake 0.5s;
+    }
+
+    .keypad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .key {
+      height: 60px;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: white;
+    }
+
+    .key:hover {
+      background-color: #fef7e0;
+      border-color: var(--gold);
+    }
+
+    .key:active {
+      transform: scale(0.95);
+      background-color: var(--gold);
+      color: white;
+    }
+
+    .key.empty {
+      border: none;
+      cursor: default;
+    }
+
+    .key.empty:hover {
+      background: transparent;
+    }
+
+    .key.backspace {
+      font-size: 1.2rem;
+    }
+
+    .security-note {
+      margin-top: 30px;
+      font-size: 0.9rem;
+      opacity: 0.8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-light);
+      letter-spacing: 0.5px;
+    }
+
+    .security-note i {
+      margin-right: 10px;
+      color: var(--gold);
+    }
+
+    .error-message {
+      color: #ff4757;
+      margin-top: 15px;
+      font-size: 0.9rem;
+      min-height: 20px;
+    }
+
+    /* Animations */
+    @keyframes gentlePulse {
+      0% { transform: scale(1); opacity: 0.9; }
+      50% { transform: scale(1.03); opacity: 1; }
+      100% { transform: scale(1); opacity: 0.9; }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-5px); }
+      40%, 80% { transform: translateX(5px); }
+    }
+
+    @keyframes success {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .unlock-container {
+        width: 90%;
+        padding: 40px 30px;
+      }
+      
+      .bank-name {
+        font-size: 2rem;
+      }
+      
+      h1 {
+        font-size: 1.6rem;
+      }
+      
+      .key {
+        height: 55px;
+        font-size: 1.3rem;
+      }
+
+      .decorative-corner {
+        width: 80px;
+        height: 80px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Light background pattern -->
+  <div class="light-pattern"></div>
+  
+  <!-- Decorative corners -->
+  <div class="decorative-corner corner-top-left"></div>
+  <div class="decorative-corner corner-top-right"></div>
+  <div class="decorative-corner corner-bottom-left"></div>
+  <div class="decorative-corner corner-bottom-right"></div>
+  
+  <!-- Accent dots -->
+  <div class="accent-dots dot-1"></div>
+  <div class="accent-dots dot-2"></div>
+  <div class="accent-dots dot-3"></div>
+  <div class="accent-dots dot-4"></div>
+
+  <div class="unlock-container">
+    <div class="bank-name">APEX BANK</div>
+
+    <h1>Enter Passcode</h1>
+    
+    <div class="user-info">
+      <div class="user-avatar">AJ</div>
+      <div class="user-details">
+        <div class="user-name">Alice Johnson</div>
+        <div class="user-email">alice.j@email.com</div>
+      </div>
+    </div>
+    
+    <div class="passcode-display">
+      <div class="passcode-dot" id="dot-1"></div>
+      <div class="passcode-dot" id="dot-2"></div>
+      <div class="passcode-dot" id="dot-3"></div>
+      <div class="passcode-dot" id="dot-4"></div>
+      <div class="passcode-dot" id="dot-5"></div>
+      <div class="passcode-dot" id="dot-6"></div>
+    </div>
+    
+    <div class="keypad">
+      <div class="key" data-value="1">1</div>
+      <div class="key" data-value="2">2</div>
+      <div class="key" data-value="3">3</div>
+      <div class="key" data-value="4">4</div>
+      <div class="key" data-value="5">5</div>
+      <div class="key" data-value="6">6</div>
+      <div class="key" data-value="7">7</div>
+      <div class="key" data-value="8">8</div>
+      <div class="key" data-value="9">9</div>
+      <div class="key empty"></div>
+      <div class="key" data-value="0">0</div>
+      <div class="key backspace" id="backspace">
+        <i class="fas fa-arrow-left"></i>
+      </div>
+    </div>
+    
+    <div class="error-message" id="error-message"></div>
+    
+    <div class="security-note">
+      <i class="fas fa-shield-alt"></i> Secure Passcode Entry
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const correctPasscode = "123456"; // Default passcode
+      let enteredPasscode = "";
+      const dots = [
+        document.getElementById('dot-1'),
+        document.getElementById('dot-2'),
+        document.getElementById('dot-3'),
+        document.getElementById('dot-4'),
+        document.getElementById('dot-5'),
+        document.getElementById('dot-6')
+      ];
+      const errorMessage = document.getElementById('error-message');
+      const backspaceBtn = document.getElementById('backspace');
+      
+      // Add event listeners to number keys
+      document.querySelectorAll('.key[data-value]').forEach(key => {
+        key.addEventListener('click', function() {
+          if (enteredPasscode.length < 6) {
+            enteredPasscode += this.getAttribute('data-value');
+            updateDots();
+            
+            // Check if passcode is complete
+            if (enteredPasscode.length === 6) {
+              validatePasscode();
+            }
+          }
+        });
+      });
+      
+      // Backspace functionality
+      backspaceBtn.addEventListener('click', function() {
+        if (enteredPasscode.length > 0) {
+          enteredPasscode = enteredPasscode.slice(0, -1);
+          updateDots();
+          clearError();
+        }
+      });
+      
+      // Update the visual dots
+      function updateDots() {
+        dots.forEach((dot, index) => {
+          if (index < enteredPasscode.length) {
+            dot.classList.add('filled');
+          } else {
+            dot.classList.remove('filled');
+            dot.classList.remove('error');
+          }
+        });
+      }
+      
+      // Validate the entered passcode
+      function validatePasscode() {
+        if (enteredPasscode === correctPasscode) {
+          // Success - redirect to main page
+          dots.forEach(dot => {
+            dot.style.backgroundColor = '#10b981';
+            dot.style.borderColor = '#10b981';
+          });
+          
+          setTimeout(function() {
+            window.location.href = "main.html";
+          }, 500);
+        } else {
+          // Incorrect passcode
+          showError("Incorrect passcode. Please try again.");
+          dots.forEach(dot => {
+            dot.classList.add('error');
+          });
+          
+          // Clear after a delay
+          setTimeout(function() {
+            enteredPasscode = "";
+            updateDots();
+            clearError();
+          }, 1500);
+        }
+      }
+      
+      // Show error message
+      function showError(message) {
+        errorMessage.textContent = message;
+      }
+      
+      // Clear error message
+      function clearError() {
+        errorMessage.textContent = "";
+      }
+      
+      // Keyboard support
+      document.addEventListener('keydown', function(event) {
+        if (event.key >= '0' && event.key <= '9' && enteredPasscode.length < 6) {
+          enteredPasscode += event.key;
+          updateDots();
+          
+          if (enteredPasscode.length === 6) {
+            validatePasscode();
+          }
+        } else if (event.key === 'Backspace') {
+          if (enteredPasscode.length > 0) {
+            enteredPasscode = enteredPasscode.slice(0, -1);
+            updateDots();
+            clearError();
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

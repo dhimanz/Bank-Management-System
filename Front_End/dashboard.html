@@ -1,0 +1,1519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>APEX Bank Management</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* ===============================================
+   APEX BANK - MODERN DESIGN SYSTEM 2024
+   Professional Banking Interface Design
+   =============================================== */
+
+:root {
+  /* === PRIMARY COLORS === */
+  --primary-50: #f0f9ff;
+  --primary-100: #e0f2fe;
+  --primary-200: #bae6fd;
+  --primary-300: #7dd3fc;
+  --primary-400: #38bdf8;
+  --primary-500: #0ea5e9;
+  --primary-600: #0284c7;
+  --primary-700: #0369a1;
+  --primary-800: #075985;
+  --primary-900: #0c4a6e;
+
+  /* === ACCENT COLORS === */
+  --accent-50: #fffbeb;
+  --accent-100: #fef3c7;
+  --accent-200: #fde68a;
+  --accent-300: #fcd34d;
+  --accent-400: #fbbf24;
+  --accent-500: #f59e0b;
+  --accent-600: #d97706;
+  --accent-700: #b45309;
+  --accent-800: #92400e;
+  --accent-900: #78350f;
+
+  /* === NEUTRAL COLORS === */
+  --gray-50: #f8fafc;
+  --gray-100: #f1f5f9;
+  --gray-200: #e2e8f0;
+  --gray-300: #cbd5e1;
+  --gray-400: #94a3b8;
+  --gray-500: #64748b;
+  --gray-600: #475569;
+  --gray-700: #334155;
+  --gray-800: #1e293b;
+  --gray-900: #0f172a;
+
+  /* === SEMANTIC COLORS === */
+  --success-50: #ecfdf5;
+  --success-500: #10b981;
+  --success-600: #059669;
+  --error-50: #fef2f2;
+  --error-500: #ef4444;
+  --error-600: #dc2626;
+  --warning-50: #fffbeb;
+  --warning-500: #f59e0b;
+  --info-50: #eff6ff;
+  --info-500: #3b82f6;
+
+  /* === DESIGN TOKENS === */
+  /* Backgrounds */
+  --bg-primary: var(--gray-50);
+  --bg-secondary: #ffffff;
+  --bg-tertiary: var(--gray-100);
+  --bg-accent: var(--primary-50);
+  --bg-dark: var(--gray-900);
+
+  /* Text Colors */
+  --text-primary: var(--gray-900);
+  --text-secondary: var(--gray-600);
+  --text-tertiary: var(--gray-500);
+  --text-inverse: #ffffff;
+  --text-accent: var(--primary-600);
+
+  /* Border Colors */
+  --border-light: var(--gray-200);
+  --border-medium: var(--gray-300);
+  --border-strong: var(--gray-400);
+  --border-accent: var(--primary-500);
+
+  /* === TYPOGRAPHY SCALE === */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+  --text-6xl: 3.75rem;
+
+  /* Font Weights */
+  --font-light: 300;
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+
+  /* Line Heights */
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose: 2;
+
+  /* === SPACING SCALE === */
+  --space-0: 0;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+
+  /* === BORDER RADIUS === */
+  --radius-none: 0;
+  --radius-sm: 0.125rem;
+  --radius-base: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.5rem;
+  --radius-full: 9999px;
+
+  /* === SHADOWS === */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-base: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+
+  /* === TRANSITIONS === */
+  --transition-fast: 150ms ease;
+  --transition-base: 200ms ease;
+  --transition-slow: 300ms ease;
+  --transition-slower: 500ms ease;
+
+  /* === Z-INDEX SCALE === */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+  --z-toast: 1080;
+
+  /* === BANKING SPECIFIC === */
+  --banking-income: var(--success-500);
+  --banking-expense: var(--error-500);
+  --banking-transfer: var(--primary-500);
+  --banking-pending: var(--warning-500);
+  --banking-card-bg: linear-gradient(135deg, var(--primary-600), var(--primary-800));
+}
+
+/* ===============================================
+   MODERN BASE STYLES
+   =============================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  font-feature-settings: 'kern' 1;
+  font-kerning: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===============================================
+   LAYOUT COMPONENTS
+   =============================================== */
+
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Modern Sidebar */
+.sidebar {
+  width: 280px;
+  background: var(--bg-secondary);
+  box-shadow: var(--shadow-md);
+  border-right: 1px solid var(--border-light);
+  padding: var(--space-6) var(--space-0);
+  display: flex;
+  flex-direction: column;
+  z-index: var(--z-sticky);
+  transition: transform var(--transition-base);
+}
+
+.logo-container {
+  padding: var(--space-0) var(--space-6) var(--space-6);
+  border-bottom: 1px solid var(--border-light);
+  margin-bottom: var(--space-6);
+}
+
+.bank-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: var(--text-2xl);
+  font-weight: var(--font-bold);
+  color: var(--primary-600);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.bank-logo i {
+  color: var(--primary-500);
+}
+
+/* Modern Navigation */
+.nav-menu {
+  flex: 1;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-6);
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all var(--transition-base);
+  border-radius: var(--radius-lg);
+  margin: 0 var(--space-2);
+  font-weight: var(--font-medium);
+  font-size: var(--text-sm);
+}
+
+.nav-item:hover, .nav-item.active {
+  background-color: var(--primary-50);
+  color: var(--primary-700);
+  transform: translateX(var(--space-1));
+}
+
+.nav-item i {
+  width: 20px;
+  text-align: center;
+  color: var(--primary-500);
+}
+
+/* User Section */
+.user-section {
+  padding: var(--space-5) var(--space-6);
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.user-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  background: var(--primary-500);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-inverse);
+  font-weight: var(--font-semibold);
+  font-size: var(--text-sm);
+}
+
+.user-info {
+  flex: 1;
+}
+
+.user-name {
+  font-weight: var(--font-semibold);
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+}
+
+.user-role {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  padding: var(--space-6);
+  overflow-y: auto;
+  width: 100%;
+}
+
+/* Modern Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-8);
+  padding: var(--space-4) var(--space-0);
+}
+
+.page-title {
+  font-family: 'Playfair Display', serif;
+  font-size: var(--text-3xl);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+}
+
+.header-actions {
+  display: flex;
+  gap: var(--space-3);
+}
+
+/* Modern Buttons */
+.header-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-lg);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  text-decoration: none;
+}
+
+.header-action-btn:hover {
+  border-color: var(--primary-500);
+  background: var(--primary-50);
+  color: var(--primary-700);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.header-action-btn i {
+  color: var(--primary-500);
+}
+
+.menu-toggle {
+  background: none;
+  border: none;
+  font-size: var(--text-xl);
+  cursor: pointer;
+  color: var(--text-primary);
+  padding: var(--space-2);
+  border-radius: var(--radius-base);
+  transition: all var(--transition-fast);
+}
+
+.menu-toggle:hover {
+  background: var(--gray-100);
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: var(--z-modal-backdrop);
+}
+
+/* ===============================================
+   MODERN CARDS & COMPONENTS
+   =============================================== */
+
+/* Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-6);
+  margin-bottom: var(--space-8);
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-base);
+  border: 1px solid var(--border-light);
+  transition: all var(--transition-base);
+}
+
+.stat-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+.stat-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-4);
+}
+
+.stat-card-title {
+  font-size: var(--text-sm);
+  color: var(--text-tertiary);
+  font-weight: var(--font-medium);
+}
+
+.stat-card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-xl);
+  background: var(--primary-50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-600);
+}
+
+.stat-card-value {
+  font-size: var(--text-3xl);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-2);
+}
+
+.stat-card-change {
+  font-size: var(--text-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.change-positive {
+  color: var(--success-600);
+}
+
+.change-negative {
+  color: var(--error-600);
+}
+
+/* Quick Actions */
+.quick-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-6);
+  margin-bottom: var(--space-8);
+}
+
+.action-card {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-base);
+  border: 1px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  text-decoration: none;
+  color: inherit;
+}
+
+.action-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-300);
+}
+
+.action-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-2xl);
+  background: var(--primary-50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-4);
+  color: var(--primary-600);
+  font-size: var(--text-xl);
+}
+
+.action-title {
+  font-weight: var(--font-semibold);
+  margin-bottom: var(--space-2);
+  color: var(--text-primary);
+}
+
+.action-desc {
+  font-size: var(--text-sm);
+  color: var(--text-tertiary);
+  line-height: var(--leading-snug);
+}
+
+/* Charts Section */
+.charts-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--space-6);
+  margin-bottom: var(--space-8);
+}
+
+.chart-card {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-base);
+  border: 1px solid var(--border-light);
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-6);
+}
+
+.chart-title {
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  font-size: var(--text-lg);
+}
+
+.chart-actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.chart-action-btn {
+  padding: var(--space-2) var(--space-3);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-lg);
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.chart-action-btn:hover {
+  background: var(--primary-50);
+  border-color: var(--primary-300);
+  color: var(--primary-700);
+}
+
+.chart-container {
+  height: 280px;
+  position: relative;
+}
+
+/* Transactions Card */
+.transactions-card {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-base);
+  border: 1px solid var(--border-light);
+  margin-bottom: var(--space-8);
+}
+
+.transactions-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-6);
+}
+
+.transactions-title {
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  font-size: var(--text-lg);
+}
+
+.view-all-btn {
+  color: var(--primary-600);
+  text-decoration: none;
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  transition: all var(--transition-fast);
+}
+
+.view-all-btn:hover {
+  color: var(--primary-700);
+  transform: translateX(2px);
+}
+
+/* Transaction Items */
+.transaction-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  transition: background-color var(--transition-fast);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.transaction-item:last-child {
+  border-bottom: none;
+}
+
+.transaction-item:hover {
+  background-color: var(--bg-tertiary);
+}
+
+.transaction-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-xl);
+  background: var(--bg-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-600);
+  font-size: var(--text-lg);
+}
+
+.transaction-details {
+  flex: 1;
+}
+
+.transaction-name {
+  font-weight: var(--font-semibold);
+  margin-bottom: var(--space-1);
+  color: var(--text-primary);
+}
+
+.transaction-date {
+  font-size: var(--text-sm);
+  color: var(--text-tertiary);
+}
+
+.transaction-amount {
+  font-weight: var(--font-semibold);
+  font-size: var(--text-lg);
+}
+
+.amount-positive {
+  color: var(--success-600);
+}
+
+.amount-negative {
+  color: var(--text-primary);
+}
+
+/* ===============================================
+   PROFILE PAGE STYLES
+   =============================================== */
+
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--space-8);
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.profile-avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: var(--radius-full);
+  background: var(--primary-500);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-inverse);
+  font-weight: var(--font-bold);
+  font-size: var(--text-2xl);
+  margin-right: var(--space-6);
+}
+
+.profile-info h2 {
+  font-family: 'Playfair Display', serif;
+  color: var(--text-primary);
+  margin-bottom: var(--space-2);
+  font-size: var(--text-2xl);
+}
+
+.profile-info p {
+  color: var(--text-tertiary);
+  font-size: var(--text-sm);
+}
+
+.profile-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-8);
+}
+
+.profile-card {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-base);
+  border: 1px solid var(--border-light);
+}
+
+.profile-card h3 {
+  font-family: 'Playfair Display', serif;
+  color: var(--text-primary);
+  margin-bottom: var(--space-6);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--border-light);
+  font-size: var(--text-xl);
+}
+
+/* Form Styles */
+.form-group {
+  margin-bottom: var(--space-6);
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: var(--space-2);
+  font-weight: var(--font-medium);
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+}
+
+.form-group input, .form-group select {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-lg);
+  font-size: var(--text-base);
+  transition: all var(--transition-base);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.form-group input:focus, .form-group select:focus {
+  outline: none;
+  border-color: var(--primary-500);
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+}
+
+.save-btn {
+  padding: var(--space-3) var(--space-6);
+  background: var(--primary-500);
+  color: var(--text-inverse);
+  border: none;
+  border-radius: var(--radius-lg);
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.save-btn:hover {
+  background: var(--primary-600);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Security & Notification Settings */
+.security-settings, .notification-settings {
+  margin-top: var(--space-8);
+}
+
+.security-item, .notification-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-4) var(--space-0);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.security-item:last-child, .notification-item:last-child {
+  border-bottom: none;
+}
+
+.security-info h4 {
+  margin-bottom: var(--space-1);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+}
+
+.security-info p {
+  font-size: var(--text-sm);
+  color: var(--text-tertiary);
+}
+
+/* Toggle Switch */
+.toggle-btn {
+  position: relative;
+  display: inline-block;
+  width: 52px;
+  height: 28px;
+}
+
+.toggle-btn input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--gray-300);
+  transition: var(--transition-base);
+  border-radius: var(--radius-full);
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 4px;
+  bottom: 4px;
+  background-color: var(--text-inverse);
+  transition: var(--transition-base);
+  border-radius: var(--radius-full);
+}
+
+input:checked + .slider {
+  background-color: var(--primary-500);
+}
+
+input:checked + .slider:before {
+  transform: translateX(24px);
+}
+
+/* ===============================================
+   RESPONSIVE DESIGN
+   =============================================== */
+
+@media (max-width: 1024px) {
+  .charts-row {
+    display: none;
+  }
+  
+  .profile-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    transform: translateX(-100%);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .overlay.active {
+    display: block;
+  }
+
+  .main-content {
+    width: 100%;
+    padding-top: 80px;
+  }
+  
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: var(--bg-primary);
+    padding: var(--space-4) var(--space-6);
+    z-index: var(--z-sticky);
+    box-shadow: var(--shadow-sm);
+    justify-content: space-between;
+    margin-bottom: 0;
+  }
+
+  .mobile-header-elements {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .page-title, .header-actions {
+    display: none;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .quick-actions {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .profile-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .profile-avatar {
+    margin-right: 0;
+    margin-bottom: var(--space-4);
+  }
+}
+
+@media (max-width: 480px) {
+  .quick-actions {
+    grid-template-columns: 1fr;
+  }
+  
+  .main-content {
+    padding: var(--space-4);
+  }
+  
+  .stat-card, .action-card, .chart-card, .transactions-card, .profile-card {
+    padding: var(--space-4);
+  }
+}
+
+/* ===============================================
+   UTILITY CLASSES
+   =============================================== */
+
+.text-xs { font-size: var(--text-xs); }
+.text-sm { font-size: var(--text-sm); }
+.text-base { font-size: var(--text-base); }
+.text-lg { font-size: var(--text-lg); }
+.text-xl { font-size: var(--text-xl); }
+.text-2xl { font-size: var(--text-2xl); }
+.text-3xl { font-size: var(--text-3xl); }
+.text-4xl { font-size: var(--text-4xl); }
+.text-5xl { font-size: var(--text-5xl); }
+.text-6xl { font-size: var(--text-6xl); }
+
+.font-light { font-weight: var(--font-light); }
+.font-normal { font-weight: var(--font-normal); }
+.font-medium { font-weight: var(--font-medium); }
+.font-semibold { font-weight: var(--font-semibold); }
+.font-bold { font-weight: var(--font-bold); }
+
+.text-primary { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-tertiary { color: var(--text-tertiary); }
+.text-accent { color: var(--text-accent); }
+.text-success { color: var(--success-500); }
+.text-error { color: var(--error-500); }
+.text-warning { color: var(--warning-500); }
+
+.glassmorphism {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.gradient-primary {
+  background: linear-gradient(135deg, var(--primary-500), var(--primary-700));
+}
+
+.gradient-accent {
+  background: linear-gradient(135deg, var(--accent-400), var(--accent-600));
+}
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <aside class="sidebar">
+      <div class="logo-container">
+        <div class="bank-logo">
+          <i class="fas fa-landmark"></i>
+          APEX BANK
+        </div>
+      </div>
+      
+     <nav class="nav-menu">
+        <a href="dashboard.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            Dashboard
+        </a>
+        <a href="account.html" class="nav-item active">
+            <i class="fas fa-wallet"></i>
+            Accounts
+        </a>
+        <a href="transactions.html" class="nav-item">
+            <i class="fas fa-exchange-alt"></i>
+            Transactions
+        </a>
+        <a href="transfers.html" class="nav-item">
+            <i class="fas fa-money-check-alt"></i>
+            Transfers
+        </a>
+        <a href="investments.html" class="nav-item">
+            <i class="fas fa-chart-line"></i>
+            Investments
+        </a>
+        <!-- <a href="cards.html" class="nav-item">
+            <i class="fas fa-credit-card"></i>
+            Cards
+        </a> -->
+        <a href="profile.html" class="nav-item" data-page="profile">
+            <i class="fas fa-user"></i>
+            Profile
+        </a>
+        <a href="settings.html" class="nav-item">
+            <i class="fas fa-cog"></i>
+            Settings
+        </a>
+    </nav>
+      
+   
+    </aside>
+
+    <div class="overlay"></div>
+    
+    <main class="main-content">
+      <div class="page active" id="dashboard-page">
+        <div class="header">
+          <div class="mobile-header-elements">
+              <button class="menu-toggle" id="menu-toggle">
+                  <i class="fas fa-bars"></i>
+              </button>
+              <div class="bank-logo">
+                  <i class="fas fa-landmark"></i>
+                  APEX
+              </div>
+          </div>
+
+          <h1 class="page-title">Dashboard</h1>
+          <div class="header-actions">
+            <div class="header-action-btn">
+              <i class="fas fa-search"></i>
+              Search
+            </div>
+            <div class="header-action-btn">
+              <i class="fas fa-bell"></i>
+              Notifications
+            </div>
+            <div class="header-action-btn">
+              <i class="fas fa-question-circle"></i>
+              Help
+            </div>
+          </div>
+        </div>
+        
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-card-header">
+              <div class="stat-card-title">Total Balance</div>
+              <div class="stat-card-icon">
+                <i class="fas fa-dollar-sign"></i>
+              </div>
+            </div>
+            <div class="stat-card-value">$24,562.00</div>
+            <div class="stat-card-change change-positive">
+              <i class="fas fa-arrow-up"></i> 2.5% from last month
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-card-header">
+              <div class="stat-card-title">Monthly Spending</div>
+              <div class="stat-card-icon">
+                <i class="fas fa-chart-pie"></i>
+              </div>
+            </div>
+            <div class="stat-card-value">$3,284.50</div>
+            <div class="stat-card-change change-negative">
+              <i class="fas fa-arrow-down"></i> 1.2% from last month
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-card-header">
+              <div class="stat-card-title">Investment Value</div>
+              <div class="stat-card-icon">
+                <i class="fas fa-chart-line"></i>
+              </div>
+            </div>
+            <div class="stat-card-value">$18,739.25</div>
+            <div class="stat-card-change change-positive">
+              <i class="fas fa-arrow-up"></i> 3.8% from last month
+            </div>
+          </div>
+        </div>
+        
+        <div class="quick-actions">
+          <div class="action-card">
+            <div class="action-icon">
+              <i class="fas fa-exchange-alt"></i>
+            </div>
+            <div class="action-title">Transfer Money</div>
+            <div class="action-desc">Send money between accounts or to others</div>
+          </div>
+          
+          <div class="action-card">
+            <div class="action-icon">
+              <i class="fas fa-money-bill-wave"></i>
+            </div>
+            <div class="action-title">Pay Bills</div>
+            <div class="action-desc">Schedule and manage bill payments</div>
+          </div>
+          
+          <div class="action-card">
+            <div class="action-icon">
+              <i class="fas fa-piggy-bank"></i>
+            </div>
+            <div class="action-title">Create Goal</div>
+            <div class="action-desc">Set up savings goals and track progress</div>
+          </div>
+          
+          <div class="action-card">
+            <div class="action-icon">
+              <i class="fas fa-chart-line"></i>
+            </div>
+            <div class="action-title">Invest</div>
+            <div class="action-desc">Explore investment opportunities</div>
+          </div>
+        </div>
+        
+        <div class="charts-row">
+          <div class="chart-card">
+            <div class="chart-header">
+              <div class="chart-title">Monthly Expenses</div>
+              <div class="chart-actions">
+                <button class="chart-action-btn">Month</button>
+                <button class="chart-action-btn">Quarter</button>
+                <button class="chart-action-btn">Year</button>
+              </div>
+            </div>
+            <div class="chart-container">
+              <canvas id="expensesChart"></canvas>
+            </div>
+          </div>
+          
+          <div class="chart-card">
+            <div class="chart-header">
+              <div class="chart-title">Account Distribution</div>
+              <div class="chart-actions">
+                <button class="chart-action-btn">View</button>
+              </div>
+            </div>
+            <div class="chart-container">
+              <canvas id="accountsChart"></canvas>
+            </div>
+          </div>
+        </div>
+        
+        <div class="transactions-card">
+          <div class="transactions-header">
+            <div class="transactions-title">Recent Transactions</div>
+            <a href="#" class="view-all-btn">
+              View All <i class="fas fa-chevron-right"></i>
+            </a>
+          </div>
+          
+          <div class="transaction-item">
+            <div class="transaction-icon">
+              <i class="fas fa-shopping-bag"></i>
+            </div>
+            <div class="transaction-details">
+              <div class="transaction-name">Grocery Store</div>
+              <div class="transaction-date">Aug 28, 2023 • Debit Card</div>
+            </div>
+            <div class="transaction-amount amount-negative">-$86.42</div>
+          </div>
+          
+          <div class="transaction-item">
+            <div class="transaction-icon">
+              <i class="fas fa-home"></i>
+            </div>
+            <div class="transaction-details">
+              <div class="transaction-name">Rent Payment</div>
+              <div class="transaction-date">Aug 27, 2023 • Online Transfer</div>
+            </div>
+            <div class="transaction-amount amount-negative">-$1,200.00</div>
+          </div>
+          
+          <div class="transaction-item">
+            <div class="transaction-icon">
+              <i class="fas fa-building"></i>
+            </div>
+            <div class="transaction-details">
+              <div class="transaction-name">Salary Deposit</div>
+              <div class="transaction-date">Aug 25, 2023 • Direct Deposit</div>
+            </div>
+            <div class="transaction-amount amount-positive">+$4,250.00</div>
+          </div>
+          
+          <div class="transaction-item">
+            <div class="transaction-icon">
+              <i class="fas fa-utensils"></i>
+            </div>
+            <div class="transaction-details">
+              <div class="transaction-name">Restaurant</div>
+              <div class="transaction-date">Aug 24, 2023 • Debit Card</div>
+            </div>
+            <div class="transaction-amount amount-negative">-$64.35</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="profile-page page" id="profile-page">
+        <div class="profile-header">
+          <div class="profile-avatar">AJ</div>
+          <div class="profile-info">
+            <h2>Alice Johnson</h2>
+            <p>Premium Banking Member since 2021</p>
+          </div>
+        </div>
+        
+        <div class="profile-content">
+          <div class="profile-card">
+            <h3>Personal Information</h3>
+            <div class="form-group">
+              <label for="fullName">Full Name</label>
+              <input type="text" id="fullName" value="Alice Johnson">
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" value="alice.johnson@example.com">
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" value="(555) 123-4567">
+            </div>
+            <div class="form-group">
+              <label for="address">Address</label>
+              <input type="text" id="address" value="123 Main Street, New York, NY 10001">
+            </div>
+            <button class="save-btn">Save Changes</button>
+            
+            <div class="security-settings">
+              <h3>Security</h3>
+              <div class="security-item">
+                <div class="security-info">
+                  <h4>Two-Factor Authentication</h4>
+                  <p>Add an extra layer of security to your account</p>
+                </div>
+                <label class="toggle-btn">
+                  <input type="checkbox" checked>
+                  <span class="slider"></span>
+                </label>
+              </div>
+              <div class="security-item">
+                <div class="security-info">
+                  <h4>Biometric Login</h4>
+                  <p>Use fingerprint or face recognition to log in</p>
+                </div>
+                <label class="toggle-btn">
+                  <input type="checkbox">
+                  <span class="slider"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="profile-card">
+            <h3>Account Preferences</h3>
+            <div class="form-group">
+              <label for="language">Language</label>
+              <select id="language">
+                <option selected>English</option>
+                <option>Spanish</option>
+                <option>French</option>
+                <option>German</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="currency">Currency</label>
+              <select id="currency">
+                <option selected>US Dollar (USD)</option>
+                <option>Euro (EUR)</option>
+                <option>British Pound (GBP)</option>
+                <option>Japanese Yen (JPY)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="timezone">Timezone</label>
+              <select id="timezone">
+                <option selected>Eastern Time (ET)</option>
+                <option>Central Time (CT)</option>
+                <option>Mountain Time (MT)</option>
+                <option>Pacific Time (PT)</option>
+              </select>
+            </div>
+            <button class="save-btn">Save Preferences</button>
+            
+            <div class="notification-settings">
+              <h3>Notification Preferences</h3>
+              <div class="notification-item">
+                <div class="security-info">
+                  <h4>Email Notifications</h4>
+                  <p>Receive account updates via email</p>
+                </div>
+                <label class="toggle-btn">
+                  <input type="checkbox" checked>
+                  <span class="slider"></span>
+                </label>
+              </div>
+              <div class="notification-item">
+                <div class="security-info">
+                  <h4>SMS Alerts</h4>
+                  <p>Get important alerts via text message</p>
+                </div>
+                <label class="toggle-btn">
+                  <input type="checkbox" checked>
+                  <span class="slider"></span>
+                </label>
+              </div>
+              <div class="notification-item">
+                <div class="security-info">
+                  <h4>Push Notifications</h4>
+                  <p>Receive app notifications on your device</p>
+                </div>
+                <label class="toggle-btn">
+                  <input type="checkbox">
+                  <span class="slider"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+ <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- RESPONSIVE NAVIGATION ---
+        const menuToggle = document.getElementById('menu-toggle');
+        const sidebar = document.querySelector('.sidebar');
+        const overlay = document.querySelector('.overlay');
+
+        function closeMenu() {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('active');
+        }
+
+        if (menuToggle) {
+            menuToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+            });
+        }
+        
+        if (overlay) {
+            overlay.addEventListener('click', closeMenu);
+        }
+
+      // --- CHARTS LOGIC ---
+      // Check if the charts container exists before trying to render charts
+      if (document.getElementById('expensesChart')) {
+        const expensesCtx = document.getElementById('expensesChart').getContext('2d');
+        const expensesChart = new Chart(expensesCtx, {
+            type: 'line',
+            data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
+            datasets: [{
+                label: 'Spending',
+                data: [3200, 2900, 3500, 3800, 3700, 3900, 4300, 4100],
+                borderColor: '#e7d38e',
+                backgroundColor: 'rgba(231, 211, 142, 0.1)',
+                tension: 0.3,
+                fill: true
+            }]
+            },
+            options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                display: false
+                }
+            },
+            scales: {
+                y: {
+                beginAtZero: true,
+                grid: {
+                    drawBorder: false
+                }
+                },
+                x: {
+                grid: {
+                    display: false
+                }
+                }
+            }
+            }
+        });
+      }
+      
+      if (document.getElementById('accountsChart')) {
+        const accountsCtx = document.getElementById('accountsChart').getContext('2d');
+        const accountsChart = new Chart(accountsCtx, {
+            type: 'doughnut',
+            data: {
+            labels: ['Checking', 'Savings', 'Investment'],
+            datasets: [{
+                data: [8450, 12612, 18739],
+                backgroundColor: [
+                '#e7d38e',
+                '#d4bc6a',
+                '#b8a04c'
+                ],
+                borderWidth: 0
+            }]
+            },
+            options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                position: 'bottom'
+                }
+            },
+            cutout: '70%'
+            }
+        });
+      }
+      
+      // --- PAGE NAVIGATION ---
+      const navItems = document.querySelectorAll('.nav-item');
+      const pages = document.querySelectorAll('.page');
+      
+      function setActiveNavItem() {
+        const currentPage = window.location.pathname.split('/').pop() || 'dashboard.html';
+        navItems.forEach(item => {
+          item.classList.remove('active');
+          const href = item.getAttribute('href');
+          if (href === currentPage) {
+            item.classList.add('active');
+          }
+        });
+      }
+      
+      navItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+          closeMenu(); // Close mobile menu on item click
+
+          if (!this.hasAttribute('data-page')) return;
+          
+          e.preventDefault();
+          const targetPage = this.getAttribute('data-page');
+          
+          navItems.forEach(i => i.classList.remove('active'));
+          this.classList.add('active');
+          
+          pages.forEach(page => {
+            page.classList.remove('active');
+            if (page.id === `${targetPage}-page`) {
+              page.classList.add('active');
+            }
+          });
+        });
+      });
+      
+      setActiveNavItem();
+      
+      // --- INTERACTION LOGIC ---
+      const actionCards = document.querySelectorAll('.action-card');
+      actionCards.forEach(card => {
+        card.addEventListener('click', function() {
+          alert(`You selected: ${this.querySelector('.action-title').textContent}`);
+        });
+      });
+      
+      const saveButtons = document.querySelectorAll('.save-btn');
+      saveButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          alert('Settings saved successfully!');
+        });
+      });
+    });
+</script>
+</body>
+</html>

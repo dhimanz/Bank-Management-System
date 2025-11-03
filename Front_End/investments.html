@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Investments - APEX Bank</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+  /* ===============================================
+   APEX BANK - MODERN DESIGN SYSTEM 2024
+   Professional Banking Interface Design
+   =============================================== */
+
+:root {
+  /* === PRIMARY COLORS === */
+  --primary-50: #f0f9ff;
+  --primary-100: #e0f2fe;
+  --primary-200: #bae6fd;
+  --primary-300: #7dd3fc;
+  --primary-400: #38bdf8;
+  --primary-500: #0ea5e9;
+  --primary-600: #0284c7;
+  --primary-700: #0369a1;
+  --primary-800: #075985;
+  --primary-900: #0c4a6e;
+
+  /* === ACCENT COLORS === */
+  --accent-50: #fffbeb;
+  --accent-100: #fef3c7;
+  --accent-200: #fde68a;
+  --accent-300: #fcd34d;
+  --accent-400: #fbbf24;
+  --accent-500: #f59e0b;
+  --accent-600: #d97706;
+  --accent-700: #b45309;
+  --accent-800: #92400e;
+  --accent-900: #78350f;
+
+  /* === NEUTRAL COLORS === */
+  --gray-50: #f8fafc;
+  --gray-100: #f1f5f9;
+  --gray-200: #e2e8f0;
+  --gray-300: #cbd5e1;
+  --gray-400: #94a3b8;
+  --gray-500: #64748b;
+  --gray-600: #475569;
+  --gray-700: #334155;
+  --gray-800: #1e293b;
+  --gray-900: #0f172a;
+
+  /* === SEMANTIC COLORS === */
+  --success-50: #ecfdf5;
+  --success-500: #10b981;
+  --success-600: #059669;
+  --error-50: #fef2f2;
+  --error-500: #ef4444;
+  --error-600: #dc2626;
+  --warning-50: #fffbeb;
+  --warning-500: #f59e0b;
+  --info-50: #eff6ff;
+  --info-500: #3b82f6;
+
+  /* === DESIGN TOKENS === */
+  /* Backgrounds */
+  --bg-primary: var(--gray-50);
+  --bg-secondary: #ffffff;
+  --bg-tertiary: var(--gray-100);
+  --bg-accent: var(--primary-50);
+  --bg-dark: var(--gray-900);
+
+  /* Text Colors */
+  --text-primary: var(--gray-900);
+  --text-secondary: var(--gray-600);
+  --text-tertiary: var(--gray-500);
+  --text-inverse: #ffffff;
+  --text-accent: var(--primary-600);
+
+  /* Border Colors */
+  --border-light: var(--gray-200);
+  --border-medium: var(--gray-300);
+  --border-strong: var(--gray-400);
+  --border-accent: var(--primary-500);
+
+  /* === TYPOGRAPHY SCALE === */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+  --text-6xl: 3.75rem;
+
+  /* Font Weights */
+  --font-light: 300;
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+
+  /* Line Heights */
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose: 2;
+
+  /* === SPACING SCALE === */
+  --space-0: 0;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+
+  /* === BORDER RADIUS === */
+  --radius-none: 0;
+  --radius-sm: 0.125rem;
+  --radius-base: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.5rem;
+  --radius-full: 9999px;
+
+  /* === SHADOWS === */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-base: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+
+  /* === TRANSITIONS === */
+  --transition-fast: 150ms ease;
+  --transition-base: 200ms ease;
+  --transition-slow: 300ms ease;
+  --transition-slower: 500ms ease;
+
+  /* === Z-INDEX SCALE === */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+  --z-toast: 1080;
+
+  /* === BANKING SPECIFIC === */
+  --banking-income: var(--success-500);
+  --banking-expense: var(--error-500);
+  --banking-transfer: var(--primary-500);
+  --banking-pending: var(--warning-500);
+  --banking-card-bg: linear-gradient(135deg, var(--primary-600), var(--primary-800));
+}
+
+/* ===============================================
+   MODERN BASE STYLES
+   =============================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  font-feature-settings: 'kern' 1;
+  font-kerning: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===============================================
+   LAYOUT COMPONENTS
+   =============================================== */
+
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Modern Sidebar */
+.sidebar {
+  width: 280px;
+  background: var(--bg-secondary);
+  box-shadow: var(--shadow-md);
+  border-right: 1px solid var(--border-light);
+  padding: var(--space-6) var(--space-0);
+  display: flex;
+  flex-direction: column;
+  z-index: var(--z-sticky);
+  transition: transform var(--transition-base);
+}
+
+.logo-container {
+  padding: var(--space-0) var(--space-6) var(--space-6);
+  border-bottom: 1px solid var(--border-light);
+  margin-bottom: var(--space-6);
+}
+
+.bank-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: var(--text-2xl);
+  font-weight: var(--font-bold);
+  color: var(--primary-600);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.bank-logo i {
+  color: var(--primary-500);
+}
+
+/* Modern Navigation */
+.nav-menu {
+  flex: 1;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-6);
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all var(--transition-base);
+  border-radius: var(--radius-lg);
+  margin: 0 var(--space-2);
+  font-weight: var(--font-medium);
+  font-size: var(--text-sm);
+}
+
+.nav-item:hover, .nav-item.active {
+  background-color: var(--primary-50);
+  color: var(--primary-700);
+  transform: translateX(var(--space-1));
+}
+
+.nav-item i {
+  width: 20px;
+  text-align: center;
+  color: var(--primary-500);
+}
+
+/* User Section */
+.user-section {
+  padding: var(--space-5) var(--space-6);
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.user-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  background: var(--primary-500);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-inverse);
+  font-weight: var(--font-semibold);
+  font-size: var(--text-sm);
+}
+
+.user-info {
+  flex: 1;
+}
+
+.user-name {
+  font-weight: var(--font-semibold);
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+}
+
+.user-role {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  padding: var(--space-6);
+  overflow-y: auto;
+  width: 100%;
+}
+
+/* Modern Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-8);
+  padding: var(--space-4) var(--space-0);
+}
+
+.page-title {
+  font-family: 'Playfair Display', serif;
+  font-size: var(--text-3xl);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+}
+
+.header-actions {
+  display: flex;
+  gap: var(--space-3);
+}
+
+/* Modern Buttons */
+.header-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-lg);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  text-decoration: none;
+}
+
+.header-action-btn:hover {
+  border-color: var(--primary-500);
+  background: var(--primary-50);
+  color: var(--primary-700);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.header-action-btn i {
+  color: var(--primary-500);
+}
+
+/* ===============================================
+   INVESTMENTS PAGE SPECIFIC STYLES
+   =============================================== */
+
+/* Overview Grid */
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-6);
+  margin-bottom: var(--space-8);
+}
+
+.overview-card {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-base);
+  border: 1px solid var(--border-light);
+  transition: all var(--transition-base);
+}
+
+.overview-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.overview-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-4);
+}
+
+.overview-card-title {
+  font-size: var(--text-sm);
+  color: var(--text-tertiary);
+  font-weight: var(--font-medium);
+}
+
+.overview-card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-xl);
+  background: var(--primary-50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-600);
+}
+
+.overview-card-value {
+  font-size: var(--text-3xl);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-2);
+}
+
+.overview-card-change {
+  font-size: var(--text-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-weight: var(--font-medium);
+}
+
+.change-positive {
+  color: var(--success-600);
+}
+
+.change-negative {
+  color: var(--error-600);
+}
+
+/* Investments Grid */
+.investments-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--space-6);
+  margin-bottom: var(--space-8);
+}
+
+.investment-card {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-base);
+  border: 1px solid var(--border-light);
+  transition: all var(--transition-base);
+}
+
+.investment-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-300);
+}
+
+.investment-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-4);
+}
+
+.investment-name {
+  font-weight: var(--font-semibold);
+  font-size: var(--text-lg);
+  color: var(--text-primary);
+}
+
+.investment-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-xl);
+  background: var(--primary-50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-600);
+}
+
+.investment-details {
+  margin-bottom: var(--space-6);
+}
+
+.investment-detail {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+  font-size: var(--text-sm);
+}
+
+.investment-label {
+  color: var(--text-tertiary);
+}
+
+.investment-value {
+  font-weight: var(--font-medium);
+  color: var(--text-primary);
+}
+
+.investment-actions {
+  display: flex;
+  gap: var(--space-3);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid transparent;
+  border-radius: var(--radius-lg);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  text-decoration: none;
+  flex: 1;
+}
+
+.btn-primary {
+  background: var(--primary-500);
+  color: var(--text-inverse);
+  border-color: var(--primary-500);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--primary-600);
+  border-color: var(--primary-600);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-secondary {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border-color: var(--border-medium);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--gray-200);
+  border-color: var(--border-strong);
+  transform: translateY(-2px);
+}
+
+/* Performance Card */
+.performance-card {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-base);
+  border: 1px solid var(--border-light);
+  margin-bottom: var(--space-8);
+}
+
+.performance-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-6);
+}
+
+.performance-title {
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  font-size: var(--text-lg);
+}
+
+.performance-actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.performance-action-btn {
+  padding: var(--space-2) var(--space-3);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-lg);
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.performance-action-btn:hover, .performance-action-btn.active {
+  background: var(--primary-500);
+  color: var(--text-inverse);
+  border-color: var(--primary-500);
+}
+
+.chart-container {
+  height: 280px;
+  position: relative;
+  background: var(--primary-50);
+  border-radius: var(--radius-xl);
+  padding: var(--space-4);
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-3);
+}
+
+.chart-bar {
+  flex: 1;
+  background: var(--primary-500);
+  border-radius: var(--radius-base) var(--radius-base) 0 0;
+  position: relative;
+  transition: height 0.5s ease;
+  min-height: 20px;
+}
+
+.chart-label {
+  position: absolute;
+  bottom: -25px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  font-weight: var(--font-medium);
+}
+
+.chart-value {
+  position: absolute;
+  top: -25px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  color: var(--primary-700);
+}
+
+/* Opportunities Card */
+.opportunities-card {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-base);
+  border: 1px solid var(--border-light);
+}
+
+.opportunities-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-6);
+}
+
+.opportunities-title {
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  font-size: var(--text-lg);
+}
+
+.view-all-btn {
+  color: var(--primary-600);
+  text-decoration: none;
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  transition: all var(--transition-fast);
+}
+
+.view-all-btn:hover {
+  color: var(--primary-700);
+  transform: translateX(2px);
+}
+
+.opportunities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-6);
+}
+
+.opportunity-card {
+  background: var(--primary-50);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5);
+  border: 1px solid var(--primary-200);
+  transition: all var(--transition-base);
+}
+
+.opportunity-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary-300);
+}
+
+.opportunity-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-4);
+}
+
+.opportunity-name {
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  font-size: var(--text-base);
+}
+
+.opportunity-risk {
+  font-size: var(--text-xs);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  background: var(--warning-50);
+  color: var(--warning-700);
+  font-weight: var(--font-medium);
+}
+
+.opportunity-details {
+  margin-bottom: var(--space-5);
+}
+
+.opportunity-detail {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--space-2);
+  font-size: var(--text-sm);
+}
+
+.opportunity-label {
+  color: var(--text-tertiary);
+}
+
+.opportunity-value {
+  font-weight: var(--font-medium);
+  color: var(--text-primary);
+}
+
+.opportunity-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.opportunity-actions .btn {
+  flex: 0 1 auto;
+  min-width: 120px;
+}
+
+/* Toast Notification */
+.toast {
+  position: fixed;
+  bottom: var(--space-6);
+  right: var(--space-6);
+  padding: var(--space-4) var(--space-5);
+  background: var(--primary-500);
+  color: var(--text-inverse);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  align-items: center;
+  z-index: var(--z-toast);
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all var(--transition-base);
+}
+
+.toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.toast i {
+  margin-right: var(--space-3);
+}
+
+/* ===============================================
+   RESPONSIVE DESIGN
+   =============================================== */
+
+@media (max-width: 1024px) {
+  .investments-grid, .opportunities-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .overview-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    transform: translateX(-100%);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .overlay.active {
+    display: block;
+  }
+
+  .main-content {
+    width: 100%;
+    padding-top: 80px;
+  }
+  
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: var(--bg-primary);
+    padding: var(--space-4) var(--space-6);
+    z-index: var(--z-sticky);
+    box-shadow: var(--shadow-sm);
+    justify-content: space-between;
+    margin-bottom: 0;
+  }
+
+  .mobile-header-elements {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .page-title, .header-actions {
+    display: none;
+  }
+  
+  .overview-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .investment-actions {
+    flex-direction: column;
+  }
+  
+  .performance-header {
+    flex-direction: column;
+    gap: var(--space-4);
+    align-items: flex-start;
+  }
+  
+  .performance-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .chart-container {
+    height: 200px;
+    gap: var(--space-2);
+  }
+}
+
+@media (max-width: 480px) {
+  .main-content {
+    padding: var(--space-4);
+  }
+  
+  .overview-card, .investment-card, .performance-card, .opportunities-card {
+    padding: var(--space-4);
+  }
+  
+  .overview-card-value {
+    font-size: var(--text-2xl);
+  }
+  
+  .chart-container {
+    height: 180px;
+    padding: var(--space-3);
+  }
+  
+  .chart-label, .chart-value {
+    font-size: var(--text-xs);
+  }
+}
+
+/* ===============================================
+   UTILITY CLASSES
+   =============================================== */
+
+.text-xs { font-size: var(--text-xs); }
+.text-sm { font-size: var(--text-sm); }
+.text-base { font-size: var(--text-base); }
+.text-lg { font-size: var(--text-lg); }
+.text-xl { font-size: var(--text-xl); }
+.text-2xl { font-size: var(--text-2xl); }
+.text-3xl { font-size: var(--text-3xl); }
+.text-4xl { font-size: var(--text-4xl); }
+.text-5xl { font-size: var(--text-5xl); }
+.text-6xl { font-size: var(--text-6xl); }
+
+.font-light { font-weight: var(--font-light); }
+.font-normal { font-weight: var(--font-normal); }
+.font-medium { font-weight: var(--font-medium); }
+.font-semibold { font-weight: var(--font-semibold); }
+.font-bold { font-weight: var(--font-bold); }
+
+.text-primary { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-tertiary { color: var(--text-tertiary); }
+.text-accent { color: var(--text-accent); }
+.text-success { color: var(--success-500); }
+.text-error { color: var(--error-500); }
+.text-warning { color: var(--warning-500); }
+
+.glassmorphism {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.gradient-primary {
+  background: linear-gradient(135deg, var(--primary-500), var(--primary-700));
+}
+
+.gradient-accent {
+  background: linear-gradient(135deg, var(--accent-400), var(--accent-600));
+}
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo-container">
+        <div class="bank-logo">
+          <i class="fas fa-landmark"></i>
+          APEX BANK
+        </div>
+      </div>
+      
+      <nav class="nav-menu">
+        <a href="dashboard.html" class="nav-item">
+          <i class="fas fa-home"></i>
+          Dashboard
+        </a>
+        <a href="account.html" class="nav-item">
+          <i class="fas fa-wallet"></i>
+          Accounts
+        </a>
+        <a href="transactions.html" class="nav-item">
+          <i class="fas fa-exchange-alt"></i>
+          Transactions
+        </a>
+        <a href="transfers.html" class="nav-item">
+          <i class="fas fa-money-check-alt"></i>
+          Transfers
+        </a>
+        <a href="investments.html" class="nav-item active">
+          <i class="fas fa-chart-line"></i>
+          Investments
+        </a>
+        <!-- <a href="cards.html" class="nav-item">
+          <i class="fas fa-credit-card"></i>
+          Cards
+        </a> -->
+        <a href="profile.html" class="nav-item">
+          <i class="fas fa-user"></i>
+          Profile
+        </a>
+        <a href="settings.html" class="nav-item">
+          <i class="fas fa-cog"></i>
+          Settings
+        </a>
+      </nav>
+      
+      
+    </aside>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="header">
+        <h1 class="page-title">Investment Portfolio</h1>
+        <div class="header-actions">
+          <div class="header-action-btn">
+            <i class="fas fa-search"></i>
+            Search
+          </div>
+          <div class="header-action-btn">
+            <i class="fas fa-bell"></i>
+            Notifications
+          </div>
+          <div class="header-action-btn">
+            <i class="fas fa-question-circle"></i>
+            Help
+          </div>
+        </div>
+      </div>
+      
+      <!-- Overview Cards -->
+      <div class="overview-grid">
+        <div class="overview-card">
+          <div class="overview-card-header">
+            <div class="overview-card-title">Portfolio Value</div>
+            <div class="overview-card-icon">
+              <i class="fas fa-chart-pie"></i>
+            </div>
+          </div>
+          <div class="overview-card-value">$18,739.25</div>
+          <div class="overview-card-change change-positive">
+            <i class="fas fa-arrow-up"></i> 3.8% ($684.50)
+          </div>
+        </div>
+        
+        <div class="overview-card">
+          <div class="overview-card-header">
+            <div class="overview-card-title">Total Gain</div>
+            <div class="overview-card-icon">
+              <i class="fas fa-coins"></i>
+            </div>
+          </div>
+          <div class="overview-card-value">$2,450.80</div>
+          <div class="overview-card-change change-positive">
+            <i class="fas fa-arrow-up"></i> 15.2% since inception
+          </div>
+        </div>
+        
+        <div class="overview-card">
+          <div class="overview-card-header">
+            <div class="overview-card-title">Annual Return</div>
+            <div class="overview-card-icon">
+              <i class="fas fa-percentage"></i>
+            </div>
+          </div>
+          <div class="overview-card-value">7.2%</div>
+          <div class="overview-card-change change-positive">
+            <i class="fas fa-arrow-up"></i> 1.2% from last year
+          </div>
+        </div>
+      </div>
+      
+      <!-- Current Investments -->
+      <div class="investments-grid">
+        <div class="investment-card">
+          <div class="investment-card-header">
+            <div class="investment-name">S&P 500 Index Fund</div>
+            <div class="investment-icon">
+              <i class="fas fa-chart-line"></i>
+            </div>
+          </div>
+          <div class="investment-details">
+            <div class="investment-detail">
+              <span class="investment-label">Shares</span>
+              <span class="investment-value">12.45</span>
+            </div>
+            <div class="investment-detail">
+              <span class="investment-label">Current Value</span>
+              <span class="investment-value">$6,842.50</span>
+            </div>
+            <div class="investment-detail">
+              <span class="investment-label">Gain/Loss</span>
+              <span class="investment-value change-positive">+$423.15 (+6.6%)</span>
+            </div>
+          </div>
+          <div class="investment-actions">
+            <button class="btn btn-secondary">Sell</button>
+            <button class="btn btn-primary">Buy More</button>
+          </div>
+        </div>
+        
+        <div class="investment-card">
+          <div class="investment-card-header">
+            <div class="investment-name">Technology ETF</div>
+            <div class="investment-icon">
+              <i class="fas fa-microchip"></i>
+            </div>
+          </div>
+          <div class="investment-details">
+            <div class="investment-detail">
+              <span class="investment-label">Shares</span>
+              <span class="investment-value">8.75</span>
+            </div>
+            <div class="investment-detail">
+              <span class="investment-label">Current Value</span>
+              <span class="investment-value">$4,312.80</span>
+            </div>
+            <div class="investment-detail">
+              <span class="investment-label">Gain/Loss</span>
+              <span class="investment-value change-positive">+$312.40 (+7.8%)</span>
+            </div>
+          </div>
+          <div class="investment-actions">
+            <button class="btn btn-secondary">Sell</button>
+            <button class="btn btn-primary">Buy More</button>
+          </div>
+        </div>
+        
+        <div class="investment-card">
+          <div class="investment-card-header">
+            <div class="investment-name">Government Bonds</div>
+            <div class="investment-icon">
+              <i class="fas fa-university"></i>
+            </div>
+          </div>
+          <div class="investment-details">
+            <div class="investment-detail">
+              <span class="investment-label">Units</span>
+              <span class="investment-value">25</span>
+            </div>
+            <div class="investment-detail">
+              <span class="investment-label">Current Value</span>
+              <span class="investment-value">$7,584.95</span>
+            </div>
+            <div class="investment-detail">
+              <span class="investment-label">Gain/Loss</span>
+              <span class="investment-value change-positive">+$251.30 (+3.4%)</span>
+            </div>
+          </div>
+          <div class="investment-actions">
+            <button class="btn btn-secondary">Sell</button>
+            <button class="btn btn-primary">Buy More</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Performance Chart -->
+      <div class="performance-card">
+        <div class="performance-header">
+          <div class="performance-title">Portfolio Performance</div>
+          <div class="performance-actions">
+            <button class="performance-action-btn active">1M</button>
+            <button class="performance-action-btn">3M</button>
+            <button class="performance-action-btn">1Y</button>
+            <button class="performance-action-btn">All</button>
+          </div>
+        </div>
+        <div class="chart-container" id="performanceChart">
+          <!-- Chart will be generated by JavaScript -->
+        </div>
+      </div>
+      
+      <!-- Investment Opportunities -->
+      <div class="opportunities-card">
+        <div class="opportunities-header">
+          <div class="opportunities-title">Investment Opportunities</div>
+          <a href="#" class="view-all-btn">
+            View All <i class="fas fa-chevron-right"></i>
+          </a>
+        </div>
+        <div class="opportunities-grid">
+          <div class="opportunity-card">
+            <div class="opportunity-header">
+              <div class="opportunity-name">Green Energy Fund</div>
+              <div class="opportunity-risk">Medium Risk</div>
+            </div>
+            <div class="opportunity-details">
+              <div class="opportunity-detail">
+                <span class="opportunity-label">Expected Return</span>
+                <span class="opportunity-value">9.5%</span>
+              </div>
+              <div class="opportunity-detail">
+                <span class="opportunity-label">Minimum Investment</span>
+                <span class="opportunity-value">$1,000</span>
+              </div>
+            </div>
+            <div class="opportunity-actions">
+              <button class="btn btn-primary">Invest Now</button>
+            </div>
+          </div>
+          
+          <div class="opportunity-card">
+            <div class="opportunity-header">
+              <div class="opportunity-name">AI Technology ETF</div>
+              <div class="opportunity-risk">High Risk</div>
+            </div>
+            <div class="opportunity-details">
+              <div class="opportunity-detail">
+                <span class="opportunity-label">Expected Return</span>
+                <span class="opportunity-value">12.8%</span>
+              </div>
+              <div class="opportunity-detail">
+                <span class="opportunity-label">Minimum Investment</span>
+                <span class="opportunity-value">$500</span>
+              </div>
+            </div>
+            <div class="opportunity-actions">
+              <button class="btn btn-primary">Invest Now</button>
+            </div>
+          </div>
+          
+          <div class="opportunity-card">
+            <div class="opportunity-header">
+              <div class="opportunity-name">Real Estate Trust</div>
+              <div class="opportunity-risk">Low Risk</div>
+            </div>
+            <div class="opportunity-details">
+              <div class="opportunity-detail">
+                <span class="opportunity-label">Expected Return</span>
+                <span class="opportunity-value">5.2%</span>
+              </div>
+              <div class="opportunity-detail">
+                <span class="opportunity-label">Minimum Investment</span>
+                <span class="opportunity-value">$2,500</span>
+              </div>
+            </div>
+            <div class="opportunity-actions">
+              <button class="btn btn-primary">Invest Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">
+    <i class="fas fa-check-circle"></i>
+    <span id="toast-message">Investment purchased successfully!</span>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Performance chart data
+      const performanceData = [
+        { month: 'Jan', value: 16500 },
+        { month: 'Feb', value: 16800 },
+        { month: 'Mar', value: 17200 },
+        { month: 'Apr', value: 16900 },
+        { month: 'May', value: 17400 },
+        { month: 'Jun', value: 17800 },
+        { month: 'Jul', value: 18250 },
+        { month: 'Aug', value: 18739 }
+      ];
+      
+      // DOM elements
+      const performanceChart = document.getElementById('performanceChart');
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toast-message');
+      const performanceActions = document.querySelectorAll('.performance-action-btn');
+      const investButtons = document.querySelectorAll('.opportunity-actions .btn');
+      const buyButtons = document.querySelectorAll('.investment-actions .btn-primary');
+      const sellButtons = document.querySelectorAll('.investment-actions .btn-secondary');
+      
+      // Render performance chart
+      function renderPerformanceChart() {
+        performanceChart.innerHTML = '';
+        
+        const maxValue = Math.max(...performanceData.map(item => item.value));
+        const minValue = Math.min(...performanceData.map(item => item.value));
+        const chartHeight = performanceChart.offsetHeight - 40;
+        
+        performanceData.forEach(item => {
+          const barHeight = ((item.value - minValue) / (maxValue - minValue)) * chartHeight;
+          const bar = document.createElement('div');
+          bar.className = 'chart-bar';
+          bar.style.height = `${barHeight}px`;
+          
+          const valueLabel = document.createElement('div');
+          valueLabel.className = 'chart-value';
+          valueLabel.textContent = `$${item.value.toLocaleString()}`;
+          
+          const monthLabel = document.createElement('div');
+          monthLabel.className = 'chart-label';
+          monthLabel.textContent = item.month;
+          
+          bar.appendChild(valueLabel);
+          bar.appendChild(monthLabel);
+          performanceChart.appendChild(bar);
+        });
+      }
+      
+      // Toast notification function
+      function showToast(message) {
+        toastMessage.textContent = message;
+        toast.classList.add('show');
+        
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, 3000);
+      }
+      
+      // Event listeners for performance period buttons
+      performanceActions.forEach(button => {
+        button.addEventListener('click', function() {
+          performanceActions.forEach(btn => btn.classList.remove('active'));
+          this.classList.add('active');
+          showToast(`Showing performance for ${this.textContent} period`);
+        });
+      });
+      
+      // Event listeners for investment buttons
+      investButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const opportunityName = this.closest('.opportunity-card').querySelector('.opportunity-name').textContent;
+          showToast(`Opening investment window for ${opportunityName}`);
+        });
+      });
+      
+      // Event listeners for buy/sell buttons
+      buyButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const investmentName = this.closest('.investment-card').querySelector('.investment-name').textContent;
+          showToast(`Buy more ${investmentName}`);
+        });
+      });
+      
+      sellButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const investmentName = this.closest('.investment-card').querySelector('.investment-name').textContent;
+          showToast(`Sell ${investmentName}`);
+        });
+      });
+      
+      // Navigation active state
+      const navItems = document.querySelectorAll('.nav-item');
+      navItems.forEach(item => {
+        item.addEventListener('click', function() {
+          navItems.forEach(i => i.classList.remove('active'));
+          this.classList.add('active');
+        });
+      });
+      
+      // Initialize the performance chart
+      renderPerformanceChart();
+      
+      // Update chart on window resize
+      window.addEventListener('resize', renderPerformanceChart);
+    });
+  </script>
+</body>
+</html>

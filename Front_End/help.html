@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Help Center | APEX Bank</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --gold: #e7d38e;
+      --gold-light: #F1E5AC;
+      --gold-dark: #100d08;
+      --light-bg: #f8fafc;
+      --light-panel: #ffffff;
+      --text: #374151;
+      --text-light: #6b7280;
+      --border: #e5e7eb;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+      font-family: 'Montserrat', sans-serif;
+      overflow-x: hidden;
+      color: var(--text);
+    }
+
+    /* Layout */
+    .help-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 30px 20px;
+    }
+
+    /* Header */
+    .help-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .help-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      color: var(--gold-dark);
+      margin-bottom: 15px;
+    }
+
+    .help-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-light);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Search Section */
+    .search-section {
+      background: var(--light-panel);
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border);
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .search-title {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      color: var(--gold-dark);
+    }
+
+    .search-box {
+      display: flex;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .search-input {
+      flex: 1;
+      padding: 15px 20px;
+      border: 1px solid var(--border);
+      border-radius: 8px 0 0 8px;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .search-input:focus {
+      border-color: var(--gold);
+    }
+
+    .search-button {
+      padding: 0 25px;
+      background: var(--gold);
+      color: white;
+      border: none;
+      border-radius: 0 8px 8px 0;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .search-button:hover {
+      background: var(--gold-dark);
+    }
+
+    /* Help Sections */
+    .help-section {
+      margin-bottom: 40px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--gold-dark);
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--gold);
+    }
+
+    /* FAQ Section */
+    .faq-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .faq-item {
+      background: var(--light-panel);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .faq-item:hover {
+      border-color: var(--gold);
+      transform: translateY(-3px);
+    }
+
+    .faq-question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    .faq-answer {
+      color: var(--text-light);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      display: none;
+    }
+
+    .faq-item.active .faq-answer {
+      display: block;
+    }
+
+    .faq-icon {
+      color: var(--gold);
+    }
+
+    /* Contact Options */
+    .contact-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .contact-card {
+      background: var(--light-panel);
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border);
+      text-align: center;
+      transition: all 0.3s;
+    }
+
+    .contact-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-5px);
+    }
+
+    .contact-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #fef7e0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 15px;
+      color: var(--gold-dark);
+      font-size: 1.5rem;
+    }
+
+    .contact-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--gold-dark);
+    }
+
+    .contact-desc {
+      color: var(--text-light);
+      margin-bottom: 15px;
+      font-size: 0.9rem;
+    }
+
+    .contact-button {
+      display: inline-block;
+      padding: 10px 20px;
+      background: var(--gold);
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background 0.3s;
+    }
+
+    .contact-button:hover {
+      background: var(--gold-dark);
+    }
+
+    /* Banking Guides */
+    .guide-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .guide-card {
+      background: var(--light-panel);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border);
+      transition: all 0.3s;
+    }
+
+    .guide-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-5px);
+    }
+
+    .guide-image {
+      height: 160px;
+      background: #fef7e0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      font-size: 2.5rem;
+    }
+
+    .guide-content {
+      padding: 20px;
+    }
+
+    .guide-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--gold-dark);
+    }
+
+    .guide-desc {
+      color: var(--text-light);
+      margin-bottom: 15px;
+      font-size: 0.9rem;
+    }
+
+    .guide-link {
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+    }
+
+    .guide-link i {
+      margin-left: 5px;
+      transition: transform 0.3s;
+    }
+
+    .guide-link:hover i {
+      transform: translateX(5px);
+    }
+
+    /* Security Tips */
+    .security-tips {
+      background: #fef7e0;
+      border-radius: 12px;
+      padding: 25px;
+      border-left: 4px solid var(--gold);
+    }
+
+    .tips-list {
+      list-style-type: none;
+    }
+
+    .tips-list li {
+      margin-bottom: 15px;
+      padding-left: 30px;
+      position: relative;
+    }
+
+    .tips-list li:before {
+      content: "•";
+      color: var(--gold);
+      font-size: 1.5rem;
+      position: absolute;
+      left: 0;
+      top: -5px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .help-title {
+        font-size: 2rem;
+      }
+      
+      .search-box {
+        flex-direction: column;
+      }
+      
+      .search-input {
+        border-radius: 8px;
+        margin-bottom: 10px;
+      }
+      
+      .search-button {
+        border-radius: 8px;
+        padding: 15px;
+      }
+      
+      .faq-container,
+      .contact-options,
+      .guide-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="help-container">
+    <!-- Header -->
+    <div class="help-header">
+      <h1 class="help-title">How can we help you?</h1>
+      <p class="help-subtitle">Find answers to common questions or contact our support team directly</p>
+    </div>
+
+    <!-- Search Section -->
+    <div class="search-section">
+      <h2 class="search-title">Search our help articles</h2>
+      <div class="search-box">
+        <input type="text" class="search-input" placeholder="What do you need help with?">
+        <button class="search-button">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="help-section">
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <div class="faq-container">
+        <div class="faq-item">
+          <div class="faq-question">
+            How do I reset my password?
+            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+          </div>
+          <div class="faq-answer">
+            To reset your password, go to the login page and click on "Forgot Password". Enter your email address and follow the instructions sent to your email to create a new password.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            How do I transfer money to another account?
+            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+          </div>
+          <div class="faq-answer">
+            Navigate to the "Transfers" section in your dashboard. Select the account to transfer from, enter the recipient's details and amount, then confirm the transaction. Transfers are typically processed within 1-2 business days.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            What should I do if my card is lost or stolen?
+            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+          </div>
+          <div class="faq-answer">
+            Immediately call our 24/7 support line at 1-800-APEX-BANK to report your card as lost or stolen. We will cancel your current card and issue a replacement, which will arrive within 5-7 business days.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            How do I set up automatic bill payments?
+            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+          </div>
+          <div class="faq-answer">
+            Go to the "Bill Pay" section in your account, select "Set Up Automatic Payments", choose the payee and payment frequency, and authorize the recurring payments. You can modify or cancel these at any time.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            What are the daily withdrawal limits?
+            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+          </div>
+          <div class="faq-answer">
+            Standard daily ATM withdrawal limit is $500, and point-of-sale purchase limit is $3,000. These limits can be adjusted temporarily by contacting customer service or through your online account settings.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            How do I update my personal information?
+            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+          </div>
+          <div class="faq-answer">
+            You can update your contact information in the "Profile" section of your online account. For changes to your legal name or address, please visit a branch location with appropriate documentation.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Options -->
+    <div class="help-section">
+      <h2 class="section-title">Contact Support</h2>
+      <div class="contact-options">
+        <div class="contact-card">
+          <div class="contact-icon">
+            <i class="fas fa-phone"></i>
+          </div>
+          <h3 class="contact-title">Call Us</h3>
+          <p class="contact-desc">Speak directly with a banking specialist</p>
+          <a href="tel:1-800-APEX-BANK" class="contact-button">1-800-APEX-BANK</a>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-icon">
+            <i class="fas fa-comments"></i>
+          </div>
+          <h3 class="contact-title">Live Chat</h3>
+          <p class="contact-desc">Instant messaging with our support team</p>
+          <a href="#" class="contact-button">Start Chat</a>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-icon">
+            <i class="fas fa-envelope"></i>
+          </div>
+          <h3 class="contact-title">Email Us</h3>
+          <p class="contact-desc">Get a response within 24 hours</p>
+          <a href="mailto:support@apexbank.com" class="contact-button">Send Email</a>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-icon">
+            <i class="fas fa-map-marker-alt"></i>
+          </div>
+          <h3 class="contact-title">Visit Branch</h3>
+          <p class="contact-desc">Find a location near you</p>
+          <a href="#" class="contact-button">Locate Branch</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Banking Guides -->
+    <div class="help-section">
+      <h2 class="section-title">Banking Guides</h2>
+      <div class="guide-cards">
+        <div class="guide-card">
+          <div class="guide-image">
+            <i class="fas fa-mobile-alt"></i>
+          </div>
+          <div class="guide-content">
+            <h3 class="guide-title">Mobile Banking Guide</h3>
+            <p class="guide-desc">Learn how to use our mobile app to manage your accounts on the go.</p>
+            <a href="#" class="guide-link">Read Guide <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+
+        <div class="guide-card">
+          <div class="guide-image">
+            <i class="fas fa-lock"></i>
+          </div>
+          <div class="guide-content">
+            <h3 class="guide-title">Security Best Practices</h3>
+            <p class="guide-desc">Protect your accounts with these essential security tips.</p>
+            <a href="#" class="guide-link">Read Guide <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+
+        <div class="guide-card">
+          <div class="guide-image">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <div class="guide-content">
+            <h3 class="guide-title">Investment Basics</h3>
+            <p class="guide-desc">Getting started with our investment products and services.</p>
+            <a href="#" class="guide-link">Read Guide <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Security Tips -->
+    <div class="help-section">
+      <h2 class="section-title">Security Tips</h2>
+      <div class="security-tips">
+        <ul class="tips-list">
+          <li>Never share your password, PIN, or security questions with anyone</li>
+          <li>Enable two-factor authentication for added security</li>
+          <li>Regularly monitor your account activity and report suspicious transactions immediately</li>
+          <li>Use strong, unique passwords for your banking accounts</li>
+          <li>Be cautious of phishing emails pretending to be from your bank</li>
+          <li>Always log out of your banking session when finished</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // FAQ toggle functionality
+      const faqItems = document.querySelectorAll('.faq-item');
+      
+      faqItems.forEach(item => {
+        item.addEventListener('click', function() {
+          this.classList.toggle('active');
+          
+          // Close other open FAQs
+          faqItems.forEach(otherItem => {
+            if (otherItem !== this && otherItem.classList.contains('active')) {
+              otherItem.classList.remove('active');
+            }
+          });
+        });
+      });
+      
+      // Search functionality
+      const searchInput = document.querySelector('.search-input');
+      const searchButton = document.querySelector('.search-button');
+      
+      searchButton.addEventListener('click', function() {
+        performSearch();
+      });
+      
+      searchInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          performSearch();
+        }
+      });
+      
+      function performSearch() {
+        const searchTerm = searchInput.value.trim().toLowerCase();
+        
+        if (searchTerm) {
+          // In a real implementation, this would search through knowledge base articles
+          // For this demo, we'll just show an alert
+          alert(`Searching for: ${searchTerm}\n\nIn a real application, this would display relevant help articles.`);
+          searchInput.value = '';
+        }
+      }
+    });
+  </script>
+</body>
+</html>

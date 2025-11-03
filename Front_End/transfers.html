@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transfers - APEX Bank</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ===============================================
+   APEX BANK - MODERN DESIGN SYSTEM 2024
+   Professional Banking Interface Design
+   =============================================== */
+
+:root {
+  /* === PRIMARY COLORS === */
+  --primary-50: #f0f9ff;
+  --primary-100: #e0f2fe;
+  --primary-200: #bae6fd;
+  --primary-300: #7dd3fc;
+  --primary-400: #38bdf8;
+  --primary-500: #0ea5e9;
+  --primary-600: #0284c7;
+  --primary-700: #0369a1;
+  --primary-800: #075985;
+  --primary-900: #0c4a6e;
+
+  /* === ACCENT COLORS === */
+  --accent-50: #fffbeb;
+  --accent-100: #fef3c7;
+  --accent-200: #fde68a;
+  --accent-300: #fcd34d;
+  --accent-400: #fbbf24;
+  --accent-500: #f59e0b;
+  --accent-600: #d97706;
+  --accent-700: #b45309;
+  --accent-800: #92400e;
+  --accent-900: #78350f;
+
+  /* === NEUTRAL COLORS === */
+  --gray-50: #f8fafc;
+  --gray-100: #f1f5f9;
+  --gray-200: #e2e8f0;
+  --gray-300: #cbd5e1;
+  --gray-400: #94a3b8;
+  --gray-500: #64748b;
+  --gray-600: #475569;
+  --gray-700: #334155;
+  --gray-800: #1e293b;
+  --gray-900: #0f172a;
+
+  /* === SEMANTIC COLORS === */
+  --success-50: #ecfdf5;
+  --success-500: #10b981;
+  --success-600: #059669;
+  --error-50: #fef2f2;
+  --error-500: #ef4444;
+  --error-600: #dc2626;
+  --warning-50: #fffbeb;
+  --warning-500: #f59e0b;
+  --info-50: #eff6ff;
+  --info-500: #3b82f6;
+
+  /* === DESIGN TOKENS === */
+  /* Backgrounds */
+  --bg-primary: var(--gray-50);
+  --bg-secondary: #ffffff;
+  --bg-tertiary: var(--gray-100);
+  --bg-accent: var(--primary-50);
+  --bg-dark: var(--gray-900);
+
+  /* Text Colors */
+  --text-primary: var(--gray-900);
+  --text-secondary: var(--gray-600);
+  --text-tertiary: var(--gray-500);
+  --text-inverse: #ffffff;
+  --text-accent: var(--primary-600);
+
+  /* Border Colors */
+  --border-light: var(--gray-200);
+  --border-medium: var(--gray-300);
+  --border-strong: var(--gray-400);
+  --border-accent: var(--primary-500);
+
+  /* === TYPOGRAPHY SCALE === */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+  --text-6xl: 3.75rem;
+
+  /* Font Weights */
+  --font-light: 300;
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+
+  /* Line Heights */
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose: 2;
+
+  /* === SPACING SCALE === */
+  --space-0: 0;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+
+  /* === BORDER RADIUS === */
+  --radius-none: 0;
+  --radius-sm: 0.125rem;
+  --radius-base: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.5rem;
+  --radius-full: 9999px;
+
+  /* === SHADOWS === */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-base: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+
+  /* === TRANSITIONS === */
+  --transition-fast: 150ms ease;
+  --transition-base: 200ms ease;
+  --transition-slow: 300ms ease;
+  --transition-slower: 500ms ease;
+
+  /* === Z-INDEX SCALE === */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+  --z-toast: 1080;
+
+  /* === BANKING SPECIFIC === */
+  --banking-income: var(--success-500);
+  --banking-expense: var(--error-500);
+  --banking-transfer: var(--primary-500);
+  --banking-pending: var(--warning-500);
+  --banking-card-bg: linear-gradient(135deg, var(--primary-600), var(--primary-800));
+}
+
+/* ===============================================
+   MODERN BASE STYLES
+   =============================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  font-feature-settings: 'kern' 1;
+  font-kerning: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===============================================
+   LAYOUT COMPONENTS
+   =============================================== */
+
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Modern Sidebar */
+.sidebar {
+  width: 280px;
+  background: var(--bg-secondary);
+  box-shadow: var(--shadow-md);
+  border-right: 1px solid var(--border-light);
+  padding: var(--space-6) var(--space-0);
+  display: flex;
+  flex-direction: column;
+  z-index: var(--z-sticky);
+  transition: transform var(--transition-base);
+}
+
+.logo-container {
+  padding: var(--space-0) var(--space-6) var(--space-6);
+  border-bottom: 1px solid var(--border-light);
+  margin-bottom: var(--space-6);
+}
+
+.bank-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: var(--text-2xl);
+  font-weight: var(--font-bold);
+  color: var(--primary-600);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.bank-logo i {
+  color: var(--primary-500);
+}
+
+/* Modern Navigation */
+.nav-menu {
+  flex: 1;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-6);
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all var(--transition-base);
+  border-radius: var(--radius-lg);
+  margin: 0 var(--space-2);
+  font-weight: var(--font-medium);
+  font-size: var(--text-sm);
+}
+
+.nav-item:hover, .nav-item.active {
+  background-color: var(--primary-50);
+  color: var(--primary-700);
+  transform: translateX(var(--space-1));
+}
+
+.nav-item i {
+  width: 20px;
+  text-align: center;
+  color: var(--primary-500);
+}
+
+/* User Section */
+.user-section {
+  padding: var(--space-5) var(--space-6);
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.user-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  background: var(--primary-500);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-inverse);
+  font-weight: var(--font-semibold);
+  font-size: var(--text-sm);
+}
+
+.user-info {
+  flex: 1;
+}
+
+.user-name {
+  font-weight: var(--font-semibold);
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+}
+
+.user-role {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  padding: var(--space-6);
+  overflow-y: auto;
+  width: 100%;
+}
+
+/* Modern Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-8);
+  padding: var(--space-4) var(--space-0);
+}
+
+.page-title {
+  font-family: 'Playfair Display', serif;
+  font-size: var(--text-3xl);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+}
+
+.header-actions {
+  display: flex;
+  gap: var(--space-3);
+}
+
+/* Modern Buttons */
+.header-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-lg);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  text-decoration: none;
+}
+
+.header-action-btn:hover {
+  border-color: var(--primary-500);
+  background: var(--primary-50);
+  color: var(--primary-700);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.header-action-btn i {
+  color: var(--primary-500);
+}
+
+/* ===============================================
+   TRANSFERS PAGE SPECIFIC STYLES
+   =============================================== */
+
+/* Transfer Form Container */
+.transfer-form-container {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-base);
+  border: 1px solid var(--border-light);
+  margin-bottom: var(--space-8);
+}
+
+.form-title {
+  font-family: 'Playfair Display', serif;
+  color: var(--text-primary);
+  margin-bottom: var(--space-6);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--border-light);
+  font-size: var(--text-xl);
+  font-weight: var(--font-semibold);
+}
+
+/* Form Grid */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+.form-group {
+  margin-bottom: var(--space-6);
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: var(--space-2);
+  font-weight: var(--font-medium);
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+}
+
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-lg);
+  font-size: var(--text-base);
+  transition: all var(--transition-base);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary-500);
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+}
+
+.form-group input::placeholder, .form-group textarea::placeholder {
+  color: var(--text-tertiary);
+}
+
+/* Account Balance */
+.account-balance {
+  display: flex;
+  align-items: center;
+  margin-top: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--text-tertiary);
+}
+
+.balance-amount {
+  font-weight: var(--font-semibold);
+  margin-left: var(--space-1);
+  color: var(--text-primary);
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-4);
+  margin-top: var(--space-8);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  border: 1px solid transparent;
+  border-radius: var(--radius-lg);
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  text-decoration: none;
+  min-width: 140px;
+}
+
+.btn-primary {
+  background: var(--primary-500);
+  color: var(--text-inverse);
+  border-color: var(--primary-500);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--primary-600);
+  border-color: var(--primary-600);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-secondary {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border-color: var(--border-medium);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--gray-200);
+  border-color: var(--border-strong);
+  transform: translateY(-2px);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.btn:disabled:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Transfer Limits */
+.transfer-limits {
+  background: var(--primary-50);
+  border-radius: var(--radius-xl);
+  padding: var(--space-4);
+  margin-top: var(--space-6);
+  font-size: var(--text-sm);
+  border: 1px solid var(--primary-200);
+}
+
+.limit-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--space-2);
+  font-weight: var(--font-medium);
+}
+
+.limit-item:last-child {
+  margin-bottom: 0;
+}
+
+/* Transfers Card */
+.transfers-card {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-base);
+  border: 1px solid var(--border-light);
+}
+
+.transfers-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-6);
+}
+
+.transfers-title {
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  font-size: var(--text-lg);
+}
+
+.view-all-btn {
+  color: var(--primary-600);
+  text-decoration: none;
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  transition: all var(--transition-fast);
+}
+
+.view-all-btn:hover {
+  color: var(--primary-700);
+  transform: translateX(2px);
+}
+
+/* Transfer Filters */
+.transfer-filters {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: var(--space-2) var(--space-4);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.filter-btn:hover, .filter-btn.active {
+  background: var(--primary-500);
+  color: var(--text-inverse);
+  border-color: var(--primary-500);
+}
+
+/* Transfer Items */
+.transfer-item {
+  display: flex;
+  align-items: center;
+  padding: var(--space-4) var(--space-0);
+  border-bottom: 1px solid var(--border-light);
+  transition: background-color var(--transition-fast);
+}
+
+.transfer-item:last-child {
+  border-bottom: none;
+}
+
+.transfer-item:hover {
+  background-color: var(--bg-tertiary);
+}
+
+.transfer-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-xl);
+  background: var(--bg-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: var(--space-4);
+  color: var(--primary-600);
+  font-size: var(--text-lg);
+}
+
+.transfer-details {
+  flex: 1;
+}
+
+.transfer-name {
+  font-weight: var(--font-semibold);
+  margin-bottom: var(--space-1);
+  color: var(--text-primary);
+}
+
+.transfer-date {
+  font-size: var(--text-sm);
+  color: var(--text-tertiary);
+}
+
+.transfer-amount {
+  font-weight: var(--font-semibold);
+  font-size: var(--text-base);
+}
+
+.amount-negative {
+  color: var(--text-primary);
+}
+
+.amount-positive {
+  color: var(--success-600);
+}
+
+/* Status Badges */
+.transfer-status {
+  font-size: var(--text-xs);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  margin-left: var(--space-3);
+  font-weight: var(--font-medium);
+}
+
+.status-completed {
+  background: var(--success-50);
+  color: var(--success-600);
+}
+
+.status-pending {
+  background: var(--warning-50);
+  color: var(--warning-600);
+}
+
+.status-failed {
+  background: var(--error-50);
+  color: var(--error-600);
+}
+
+/* Toast Notification */
+.toast {
+  position: fixed;
+  bottom: var(--space-6);
+  right: var(--space-6);
+  padding: var(--space-4) var(--space-5);
+  background: var(--primary-500);
+  color: var(--text-inverse);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  align-items: center;
+  z-index: var(--z-toast);
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all var(--transition-base);
+}
+
+.toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.toast i {
+  margin-right: var(--space-3);
+}
+
+.toast-error {
+  background: var(--error-500);
+}
+
+.toast-processing {
+  background: var(--warning-500);
+}
+
+.toast-success {
+  background: var(--primary-500);
+}
+
+/* Form Validation */
+.error-message {
+  color: var(--error-500);
+  font-size: var(--text-xs);
+  margin-top: var(--space-2);
+  display: none;
+  font-weight: var(--font-medium);
+}
+
+.form-group.error input,
+.form-group.error select,
+.form-group.error textarea {
+  border-color: var(--error-500);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.form-group.error .error-message {
+  display: block;
+}
+
+/* ===============================================
+   RESPONSIVE DESIGN
+   =============================================== */
+
+@media (max-width: 1024px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    transform: translateX(-100%);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .overlay.active {
+    display: block;
+  }
+
+  .main-content {
+    width: 100%;
+    padding-top: 80px;
+  }
+  
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: var(--bg-primary);
+    padding: var(--space-4) var(--space-6);
+    z-index: var(--z-sticky);
+    box-shadow: var(--shadow-sm);
+    justify-content: space-between;
+    margin-bottom: 0;
+  }
+
+  .mobile-header-elements {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .page-title, .header-actions {
+    display: none;
+  }
+  
+  .transfer-filters {
+    justify-content: center;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .btn {
+    width: 100%;
+  }
+  
+  .transfer-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+    text-align: left;
+  }
+  
+  .transfer-icon {
+    margin-right: 0;
+  }
+  
+  .transfer-amount {
+    align-self: flex-end;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-content {
+    padding: var(--space-4);
+  }
+  
+  .transfer-form-container, .transfers-card {
+    padding: var(--space-4);
+  }
+  
+  .form-grid {
+    gap: var(--space-4);
+  }
+  
+  .transfer-filters {
+    gap: var(--space-1);
+  }
+  
+  .filter-btn {
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-xs);
+  }
+}
+
+/* ===============================================
+   UTILITY CLASSES
+   =============================================== */
+
+.text-xs { font-size: var(--text-xs); }
+.text-sm { font-size: var(--text-sm); }
+.text-base { font-size: var(--text-base); }
+.text-lg { font-size: var(--text-lg); }
+.text-xl { font-size: var(--text-xl); }
+.text-2xl { font-size: var(--text-2xl); }
+.text-3xl { font-size: var(--text-3xl); }
+.text-4xl { font-size: var(--text-4xl); }
+.text-5xl { font-size: var(--text-5xl); }
+.text-6xl { font-size: var(--text-6xl); }
+
+.font-light { font-weight: var(--font-light); }
+.font-normal { font-weight: var(--font-normal); }
+.font-medium { font-weight: var(--font-medium); }
+.font-semibold { font-weight: var(--font-semibold); }
+.font-bold { font-weight: var(--font-bold); }
+
+.text-primary { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-tertiary { color: var(--text-tertiary); }
+.text-accent { color: var(--text-accent); }
+.text-success { color: var(--success-500); }
+.text-error { color: var(--error-500); }
+.text-warning { color: var(--warning-500); }
+
+.glassmorphism {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.gradient-primary {
+  background: linear-gradient(135deg, var(--primary-500), var(--primary-700));
+}
+
+.gradient-accent {
+  background: linear-gradient(135deg, var(--accent-400), var(--accent-600));
+}
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo-container">
+        <div class="bank-logo">
+          <i class="fas fa-landmark"></i>
+          APEX BANK
+        </div>
+      </div>
+      
+      <nav class="nav-menu">
+        <a href="dashboard.html" class="nav-item">
+          <i class="fas fa-home"></i>
+          Dashboard
+        </a>
+        <a href="account.html" class="nav-item">
+          <i class="fas fa-wallet"></i>
+          Accounts
+        </a>
+        <a href="transactions.html" class="nav-item">
+          <i class="fas fa-exchange-alt"></i>
+          Transactions
+        </a>
+        <a href="transfers.html" class="nav-item active">
+          <i class="fas fa-money-check-alt"></i>
+          Transfers
+        </a>
+        <a href="investments.html" class="nav-item">
+          <i class="fas fa-chart-line"></i>
+          Investments
+        </a>
+        <!-- <a href="cards.html" class="nav-item">
+          <i class="fas fa-credit-card"></i>
+          Cards
+        </a> -->
+        <a href="profile.html" class="nav-item">
+          <i class="fas fa-user"></i>
+          Profile
+        </a>
+        <a href="settings.html" class="nav-item">
+          <i class="fas fa-cog"></i>
+          Settings
+        </a>
+      </nav>
+      
+      
+    </aside>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="header">
+        <h1 class="page-title">Money Transfer</h1>
+        <div class="header-actions">
+          <div class="header-action-btn">
+            <i class="fas fa-search"></i>
+            Search
+          </div>
+          <div class="header-action-btn">
+            <i class="fas fa-bell"></i>
+            Notifications
+          </div>
+          <div class="header-action-btn">
+            <i class="fas fa-question-circle"></i>
+            Help
+          </div>
+        </div>
+      </div>
+      
+      <!-- Transfer Form -->
+      <div class="transfer-form-container">
+        <h2 class="form-title">Make a Transfer</h2>
+        
+        <form id="transferForm">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="fromAccount">From Account</label>
+              <select id="fromAccount" required>
+                <option value="">Select an account</option>
+              </select>
+              <div class="account-balance">
+                Balance: <span class="balance-amount" id="fromAccountBalance">$0.00</span>
+              </div>
+              <div class="error-message" id="fromAccountError">Please select a source account</div>
+            </div>
+            
+            <div class="form-group">
+              <label for="toAccount">To Account</label>
+              <select id="toAccount" required>
+                <option value="">Select recipient</option>
+              </select>
+              <div class="account-balance">
+                Balance: <span class="balance-amount" id="toAccountBalance">$0.00</span>
+              </div>
+              <div class="error-message" id="toAccountError">Please select a destination account</div>
+            </div>
+          </div>
+          
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="amount">Amount</label>
+              <input type="number" id="amount" placeholder="0.00" min="0.01" step="0.01" required>
+              <div class="error-message" id="amountError">Please enter a valid amount</div>
+            </div>
+            
+            <div class="form-group">
+              <label for="date">Transfer Date</label>
+              <input type="date" id="date" required>
+              <div class="error-message" id="dateError">Please select a transfer date</div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="description">Description (Optional)</label>
+            <input type="text" id="description" placeholder="e.g., Rent payment, Gift, etc.">
+          </div>
+          
+          <div class="form-group">
+            <label for="notes">Notes (Optional)</label>
+            <textarea id="notes" rows="3" placeholder="Any additional information about this transfer"></textarea>
+          </div>
+          
+          <div class="transfer-limits">
+            <div class="limit-item">
+              <span>Daily Transfer Limit:</span>
+              <span>$10,000.00</span>
+            </div>
+            <div class="limit-item">
+              <span>Remaining Today:</span>
+              <span id="remainingLimit">$10,000.00</span>
+            </div>
+          </div>
+          
+          <div class="form-actions">
+            <button type="reset" class="btn btn-secondary">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="submitBtn">Confirm Transfer</button>
+          </div>
+        </form>
+      </div>
+      
+      <!-- Recent Transfers -->
+      <div class="transfers-card">
+        <div class="transfers-header">
+          <div class="transfers-title">Recent Transfers</div>
+          <a href="#" class="view-all-btn">
+            View All <i class="fas fa-chevron-right"></i>
+          </a>
+        </div>
+        
+        <div class="transfer-filters">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="completed">Completed</button>
+          <button class="filter-btn" data-filter="pending">Pending</button>
+          <button class="filter-btn" data-filter="failed">Failed</button>
+        </div>
+        
+        <div id="transfersList">
+          <!-- Dynamic content will be inserted here -->
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">
+    <i class="fas fa-check-circle"></i>
+    <span id="toast-message">Transfer completed successfully!</span>
+  </div>
+
+  <script>
+    // Data models
+    const accounts = [
+      { id: 'checking', name: 'Checking Account', number: '4582', balance: 8450.00, type: 'checking' },
+      { id: 'savings', name: 'Savings Account', number: '7821', balance: 12612.50, type: 'savings' },
+      { id: 'loan', name: 'Loan Account', number: '3095', balance: -15000.00, type: 'loan' }
+    ];
+
+    const recipients = [
+      { id: 'john-smith', name: 'John Smith', account: 'External Bank', type: 'external' },
+      { id: 'power-company', name: 'Power Company Inc.', account: 'External Account', type: 'external' },
+      { id: 'telecom-provider', name: 'Telecom Provider', account: 'External Account', type: 'external' }
+    ];
+
+    let transfers = [
+      { id: 1, from: 'checking', to: 'john-smith', amount: 1200.00, date: '2023-08-27', description: 'Rent Payment', status: 'completed', type: 'expense' },
+      { id: 2, from: 'checking', to: 'savings', amount: 500.00, date: '2023-08-20', description: 'Savings Transfer', status: 'completed', type: 'transfer' },
+      { id: 3, from: 'checking', to: 'power-company', amount: 125.50, date: '2023-08-15', description: 'Electricity Bill', status: 'completed', type: 'expense' },
+      { id: 4, from: 'checking', to: 'telecom-provider', amount: 85.75, date: '2023-08-05', description: 'Phone Bill', status: 'completed', type: 'expense' },
+      { id: 5, from: 'savings', to: 'checking', amount: 1000.00, date: '2023-09-01', description: 'Emergency Funds', status: 'pending', type: 'transfer' }
+    ];
+
+    const dailyLimit = 10000;
+    let remainingLimit = dailyLimit;
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize the application
+      initApp();
+      
+      // Set today's date as default for the date field
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('date').value = today;
+      
+      // Form submission handling
+      const transferForm = document.getElementById('transferForm');
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toast-message');
+      const submitBtn = document.getElementById('submitBtn');
+      
+      transferForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Validate form
+        if (!validateForm()) {
+          return;
+        }
+        
+        // Disable submit button during processing
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Processing...';
+        
+        // Simulate transfer processing
+        showToast('Processing your transfer...', 'processing');
+        
+        // Simulate API call delay
+        setTimeout(() => {
+          processTransfer();
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Confirm Transfer';
+        }, 2000);
+      });
+      
+      // Form reset handling
+      transferForm.addEventListener('reset', function() {
+        clearErrors();
+        updateAccountBalances();
+      });
+      
+      // Account selection change
+      document.getElementById('fromAccount').addEventListener('change', function() {
+        updateAccountBalances();
+        validateAmount();
+      });
+      
+      document.getElementById('toAccount').addEventListener('change', function() {
+        updateAccountBalances();
+      });
+      
+      // Amount input validation
+      document.getElementById('amount').addEventListener('input', function() {
+        validateAmount();
+      });
+      
+      // Filter buttons
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          filterTransfers(this.dataset.filter);
+        });
+      });
+    });
+
+    function initApp() {
+      populateAccountSelects();
+      updateAccountBalances();
+      updateRemainingLimit();
+      renderTransfers();
+    }
+
+    function populateAccountSelects() {
+      const fromAccountSelect = document.getElementById('fromAccount');
+      const toAccountSelect = document.getElementById('toAccount');
+      
+      // Clear existing options
+      fromAccountSelect.innerHTML = '<option value="">Select an account</option>';
+      toAccountSelect.innerHTML = '<option value="">Select recipient</option>';
+      
+      // Add accounts to "From" dropdown
+      accounts.forEach(account => {
+        if (account.balance > 0) { // Only show accounts with positive balance
+          const option = document.createElement('option');
+          option.value = account.id;
+          option.textContent = `${account.name} (****${account.number}) - $${account.balance.toFixed(2)}`;
+          fromAccountSelect.appendChild(option);
+        }
+      });
+      
+      // Add accounts to "To" dropdown
+      accounts.forEach(account => {
+        const option = document.createElement('option');
+        option.value = account.id;
+        option.textContent = `${account.name} (****${account.number})`;
+        toAccountSelect.appendChild(option);
+      });
+      
+      // Add external recipients
+      recipients.forEach(recipient => {
+        const option = document.createElement('option');
+        option.value = recipient.id;
+        option.textContent = `${recipient.name} (${recipient.account})`;
+        toAccountSelect.appendChild(option);
+      });
+    }
+
+    function updateAccountBalances() {
+      const fromAccountId = document.getElementById('fromAccount').value;
+      const toAccountId = document.getElementById('toAccount').value;
+      
+      // Update "From" account balance
+      if (fromAccountId) {
+        const fromAccount = accounts.find(acc => acc.id === fromAccountId);
+        document.getElementById('fromAccountBalance').textContent = `$${fromAccount.balance.toFixed(2)}`;
+      } else {
+        document.getElementById('fromAccountBalance').textContent = '$0.00';
+      }
+      
+      // Update "To" account balance
+      if (toAccountId && accounts.find(acc => acc.id === toAccountId)) {
+        const toAccount = accounts.find(acc => acc.id === toAccountId);
+        document.getElementById('toAccountBalance').textContent = `$${toAccount.balance.toFixed(2)}`;
+      } else {
+        document.getElementById('toAccountBalance').textContent = '$0.00';
+      }
+    }
+
+    function updateRemainingLimit() {
+      // Calculate remaining daily limit
+      const today = new Date().toISOString().split('T')[0];
+      const todayTransfers = transfers.filter(t => t.date === today && t.status === 'completed');
+      const todayTotal = todayTransfers.reduce((sum, transfer) => sum + transfer.amount, 0);
+      remainingLimit = Math.max(0, dailyLimit - todayTotal);
+      
+      document.getElementById('remainingLimit').textContent = `$${remainingLimit.toFixed(2)}`;
+    }
+
+    function validateForm() {
+      let isValid = true;
+      
+      // Clear previous errors
+      clearErrors();
+      
+      // Validate From Account
+      const fromAccount = document.getElementById('fromAccount');
+      if (!fromAccount.value) {
+        markError(fromAccount, 'fromAccountError', 'Please select a source account');
+        isValid = false;
+      }
+      
+      // Validate To Account
+      const toAccount = document.getElementById('toAccount');
+      if (!toAccount.value) {
+        markError(toAccount, 'toAccountError', 'Please select a destination account');
+        isValid = false;
+      }
+      
+      // Validate Amount
+      if (!validateAmount()) {
+        isValid = false;
+      }
+      
+      // Validate Date
+      const date = document.getElementById('date');
+      if (!date.value) {
+        markError(date, 'dateError', 'Please select a transfer date');
+        isValid = false;
+      }
+      
+      return isValid;
+    }
+
+    function validateAmount() {
+      const amountInput = document.getElementById('amount');
+      const amount = parseFloat(amountInput.value);
+      const fromAccountId = document.getElementById('fromAccount').value;
+      let isValid = true;
+      
+      // Clear previous error
+      clearError(amountInput, 'amountError');
+      
+      if (!amount || amount <= 0) {
+        markError(amountInput, 'amountError', 'Please enter a valid amount');
+        isValid = false;
+      } else if (fromAccountId) {
+        const fromAccount = accounts.find(acc => acc.id === fromAccountId);
+        if (amount > fromAccount.balance) {
+          markError(amountInput, 'amountError', 'Insufficient funds');
+          isValid = false;
+        } else if (amount > remainingLimit) {
+          markError(amountInput, 'amountError', `Amount exceeds daily limit of $${dailyLimit.toFixed(2)}`);
+          isValid = false;
+        }
+      }
+      
+      return isValid;
+    }
+
+    function markError(inputElement, errorId, message) {
+      inputElement.parentElement.classList.add('error');
+      document.getElementById(errorId).textContent = message;
+      document.getElementById(errorId).style.display = 'block';
+    }
+
+    function clearError(inputElement, errorId) {
+      inputElement.parentElement.classList.remove('error');
+      document.getElementById(errorId).style.display = 'none';
+    }
+
+    function clearErrors() {
+      document.querySelectorAll('.form-group').forEach(group => {
+        group.classList.remove('error');
+      });
+      document.querySelectorAll('.error-message').forEach(msg => {
+        msg.style.display = 'none';
+      });
+    }
+
+    function processTransfer() {
+      // Get form values
+      const fromAccountId = document.getElementById('fromAccount').value;
+      const toAccountId = document.getElementById('toAccount').value;
+      const amount = parseFloat(document.getElementById('amount').value);
+      const date = document.getElementById('date').value;
+      const description = document.getElementById('description').value || 'Transfer';
+      const notes = document.getElementById('notes').value;
+      
+      // Find accounts
+      const fromAccount = accounts.find(acc => acc.id === fromAccountId);
+      const toAccount = accounts.find(acc => acc.id === toAccountId);
+      const recipient = recipients.find(rec => rec.id === toAccountId);
+      
+      // Update account balances
+      fromAccount.balance -= amount;
+      
+      if (toAccount) {
+        toAccount.balance += amount;
+      }
+      
+      // Create new transfer record
+      const newTransfer = {
+        id: transfers.length + 1,
+        from: fromAccountId,
+        to: toAccountId,
+        amount: amount,
+        date: date,
+        description: description,
+        status: 'completed',
+        type: toAccount ? 'transfer' : 'expense'
+      };
+      
+      transfers.unshift(newTransfer);
+      
+      // Update UI
+      updateAccountBalances();
+      updateRemainingLimit();
+      renderTransfers();
+      
+      // Show success message
+      showToast(`Transfer of $${amount.toFixed(2)} completed successfully!`, 'success');
+      
+      // Reset form
+      document.getElementById('transferForm').reset();
+      document.getElementById('date').value = new Date().toISOString().split('T')[0];
+    }
+
+    function renderTransfers(filter = 'all') {
+      const transfersList = document.getElementById('transfersList');
+      transfersList.innerHTML = '';
+      
+      let filteredTransfers = transfers;
+      
+      if (filter !== 'all') {
+        filteredTransfers = transfers.filter(t => t.status === filter);
+      }
+      
+      if (filteredTransfers.length === 0) {
+        transfersList.innerHTML = '<div class="transfer-item"><div class="transfer-details">No transfers found</div></div>';
+        return;
+      }
+      
+      filteredTransfers.forEach(transfer => {
+        const fromAccount = accounts.find(acc => acc.id === transfer.from);
+        let toName = '';
+        
+        if (accounts.find(acc => acc.id === transfer.to)) {
+          toName = accounts.find(acc => acc.id === transfer.to).name;
+        } else if (recipients.find(rec => rec.id === transfer.to)) {
+          toName = recipients.find(rec => rec.id === transfer.to).name;
+        }
+        
+        const transferItem = document.createElement('div');
+        transferItem.className = 'transfer-item';
+        
+        // Determine icon based on transfer type
+        let iconClass = 'fas fa-exchange-alt';
+        if (transfer.type === 'expense') {
+          iconClass = transfer.description.toLowerCase().includes('rent') ? 'fas fa-building' : 
+                      transfer.description.toLowerCase().includes('electric') ? 'fas fa-bolt' : 
+                      transfer.description.toLowerCase().includes('phone') ? 'fas fa-phone' : 'fas fa-money-bill-wave';
+        } else if (transfer.type === 'transfer') {
+          iconClass = 'fas fa-piggy-bank';
+        }
+        
+        // Format date
+        const transferDate = new Date(transfer.date);
+        const formattedDate = transferDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        
+        transferItem.innerHTML = `
+          <div class="transfer-icon">
+            <i class="${iconClass}"></i>
+          </div>
+          <div class="transfer-details">
+            <div class="transfer-name">${transfer.description}</div>
+            <div class="transfer-date">${formattedDate} • To: ${toName}</div>
+          </div>
+          <div class="transfer-amount amount-negative">-$${transfer.amount.toFixed(2)}</div>
+          <span class="transfer-status status-${transfer.status}">${transfer.status.charAt(0).toUpperCase() + transfer.status.slice(1)}</span>
+        `;
+        
+        transfersList.appendChild(transferItem);
+      });
+    }
+
+    function filterTransfers(filter) {
+      renderTransfers(filter);
+    }
+
+    function showToast(message, type = 'success') {
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toast-message');
+      
+      toastMessage.textContent = message;
+      
+      // Remove previous type classes
+      toast.classList.remove('toast-error', 'toast-processing', 'toast-success');
+      
+      // Add appropriate class based on type
+      if (type === 'error') {
+        toast.classList.add('toast-error');
+      } else if (type === 'processing') {
+        toast.classList.add('toast-processing');
+      } else {
+        toast.classList.add('toast-success');
+      }
+      
+      // Update icon based on type
+      const icon = toast.querySelector('i');
+      if (type === 'error') {
+        icon.className = 'fas fa-exclamation-circle';
+      } else if (type === 'processing') {
+        icon.className = 'fas fa-spinner fa-spin';
+      } else {
+        icon.className = 'fas fa-check-circle';
+      }
+      
+      // Show toast
+      toast.classList.add('show');
+      
+      // Hide toast after 3 seconds (5 for processing)
+      const hideTime = type === 'processing' ? 5000 : 3000;
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, hideTime);
+    }
+  </script>
+</body>
+</html>

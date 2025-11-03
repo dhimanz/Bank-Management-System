@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Open a new account with Apex Bank. A simple, secure, multi-step process to get you started with modern banking.">
+  <title>Open an Account - Apex Bank</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    /* ------------------- */
+    /* -- Root & Base Styles (Consistent with Theme) -- */
+    /* ------------------- */
+    :root {
+      --bg-primary: #F8F9FA;      
+      --bg-secondary: #FFFFFF;    
+      --accent-primary: #D4B254;  
+      --accent-hover: #C8A447;    
+      --text-primary: #1F2937;    
+      --text-secondary: #6B7280;  
+      --border-color: #E5E7EB;    
+      --success-color: #10B981;
+      --border-radius-md: 12px;
+      --border-radius-lg: 50px;
+      --shadow-soft: 0px 5px 20px rgba(0, 0, 0, 0.07);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Poppins", sans-serif; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; display: flex; flex-direction: column; min-height: 100vh; }
+    main { flex-grow: 1; }
+    a { text-decoration: none; }
+    h1, h2, h3, h4, h5 { font-weight: 600; }
+
+    /* ------------------- */
+    /* ----- Navbar ------ */
+    /* ------------------- */
+    .navbar {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 20px 8%;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-color);
+      width: 100%;
+    }
+    .navbar h1 { font-size: 1.8rem; color: var(--text-primary); font-weight: 700; }
+    .navbar ul { display: flex; list-style: none; }
+    .navbar ul li { margin: 0 18px; }
+    .navbar ul li a { color: var(--text-primary); font-weight: 500; transition: color 0.3s; }
+    .navbar ul li a:hover, .navbar ul li a.active { color: var(--accent-primary); }
+
+    /* ------------------- */
+    /* --- Form Section -- */
+    /* ------------------- */
+    .form-container {
+        padding: 80px 8% 100px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        margin-top: 80px; /* Space for fixed navbar */
+    }
+    .form-wrapper {
+        width: 100%;
+        max-width: 700px;
+        background: var(--bg-secondary);
+        padding: 40px;
+        border-radius: var(--border-radius-md);
+        box-shadow: var(--shadow-soft);
+        border: 1px solid var(--border-color);
+    }
+    .form-wrapper h2 {
+        text-align: center;
+        margin-bottom: 15px;
+        font-size: 2.5rem;
+    }
+    .progress-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        position: relative;
+    }
+    .progress-bar .step {
+        text-align: center;
+        width: 100%;
+        position: relative;
+    }
+    .progress-bar .step .dot {
+        height: 30px;
+        width: 30px;
+        background: var(--border-color);
+        border-radius: 50%;
+        display: inline-block;
+        border: 2px solid var(--border-color);
+        transition: all 0.3s ease;
+    }
+    .progress-bar .step.active .dot {
+        background: var(--accent-primary);
+        border-color: var(--accent-primary);
+    }
+    .progress-bar .step p {
+        font-weight: 500;
+        margin-top: 5px;
+        color: var(--text-secondary);
+        transition: color 0.3s ease;
+    }
+    .progress-bar .step.active p {
+        color: var(--text-primary);
+    }
+    .form-step {
+        display: none;
+    }
+    .form-step.active {
+        display: block;
+        animation: fadeIn 0.5s ease-out;
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+    }
+    .form-group input, .form-group select {
+        width: 100%;
+        padding: 12px 15px;
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        font-size: 1rem;
+        transition: border-color 0.3s;
+    }
+    .form-group input:focus, .form-group select:focus {
+        outline: none;
+        border-color: var(--accent-primary);
+    }
+    .btn-group {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+    }
+    .btn {
+      padding: 12px 30px;
+      background: var(--accent-primary);
+      border: none;
+      border-radius: var(--border-radius-lg);
+      color: var(--text-primary);
+      font-weight: bold;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .btn:hover {
+        background: var(--accent-hover);
+        transform: translateY(-3px);
+    }
+    .btn-secondary {
+        background: var(--border-color);
+        color: var(--text-secondary);
+    }
+    .btn-secondary:hover {
+        background: #D1D5DB;
+        color: var(--text-primary);
+    }
+
+    /* Success Message */
+    #success-message {
+      text-align: center;
+      display: none;
+    }
+    #success-message i {
+      font-size: 4rem;
+      color: var(--success-color);
+      margin-bottom: 20px;
+    }
+    #success-message h3 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <h1><a href="index.html" style="color: var(--text-primary);">Apex Bank</a></h1>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#features">Features</a></li>
+      <li><a href="#">Loans</a></li>
+      <li><a href="#">About Us</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main class="form-container">
+    <div class="form-wrapper">
+      <h2>Open Your Account</h2>
+      
+      <div id="multiStepForm">
+        <div class="progress-bar">
+          <div class="step active" data-step="1">
+            <div class="dot"></div>
+            <p>Personal</p>
+          </div>
+          <div class="step" data-step="2">
+            <div class="dot"></div>
+            <p>Contact</p>
+          </div>
+          <div class="step" data-step="3">
+            <div class="dot"></div>
+            <p>Setup</p>
+          </div>
+        </div>
+
+        <form>
+          <!-- Step 1: Personal Details -->
+          <div class="form-step active" id="step1">
+            <div class="form-group">
+              <label for="firstName">First Name</label>
+              <input type="text" id="firstName" required>
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name</label>
+              <input type="text" id="lastName" required>
+            </div>
+             <div class="form-group">
+              <label for="dob">Date of Birth</label>
+              <input type="date" id="dob" required>
+            </div>
+            <div class="form-group">
+              <label for="pan">PAN Card Number</label>
+              <input type="text" id="pan" required>
+            </div>
+            <div class="btn-group">
+              <button type="button" class="btn" id="next1">Next</button>
+            </div>
+          </div>
+
+          <!-- Step 2: Contact Information -->
+          <div class="form-step" id="step2">
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" required>
+            </div>
+            <div class="form-group">
+              <label for="phone">Mobile Number</label>
+              <input type="tel" id="phone" required>
+            </div>
+            <div class="form-group">
+              <label for="address">Residential Address</label>
+              <input type="text" id="address" required>
+            </div>
+            <div class="btn-group">
+              <button type="button" class="btn btn-secondary" id="prev2">Previous</button>
+              <button type="button" class="btn" id="next2">Next</button>
+            </div>
+          </div>
+
+          <!-- Step 3: Account Setup -->
+          <div class="form-step" id="step3">
+            <div class="form-group">
+                <label for="accountType">Account Type</label>
+                <select id="accountType">
+                    <option value="savings">Savings Account</option>
+                    <option value="checking">Checking Account</option>
+                    <option value="salary">Salary Account</option>
+                </select>
+            </div>
+            <div class="form-group">
+              <label for="password">Create Password</label>
+              <input type="password" id="password" required>
+            </div>
+             <div class="form-group">
+              <label for="confirmPassword">Confirm Password</label>
+              <input type="password" id="confirmPassword" required>
+            </div>
+            <div class="btn-group">
+              <button type="button" class="btn btn-secondary" id="prev3">Previous</button>
+              <button type="submit" class="btn" id="submit">Submit Application</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div id="success-message">
+        <i class="fas fa-check-circle"></i>
+        <h3>Application Submitted!</h3>
+        <p>Thank you for choosing Apex Bank. We are reviewing your application and will get back to you within 2-3 business days.</p>
+      </div>
+
+    </div>
+  </main>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const nextBtn1 = document.getElementById('next1');
+  const nextBtn2 = document.getElementById('next2');
+  const prevBtn2 = document.getElementById('prev2');
+  const prevBtn3 = document.getElementById('prev3');
+  const submitBtn = document.getElementById('submit');
+
+  const form = document.querySelector('form');
+  const multiStepForm = document.getElementById('multiStepForm');
+  const successMessage = document.getElementById('success-message');
+
+  const steps = document.querySelectorAll('.form-step');
+  const progressSteps = document.querySelectorAll('.progress-bar .step');
+  let currentStep = 1;
+
+  const updateStep = () => {
+    steps.forEach(step => step.classList.remove('active'));
+    document.getElementById(`step${currentStep}`).classList.add('active');
+
+    progressSteps.forEach((step, index) => {
+      if (index < currentStep) {
+        step.classList.add('active');
+      } else {
+        step.classList.remove('active');
+      }
+    });
+  };
+
+  nextBtn1.addEventListener('click', () => {
+    currentStep = 2;
+    updateStep();
+  });
+
+  nextBtn2.addEventListener('click', () => {
+    currentStep = 3;
+    updateStep();
+  });
+
+  prevBtn2.addEventListener('click', () => {
+    currentStep = 1;
+    updateStep();
+  });
+
+  prevBtn3.addEventListener('click', () => {
+    currentStep = 2;
+    updateStep();
+  });
+
+  // Utility function for hashing password using SHA-256
+  async function hashPassword(password) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(password);
+    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const firstName = document.getElementById('firstName').value.trim();
+    const lastName = document.getElementById('lastName').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+
+    // Validate password
+    if (password !== confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
+    // Hash password before saving
+    const hashedPassword = await hashPassword(password);
+
+    // Store credentials securely in localStorage
+    const userData = {
+      firstName,
+      lastName,
+      email,
+      passwordHash: hashedPassword
+    };
+    localStorage.setItem("apexUser", JSON.stringify(userData));
+
+    // Success UI
+    multiStepForm.style.display = 'none';
+    successMessage.style.display = 'block';
+  });
+
+  // 🔐 Optional: Add a simple login check (for testing/demo)
+  window.verifyLogin = async function(email, password) {
+    const storedUser = JSON.parse(localStorage.getItem("apexUser"));
+    if (!storedUser) {
+      alert("No registered user found. Please register first.");
+      return;
+    }
+
+    const inputHash = await hashPassword(password);
+    if (storedUser.email === email && storedUser.passwordHash === inputHash) {
+      alert(`✅ Welcome back, ${storedUser.firstName}!`);
+    } else {
+      alert("❌ Invalid email or password.");
+    }
+  };
+});
+</script>
+
+
+</body>
+</html>
