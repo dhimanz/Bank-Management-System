@@ -1,0 +1,106 @@
+{
+  "users": [
+    {
+      "id": "bdec",
+      "firstName": "Rachana",
+      "lastName": "Sharma",
+      "dob": "2005-08-15",
+      "pan": "TJCPS5704M",
+      "email": "keshav@gmail.com",
+      "phone": "9350075830",
+      "address": "Kharak Gager",
+      "accountType": "savings",
+      "password": "123456",
+      "city": "New York",
+      "zipCode": "10001",
+      "accounts": [
+        "savings"
+      ],
+      "cards": [],
+      "joinDate": "2025-11-13",
+      "memberType": "Standard"
+    },
+    {
+      "id": "568f",
+      "firstName": "shubham",
+      "lastName": "Sharma",
+      "dob": "2005-08-15",
+      "pan": "TJCPS5704M",
+      "email": "sohal@gmail.com",
+      "phone": "9350075830",
+      "address": "Kharak Gager",
+      "accountType": "savings",
+      "password": "123456",
+      "city": "New York",
+      "zipCode": "10001",
+      "accounts": [
+        "savings"
+      ],
+      "cards": [],
+      "joinDate": "2025-11-13",
+      "memberType": "Standard"
+    },
+    {
+      "id": "12c3",
+      "firstName": "umesh",
+      "lastName": "Sharma",
+      "dob": "2005-08-15",
+      "pan": "TJCPS5704M",
+      "email": "rahul@gmail.com",
+      "phone": "9350075830",
+      "address": "Kharak Gager",
+      "accountType": "savings",
+      "password": "123456",
+      "city": "New York",
+      "zipCode": "10001",
+      "accounts": [
+        "savings"
+      ],
+      "cards": [],
+      "joinDate": "2025-11-13",
+      "memberType": "Standard"
+    },
+    {
+      "id": "17b7",
+      "firstName": "Rachana",
+      "lastName": "Sharma",
+      "dob": "2005-04-15",
+      "pan": "TJCPS5704M",
+      "email": "krishna@123gmail.com",
+      "phone": "9350075830",
+      "address": "Kharak Gager",
+      "accountType": "savings",
+      "password": "123456",
+      "city": "New York",
+      "zipCode": "10001",
+      "accounts": [
+        "savings"
+      ],
+      "cards": [],
+      "joinDate": "2025-11-14",
+      "memberType": "Standard"
+    },
+    {
+      "id": "7436",
+      "firstName": "keshav",
+      "lastName": "Sharma",
+      "dob": "2005-08-15",
+      "pan": "TJCPS5704M",
+      "email": "nauti@gmail.com",
+      "phone": "9350075830",
+      "address": "Kharak Gager",
+      "accountType": "checking",
+      "password": "123456",
+      "city": "chandigarh",
+      "zipCode": "160030",
+      "accounts": [
+        "checking"
+      ],
+      "cards": [],
+      "joinDate": "2025-11-14",
+      "memberType": "Standard"
+    }
+  ],
+  "accounts": [],
+  "transactions": []
+}
